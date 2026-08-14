@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hbmprediction"
+version = "0.1.0"
+description = "Offline peak-HBM predictor for parallel model training"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["PyYAML>=6.0"]
+
+[project.optional-dependencies]
+test = ["pytest>=7"]
+
+[tool.setuptools.packages.find]
+include = ["cost_eval", "cost_eval.*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests/test_cost_eval"]
+addopts = "-q"

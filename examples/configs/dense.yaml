@@ -1,0 +1,34 @@
+name: llama-like
+model:
+  type: dense
+  H: 4096
+  F: 11008
+  n_heads: 32
+  n_kv: 32
+  head_dim: 128
+  S: 4096
+  B: 1
+  vocab: 32000
+  n_layers: 4
+parallel:
+  tensor_parallel: 8
+  data_parallel_shard: 8
+  sequence_parallel: true
+  num_microbatches: 4
+  prefetch_depth: 1
+optimizer:
+  type: AdamW
+hardware:
+  max_device_memory: 60 GiB
+  framework_reserve: 1 GiB
+recompute:
+  mode: select
+  select_ops:
+    -1: [flash, fc1, swiglu]
+  exclude_ops:
+    0: [flash]
+swap:
+  enable: true
+  default_prefetch: 2
+  swap_ops:
+    -1: [ln1, ln2]
