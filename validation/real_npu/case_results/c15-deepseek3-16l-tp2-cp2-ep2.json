@@ -1,0 +1,319 @@
+{
+  "name": "b4-deepseek3-16l-tp2cp2ep2-hbm",
+  "collection_attempt_id": "9835fcce135743f299d39ebe319f06c7",
+  "adapter": "mindformers",
+  "world_size": 8,
+  "framework_reserve_bytes": 8975344792,
+  "device_baseline_bytes": 3584032768,
+  "config": {
+    "checkpoint": {
+      "enable_save": false,
+      "save_path": "/home/qs50063523/mycode/parallelsearch/real_tests/results/deepseek3_12l_tp2_cp2_ep2_recheck/checkpoints",
+      "save_max": 1,
+      "no_save_optim": true,
+      "load_path": ""
+    },
+    "training": {
+      "steps": 80,
+      "local_batch_size": 2,
+      "global_batch_size": 4,
+      "max_norm": 1.0,
+      "seed": 42,
+      "deterministic": true
+    },
+    "optimizer": {
+      "type": "AdamW",
+      "betas": [
+        0.9,
+        0.95
+      ],
+      "eps": 1e-08,
+      "weight_decay": 0.01
+    },
+    "lr_scheduler": {
+      "type": "ConstantWarmUpLR",
+      "learning_rate": 1e-05,
+      "warmup_ratio": 0
+    },
+    "parallelism": {
+      "data_parallel_shard": -1,
+      "data_parallel_shard_strategy": "optim_grads_params",
+      "disable_gradient_division": true,
+      "expert_parallel": 2,
+      "tensor_parallel": 2,
+      "context_parallel": 2,
+      "context_parallel_method": "ulysses",
+      "pipeline_parallel": 1,
+      "pipeline_parallel_schedule": "1f1b",
+      "pipeline_parallel_microbatch_size": 1,
+      "pipeline_parallel_interleave_num": 1,
+      "pipeline_parallel_layers_per_stage": null,
+      "sequence_parallel": true
+    },
+    "recompute": {
+      "mode": "full",
+      "full_recompute_layer": [
+        "0-3"
+      ]
+    },
+    "train_dataset": {
+      "dataloader": {
+        "type": "MindDataset",
+        "dataset_files": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/train_dataset",
+        "column_names": [
+          "input_ids",
+          "labels",
+          "loss_mask",
+          "position_ids"
+        ],
+        "shuffle": false
+      },
+      "drop_remainder": true,
+      "num_parallel_workers": 8,
+      "prefetch_size": 1,
+      "numa_enable": false
+    },
+    "model": {
+      "model_type": "deepseek_v3",
+      "architectures": "DeepseekV3ForCausalLM",
+      "vocab_size": 129280,
+      "seq_length": 4096,
+      "hidden_size": 1792,
+      "intermediate_size": 3072,
+      "num_hidden_layers": 16,
+      "max_position_embeddings": 163840,
+      "hidden_act": "fusedswiglu",
+      "num_attention_heads": 8,
+      "rms_norm_eps": 1e-06,
+      "add_bias_linear": false,
+      "use_flash_attention": true,
+      "use_attn_mask_compression": true,
+      "multi_latent_attention": true,
+      "mla_qkv_concat": true,
+      "kv_lora_rank": 512,
+      "q_lora_rank": 1536,
+      "qk_rope_head_dim": 64,
+      "v_head_dim": 192,
+      "qk_nope_head_dim": 128,
+      "qk_layernorm": true,
+      "attention_dropout": 0.0,
+      "hidden_dropout": 0.0,
+      "params_dtype": "float32",
+      "compute_dtype": "bfloat16",
+      "layernorm_compute_dtype": "float32",
+      "softmax_compute_dtype": "float32",
+      "rotary_dtype": "float32",
+      "initializer_range": 0.01,
+      "num_nextn_predict_layers": 1,
+      "mtp_loss_scaling_factor": 0.3,
+      "position_embedding_type": "yarn",
+      "rotary_scaling_factor": 40,
+      "beta_fast": 32,
+      "beta_slow": 1,
+      "mscale": 1,
+      "mscale_all_dim": 1,
+      "rope_theta": 10000,
+      "router_dense_type": "float32",
+      "moe_grouped_gemm": true,
+      "gated_linear_unit": true,
+      "scoring_func": "sigmoid",
+      "norm_topk_prob": true,
+      "moe_intermediate_size": 1024,
+      "routed_scaling_factor": 2.5,
+      "first_k_dense_replace": 1,
+      "n_routed_experts": 8,
+      "num_experts_per_tok": 4,
+      "n_shared_experts": 1,
+      "moe_shared_expert_intermediate_size": 1024,
+      "moe_router_load_balancing_type": "seq_aux_loss",
+      "moe_aux_loss_coeff": 0.001,
+      "moe_router_enable_expert_bias": true,
+      "moe_router_bias_update_rate": 0.001,
+      "topk_group": 2,
+      "n_group": 4
+    },
+    "context": {
+      "mode": 1,
+      "device_target": "Ascend",
+      "max_device_memory": "58GB"
+    },
+    "profiler": {
+      "enable_profiling": true,
+      "start_step": 7,
+      "end_step": 8,
+      "output_path": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v3-b4-deepseek3-16l-tp2cp2ep2-hbm/mindspore-profile",
+      "profiler_rank": [
+        0
+      ],
+      "profiler_level": 1,
+      "profile_memory": true,
+      "profile_cpu": true,
+      "with_stack": true
+    }
+  },
+  "metadata": {
+    "run_mode": "hbm",
+    "device": "Ascend",
+    "mindformers_commit": "d8b14de93b6774782b30f51c0bf5f5827536fb9c",
+    "mindspore_version": "2.10.0",
+    "cann_version": "unknown",
+    "original_config": "/home/qs50063523/mycode/parallelsearch/real_tests/configs/deepseek3_12l_tp2_cp2_ep2_recheck.yaml",
+    "runner": "/home/qs50063523/mycode/mindformers/tests/st/test_multi_cards_cases/test_pynative/test_models/test_deepseek3/run_deepseek3.py",
+    "generated_command": [
+      "msrun",
+      "--worker_num=8",
+      "--local_worker_num=8",
+      "--master_port=61371",
+      "--log_dir=/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v3-b4-deepseek3-16l-tp2cp2ep2-hbm/msrun-logs",
+      "--join=True",
+      "/home/qs50063523/mycode/mindformers/tests/st/test_multi_cards_cases/test_pynative/test_models/test_deepseek3/run_deepseek3.py",
+      "--config",
+      "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v3-b4-deepseek3-16l-tp2cp2ep2-hbm/profile_config.yaml"
+    ],
+    "mindspore_profiler_path": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v3-b4-deepseek3-16l-tp2cp2ep2-hbm/mindspore-profile",
+    "measurement_window": {
+      "start_step": 7,
+      "stop_step": 75
+    },
+    "collector_host": "localhost.localdomain",
+    "sample_interval_ms": 100,
+    "devices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "device_stage_map": {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0
+    },
+    "returncode": 0,
+    "timed_out": false,
+    "query_errors": [],
+    "raw_samples": "memory_samples.jsonl",
+    "training_log": "training.log",
+    "mindspore_profiler": "mindspore-profiler",
+    "profiler_memory": {
+      "mindspore_allocated_bytes": 10666004000,
+      "mindspore_active_bytes": 10703281000,
+      "mindspore_reserved_bytes": 11636736000,
+      "mindspore_ge_allocated_bytes": 10666004000,
+      "mindspore_ge_active_bytes": 10703281000,
+      "mindspore_ge_reserved_bytes": 11636736000,
+      "app_allocated_bytes": 0,
+      "app_active_bytes": 0,
+      "app_reserved_bytes": 14132256000
+    },
+    "measurement_schema": "p1.measurement-contract.v2"
+  },
+  "measured": {
+    "per_stage_peak_bytes": {
+      "0": 19678625792
+    },
+    "per_device": {
+      "0": {
+        "stage": 0,
+        "baseline_bytes": 3585081344,
+        "runtime_floor_bytes": 14413725696,
+        "peak_used_bytes": 23229104128,
+        "peak_delta_bytes": 19644022784,
+        "sample_count": 171
+      },
+      "1": {
+        "stage": 0,
+        "baseline_bytes": 3582984192,
+        "runtime_floor_bytes": 14447280128,
+        "peak_used_bytes": 23261609984,
+        "peak_delta_bytes": 19678625792,
+        "sample_count": 171
+      },
+      "2": {
+        "stage": 0,
+        "baseline_bytes": 3584032768,
+        "runtime_floor_bytes": 14362345472,
+        "peak_used_bytes": 18134073344,
+        "peak_delta_bytes": 14550040576,
+        "sample_count": 171
+      },
+      "3": {
+        "stage": 0,
+        "baseline_bytes": 3584032768,
+        "runtime_floor_bytes": 14481883136,
+        "peak_used_bytes": 18107858944,
+        "peak_delta_bytes": 14523826176,
+        "sample_count": 171
+      },
+      "4": {
+        "stage": 0,
+        "baseline_bytes": 3584032768,
+        "runtime_floor_bytes": 14447280128,
+        "peak_used_bytes": 18162384896,
+        "peak_delta_bytes": 14578352128,
+        "sample_count": 171
+      },
+      "5": {
+        "stage": 0,
+        "baseline_bytes": 3582984192,
+        "runtime_floor_bytes": 14492368896,
+        "peak_used_bytes": 18078498816,
+        "peak_delta_bytes": 14495514624,
+        "sample_count": 171
+      },
+      "6": {
+        "stage": 0,
+        "baseline_bytes": 3582984192,
+        "runtime_floor_bytes": 14424211456,
+        "peak_used_bytes": 18152947712,
+        "peak_delta_bytes": 14569963520,
+        "sample_count": 171
+      },
+      "7": {
+        "stage": 0,
+        "baseline_bytes": 3584032768,
+        "runtime_floor_bytes": 14460911616,
+        "peak_used_bytes": 18061721600,
+        "peak_delta_bytes": 14477688832,
+        "sample_count": 171
+      }
+    },
+    "idle_bytes": 14447280128,
+    "device_baseline_bytes": 3584032768,
+    "framework_reserve_bytes": 8975344792,
+    "hbm_components": {
+      "device_baseline_bytes": 3584032768,
+      "model_dynamic_peak_bytes": 10703281000,
+      "allocator_pool_peak_bytes": 11636736000,
+      "untracked_runtime_bytes": 8041889792,
+      "legacy_ambiguous_reserve_bytes": 8975344792
+    },
+    "oom": false
+  },
+  "measurement_quality": {
+    "schema": "p1.measurement-contract.v2",
+    "kind": "hbm",
+    "status": "valid",
+    "issues": [],
+    "per_rank_sample_counts": [
+      171,
+      171,
+      171,
+      171,
+      171,
+      171,
+      171,
+      171
+    ],
+    "peak_observability": "sufficient",
+    "label": "total_peak_used_bytes"
+  }
+}

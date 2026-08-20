@@ -1,0 +1,2033 @@
+{
+  "schema": "hbmprediction.current-hbm-baseline.v1",
+  "model_source_sha256": "900500886de8da20c4f4abcb56764254cacddfa469b272ec91ede3e0c52b6cae",
+  "evidence_source_commit": "fa9340cf8a208df50837b1a6269f19e750092ded",
+  "case_count": 25,
+  "diagnostic_count": 15,
+  "summary": {
+    "deepseek_v3": {
+      "active": {
+        "count": 14,
+        "mean_ape_pct": 17.652723967074976,
+        "max_ape_pct": 46.83472033694876,
+        "mean_signed_error_bytes": -1652926006
+      },
+      "dynamic": {
+        "count": 14,
+        "mean_ape_pct": 36.65641547672184,
+        "max_ape_pct": 59.97626458079617,
+        "mean_signed_error_bytes": -6866280374.857142
+      },
+      "legacy_total": {
+        "count": 14,
+        "mean_ape_pct": 23.99253921777044,
+        "max_ape_pct": 48.62092195843253,
+        "mean_signed_error_bytes": -5352451930.571428
+      }
+    },
+    "qwen3": {
+      "active": {
+        "count": 11,
+        "mean_ape_pct": 72.77029911142935,
+        "max_ape_pct": 80.67919246837346,
+        "mean_signed_error_bytes": -5377771893.454545
+      },
+      "dynamic": {
+        "count": 11,
+        "mean_ape_pct": 80.29431633816905,
+        "max_ape_pct": 85.26622346570723,
+        "mean_signed_error_bytes": -7770945349.818182
+      },
+      "legacy_total": {
+        "count": 11,
+        "mean_ape_pct": 67.75735923450169,
+        "max_ape_pct": 78.89797990972346,
+        "mean_signed_error_bytes": -8962042974.181818
+      }
+    },
+    "overall": {
+      "active": {
+        "count": 25,
+        "mean_ape_pct": 41.9044570305909,
+        "max_ape_pct": 80.67919246837346,
+        "mean_signed_error_bytes": -3291858196.48
+      },
+      "dynamic": {
+        "count": 25,
+        "mean_ape_pct": 55.85709185575862,
+        "max_ape_pct": 85.26622346570723,
+        "mean_signed_error_bytes": -7264332963.84
+      },
+      "legacy_total": {
+        "count": 25,
+        "mean_ape_pct": 43.24906002513219,
+        "max_ape_pct": 78.89797990972346,
+        "mean_signed_error_bytes": -6940671989.76
+      }
+    }
+  },
+  "cases": [
+    {
+      "name": "c12-qwen3-4l-tp2-dp4",
+      "family": "qwen3",
+      "split": "calibration",
+      "label_sha256": "0cb4f620b3094466b27d6208244aacf62972a605259301ead435e40e40dfc858",
+      "config_sha256": "3de57d1eece14dc8092d07e196c53ca255d3c6cb646be823eb8b1a6031b685de",
+      "collection_attempt_id": "20deb440149f4fe8a7df6477d5453afd",
+      "prediction": {
+        "raw_physical_active_bytes": 1317012480,
+        "legacy_reserve_bytes": 1666484776,
+        "legacy_total_bytes": 2983497256,
+        "tightest_stage": 0,
+        "peak_event": "loss_logits",
+        "per_stage": [
+          {
+            "stage": 0,
+            "peak_bytes": 1317012480,
+            "breakdown": {
+              "persistent": 137102336,
+              "act_live": 54657024,
+              "gather_buf": 66191360,
+              "grad_buf": 0,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 1059061760,
+              "framework": 0
+            },
+            "peak_event": "loss_logits",
+            "oom": false,
+            "bucket_peaks": {
+              "persistent": 137102336,
+              "act_live": 56762368,
+              "gather_buf": 66191360,
+              "grad_buf": 66191360,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 1059061760
+            }
+          }
+        ],
+        "warnings": []
+      },
+      "measured": {
+        "model_active_bytes": 3918231000,
+        "allocator_pool_bytes": 3926016000,
+        "untracked_runtime_bytes": 1658699776,
+        "dynamic_bytes": 5584715776,
+        "total_bytes": 9169797120
+      },
+      "active": {
+        "predicted_bytes": 1317012480,
+        "measured_bytes": 3918231000,
+        "signed_error_bytes": -2601218520,
+        "ape_pct": 66.38757439262768,
+        "ratio": 0.33612425607372304
+      },
+      "dynamic": {
+        "predicted_bytes": 1317012480,
+        "measured_bytes": 5584715776,
+        "signed_error_bytes": -4267703296,
+        "ape_pct": 76.41755582871761,
+        "ratio": 0.23582444171282388
+      },
+      "legacy_total": {
+        "predicted_bytes": 2983497256,
+        "measured_bytes": 9169797120,
+        "signed_error_bytes": -6186299864,
+        "ape_pct": 67.46386842634966,
+        "ratio": 0.32536131573650345
+      }
+    },
+    {
+      "name": "c14-deepseek3-16l-tp2-pp2-dp2-interleave2",
+      "family": "deepseek_v3",
+      "split": "calibration",
+      "label_sha256": "43808efcdd4c016802a0c3f09f2012e79f21c8f898b4ac80a3a9adae1d43242a",
+      "config_sha256": "c527ad40cde396f80c97ec2228f870ecccc4d9ab9b790f801a53ef8338d753ef",
+      "collection_attempt_id": "8cabc8eec29d410d808ae8d61e05edd4",
+      "prediction": {
+        "raw_physical_active_bytes": 11530516480,
+        "legacy_reserve_bytes": 3634014892,
+        "legacy_total_bytes": 15164531372,
+        "tightest_stage": 1,
+        "peak_event": "loss_logits",
+        "per_stage": [
+          {
+            "stage": 0,
+            "peak_bytes": 9286596608,
+            "breakdown": {
+              "persistent": 4216176640,
+              "act_live": 4104404992,
+              "gather_buf": 739770368,
+              "grad_buf": 226244608,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 0,
+              "framework": 0
+            },
+            "peak_event": "bwd_grad@7",
+            "oom": false,
+            "bucket_peaks": {
+              "persistent": 4216176640,
+              "act_live": 4104404992,
+              "gather_buf": 739770368,
+              "grad_buf": 463339520,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 117440512
+            }
+          },
+          {
+            "stage": 1,
+            "peak_bytes": 11530516480,
+            "breakdown": {
+              "persistent": 4546607104,
+              "act_live": 4402446336,
+              "gather_buf": 463339520,
+              "grad_buf": 0,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 2118123520,
+              "framework": 0
+            },
+            "peak_event": "loss_logits",
+            "oom": false,
+            "bucket_peaks": {
+              "persistent": 4546607104,
+              "act_live": 4431806464,
+              "gather_buf": 904978432,
+              "grad_buf": 463339520,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 2118123520
+            }
+          }
+        ],
+        "warnings": []
+      },
+      "measured": {
+        "model_active_bytes": 16411612500,
+        "allocator_pool_bytes": 17608704000,
+        "untracked_runtime_bytes": 2436923392,
+        "dynamic_bytes": 20045627392,
+        "total_bytes": 23629660160
+      },
+      "active": {
+        "predicted_bytes": 11530516480,
+        "measured_bytes": 16411612500,
+        "signed_error_bytes": -4881096020,
+        "ape_pct": 29.74172111363219,
+        "ratio": 0.7025827888636781
+      },
+      "dynamic": {
+        "predicted_bytes": 11530516480,
+        "measured_bytes": 20045627392,
+        "signed_error_bytes": -8515110912,
+        "ape_pct": 42.478645070487005,
+        "ratio": 0.57521354929513
+      },
+      "legacy_total": {
+        "predicted_bytes": 15164531372,
+        "measured_bytes": 23629660160,
+        "signed_error_bytes": -8465128788,
+        "ape_pct": 35.82416645301428,
+        "ratio": 0.6417583354698572
+      }
+    },
+    {
+      "name": "c15-deepseek3-16l-tp2-cp2-ep2",
+      "family": "deepseek_v3",
+      "split": "calibration",
+      "label_sha256": "ff0ac7746de9e57dd823742a4d8990a667985f4c9eac50e77e585793d401f16d",
+      "config_sha256": "351953bb82656304f4cf82ecdcabf83fcc523981cae9ff591b0c7d1d51a4e857",
+      "collection_attempt_id": "9835fcce135743f299d39ebe319f06c7",
+      "prediction": {
+        "raw_physical_active_bytes": 8951580672,
+        "legacy_reserve_bytes": 8975344792,
+        "legacy_total_bytes": 17926925464,
+        "tightest_stage": 0,
+        "peak_event": "loss_logits",
+        "per_stage": [
+          {
+            "stage": 0,
+            "peak_bytes": 8951580672,
+            "breakdown": {
+              "persistent": 3224061952,
+              "act_live": 4205117440,
+              "gather_buf": 463339520,
+              "grad_buf": 0,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 1059061760,
+              "framework": 0
+            },
+            "peak_event": "loss_logits",
+            "oom": false,
+            "bucket_peaks": {
+              "persistent": 3224061952,
+              "act_live": 4219805696,
+              "gather_buf": 463339520,
+              "grad_buf": 463339520,
+              "recomp_scratch": 309919744,
+              "swap_buf": 0,
+              "workspace": 1059061760
+            }
+          }
+        ],
+        "warnings": []
+      },
+      "measured": {
+        "model_active_bytes": 10703281000,
+        "allocator_pool_bytes": 11636736000,
+        "untracked_runtime_bytes": 8041889792,
+        "dynamic_bytes": 19678625792,
+        "total_bytes": 23261609984
+      },
+      "active": {
+        "predicted_bytes": 8951580672,
+        "measured_bytes": 10703281000,
+        "signed_error_bytes": -1751700328,
+        "ape_pct": 16.366012702086397,
+        "ratio": 0.836339872979136
+      },
+      "dynamic": {
+        "predicted_bytes": 8951580672,
+        "measured_bytes": 19678625792,
+        "signed_error_bytes": -10727045120,
+        "ape_pct": 54.511149474476476,
+        "ratio": 0.4548885052552353
+      },
+      "legacy_total": {
+        "predicted_bytes": 17926925464,
+        "measured_bytes": 23261609984,
+        "signed_error_bytes": -5334684520,
+        "ape_pct": 22.933427753579174,
+        "ratio": 0.7706657224642083
+      }
+    },
+    {
+      "name": "c16-deepseek3-20l-tp2-cp2-ep2",
+      "family": "deepseek_v3",
+      "split": "calibration",
+      "label_sha256": "ed2edcb3c15ccc4e843d019aec8856f2efe38c75cb82b50c42f5412e659f5608",
+      "config_sha256": "8711f2e0d2dfd49b169b66c200280c0bb36605e1fe881b800a5f5e4ae59f7d85",
+      "collection_attempt_id": "85393ddc2d5d46c596c4b2062095ee0f",
+      "prediction": {
+        "raw_physical_active_bytes": 10773276672,
+        "legacy_reserve_bytes": 5940956160,
+        "legacy_total_bytes": 16714232832,
+        "tightest_stage": 0,
+        "peak_event": "loss_logits",
+        "per_stage": [
+          {
+            "stage": 0,
+            "peak_bytes": 10773276672,
+            "breakdown": {
+              "persistent": 3776718848,
+              "act_live": 5474156544,
+              "gather_buf": 463339520,
+              "grad_buf": 0,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 1059061760,
+              "framework": 0
+            },
+            "peak_event": "loss_logits",
+            "oom": false,
+            "bucket_peaks": {
+              "persistent": 3776718848,
+              "act_live": 5488844800,
+              "gather_buf": 463339520,
+              "grad_buf": 463339520,
+              "recomp_scratch": 309919744,
+              "swap_buf": 0,
+              "workspace": 1059061760
+            }
+          }
+        ],
+        "warnings": []
+      },
+      "measured": {
+        "model_active_bytes": 12052608000,
+        "allocator_pool_bytes": 12996608000,
+        "untracked_runtime_bytes": 4996956160,
+        "dynamic_bytes": 17993564160,
+        "total_bytes": 21576548352
+      },
+      "active": {
+        "predicted_bytes": 10773276672,
+        "measured_bytes": 12052608000,
+        "signed_error_bytes": -1279331328,
+        "ape_pct": 10.614560168222512,
+        "ratio": 0.8938543983177749
+      },
+      "dynamic": {
+        "predicted_bytes": 10773276672,
+        "measured_bytes": 17993564160,
+        "signed_error_bytes": -7220287488,
+        "ape_pct": 40.12705556162587,
+        "ratio": 0.5987294443837412
+      },
+      "legacy_total": {
+        "predicted_bytes": 16714232832,
+        "measured_bytes": 21576548352,
+        "signed_error_bytes": -4862315520,
+        "ape_pct": 22.535187003389705,
+        "ratio": 0.7746481299661029
+      }
+    },
+    {
+      "name": "c17-qwen3-6l-dp8",
+      "family": "qwen3",
+      "split": "calibration",
+      "label_sha256": "5a4d5db1e9b9adaa23a4481d0b47eca81c33d8af93c3b746e436965d9c21b85c",
+      "config_sha256": "2d319f00c5153b543b8cd981fe14943b4900de92b2bd5a82d7e2ae1278e79eec",
+      "collection_attempt_id": "37759bd3852243dbb7fcb32f8b8dab8a",
+      "prediction": {
+        "raw_physical_active_bytes": 1494876672,
+        "legacy_reserve_bytes": 1133819460,
+        "legacy_total_bytes": 2628696132,
+        "tightest_stage": 0,
+        "peak_event": "loss_logits",
+        "per_stage": [
+          {
+            "stage": 0,
+            "peak_bytes": 1494876672,
+            "breakdown": {
+              "persistent": 139461120,
+              "act_live": 163971072,
+              "gather_buf": 132382720,
+              "grad_buf": 0,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 1059061760,
+              "framework": 0
+            },
+            "peak_event": "loss_logits",
+            "oom": false,
+            "bucket_peaks": {
+              "persistent": 139461120,
+              "act_live": 168181760,
+              "gather_buf": 132382720,
+              "grad_buf": 132382720,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 1059061760
+            }
+          }
+        ],
+        "warnings": []
+      },
+      "measured": {
+        "model_active_bytes": 7737133500,
+        "allocator_pool_bytes": 7745536000,
+        "untracked_runtime_bytes": 1125416960,
+        "dynamic_bytes": 8870952960,
+        "total_bytes": 12457082880
+      },
+      "active": {
+        "predicted_bytes": 1494876672,
+        "measured_bytes": 7737133500,
+        "signed_error_bytes": -6242256828,
+        "ape_pct": 80.67919246837346,
+        "ratio": 0.19320807531626538
+      },
+      "dynamic": {
+        "predicted_bytes": 1494876672,
+        "measured_bytes": 8870952960,
+        "signed_error_bytes": -7376076288,
+        "ape_pct": 83.14863489029256,
+        "ratio": 0.16851365109707447
+      },
+      "legacy_total": {
+        "predicted_bytes": 2628696132,
+        "measured_bytes": 12457082880,
+        "signed_error_bytes": -9828386748,
+        "ape_pct": 78.89797990972346,
+        "ratio": 0.21102020090276544
+      }
+    },
+    {
+      "name": "c18-qwen3-10l-dp8",
+      "family": "qwen3",
+      "split": "calibration",
+      "label_sha256": "2c55a71e060f1b85aa446f7dcb87f2b8a93ef71172abc3cfd98f021e4af487b5",
+      "config_sha256": "e6cde7653c5123e8527b2ba7c03c1a2435dc9ecbf18a7c30a1e2d3c63410cb01",
+      "collection_attempt_id": "5cc01201f6324075b20086b08e062569",
+      "prediction": {
+        "raw_physical_active_bytes": 1608909312,
+        "legacy_reserve_bytes": 3011498964,
+        "legacy_total_bytes": 4620408276,
+        "tightest_stage": 0,
+        "peak_event": "loss_logits",
+        "per_stage": [
+          {
+            "stage": 0,
+            "peak_bytes": 1608909312,
+            "breakdown": {
+              "persistent": 144179712,
+              "act_live": 273285120,
+              "gather_buf": 132382720,
+              "grad_buf": 0,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 1059061760,
+              "framework": 0
+            },
+            "peak_event": "loss_logits",
+            "oom": false,
+            "bucket_peaks": {
+              "persistent": 144179712,
+              "act_live": 277495808,
+              "gather_buf": 132382720,
+              "grad_buf": 132382720,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 1059061760
+            }
+          }
+        ],
+        "warnings": []
+      },
+      "measured": {
+        "model_active_bytes": 7908371500,
+        "allocator_pool_bytes": 7917568000,
+        "untracked_runtime_bytes": 3002302464,
+        "dynamic_bytes": 10919870464,
+        "total_bytes": 14502854656
+      },
+      "active": {
+        "predicted_bytes": 1608909312,
+        "measured_bytes": 7908371500,
+        "signed_error_bytes": -6299462188,
+        "ape_pct": 79.65561794865098,
+        "ratio": 0.20344382051349005
+      },
+      "dynamic": {
+        "predicted_bytes": 1608909312,
+        "measured_bytes": 10919870464,
+        "signed_error_bytes": -9310961152,
+        "ape_pct": 85.26622346570723,
+        "ratio": 0.14733776534292778
+      },
+      "legacy_total": {
+        "predicted_bytes": 4620408276,
+        "measured_bytes": 14502854656,
+        "signed_error_bytes": -9882446380,
+        "ape_pct": 68.14138743307005,
+        "ratio": 0.3185861256692994
+      }
+    },
+    {
+      "name": "c19-deepseek3-28l-tp2-cp2-ep2",
+      "family": "deepseek_v3",
+      "split": "calibration",
+      "label_sha256": "2e4602df3d864bbc94559a71a74aeda5a6b2d5192e7ad4131ce6389fc2066764",
+      "config_sha256": "66ee685845f4ea9eb68756f3cd69db1fc11c2c9cc4183c00c53d08f20e7afe8b",
+      "collection_attempt_id": "61cc67c1f0714e1494480d23bc91fad6",
+      "prediction": {
+        "raw_physical_active_bytes": 14416668672,
+        "legacy_reserve_bytes": 4090864296,
+        "legacy_total_bytes": 18507532968,
+        "tightest_stage": 0,
+        "peak_event": "loss_logits",
+        "per_stage": [
+          {
+            "stage": 0,
+            "peak_bytes": 14416668672,
+            "breakdown": {
+              "persistent": 4882032640,
+              "act_live": 8012234752,
+              "gather_buf": 463339520,
+              "grad_buf": 0,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 1059061760,
+              "framework": 0
+            },
+            "peak_event": "loss_logits",
+            "oom": false,
+            "bucket_peaks": {
+              "persistent": 4882032640,
+              "act_live": 8026923008,
+              "gather_buf": 463339520,
+              "grad_buf": 463339520,
+              "recomp_scratch": 309919744,
+              "swap_buf": 0,
+              "workspace": 1059061760
+            }
+          }
+        ],
+        "warnings": []
+      },
+      "measured": {
+        "model_active_bytes": 14884167000,
+        "allocator_pool_bytes": 15896576000,
+        "untracked_runtime_bytes": 3078455296,
+        "dynamic_bytes": 18975031296,
+        "total_bytes": 22558015488
+      },
+      "active": {
+        "predicted_bytes": 14416668672,
+        "measured_bytes": 14884167000,
+        "signed_error_bytes": -467498328,
+        "ape_pct": 3.140910257188058,
+        "ratio": 0.9685908974281194
+      },
+      "dynamic": {
+        "predicted_bytes": 14416668672,
+        "measured_bytes": 18975031296,
+        "signed_error_bytes": -4558362624,
+        "ape_pct": 24.02295180910146,
+        "ratio": 0.7597704819089854
+      },
+      "legacy_total": {
+        "predicted_bytes": 18507532968,
+        "measured_bytes": 22558015488,
+        "signed_error_bytes": -4050482520,
+        "ape_pct": 17.955845992546205,
+        "ratio": 0.820441540074538
+      }
+    },
+    {
+      "name": "c21-qwen3-26l-dp8",
+      "family": "qwen3",
+      "split": "calibration",
+      "label_sha256": "d574e700c1861c8b45d0fc146fd3682a35992502583da46f5a420fa6e7881999",
+      "config_sha256": "a69f028212737fa2f17d4241698181f49e142cca4f211ae29e9b0fa8a5e9ad4c",
+      "collection_attempt_id": "9d0fb1304941488299f0ddef10e9a08a",
+      "prediction": {
+        "raw_physical_active_bytes": 2065039872,
+        "legacy_reserve_bytes": 3029092884,
+        "legacy_total_bytes": 5094132756,
+        "tightest_stage": 0,
+        "peak_event": "loss_logits",
+        "per_stage": [
+          {
+            "stage": 0,
+            "peak_bytes": 2065039872,
+            "breakdown": {
+              "persistent": 163054080,
+              "act_live": 710541312,
+              "gather_buf": 132382720,
+              "grad_buf": 0,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 1059061760,
+              "framework": 0
+            },
+            "peak_event": "loss_logits",
+            "oom": false,
+            "bucket_peaks": {
+              "persistent": 163054080,
+              "act_live": 714752000,
+              "gather_buf": 132382720,
+              "grad_buf": 132382720,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 1059061760
+            }
+          }
+        ],
+        "warnings": []
+      },
+      "measured": {
+        "model_active_bytes": 8593323500,
+        "allocator_pool_bytes": 8603648000,
+        "untracked_runtime_bytes": 3018768384,
+        "dynamic_bytes": 11622416384,
+        "total_bytes": 15206449152
+      },
+      "active": {
+        "predicted_bytes": 2065039872,
+        "measured_bytes": 8593323500,
+        "signed_error_bytes": -6528283628,
+        "ape_pct": 75.96925250166598,
+        "ratio": 0.24030747498334026
+      },
+      "dynamic": {
+        "predicted_bytes": 2065039872,
+        "measured_bytes": 11622416384,
+        "signed_error_bytes": -9557376512,
+        "ape_pct": 82.23226733777291,
+        "ratio": 0.17767732662227084
+      },
+      "legacy_total": {
+        "predicted_bytes": 5094132756,
+        "measured_bytes": 15206449152,
+        "signed_error_bytes": -10112316396,
+        "ape_pct": 66.50018222478978,
+        "ratio": 0.3349981777521022
+      }
+    },
+    {
+      "name": "c22-deepseek3-30l-tp2-cp2-ep2",
+      "family": "deepseek_v3",
+      "split": "calibration",
+      "label_sha256": "441287265f0e6b585b443f45d84699382c0846617cb342b0250c231a92a8cedf",
+      "config_sha256": "c890c0e8f116df5f660d980c3b173e62ef2de1ec8330522b201a96cff91b1c9c",
+      "collection_attempt_id": "d3e2f8bfa70f4bf09f74d4c4fc25b021",
+      "prediction": {
+        "raw_physical_active_bytes": 15327516672,
+        "legacy_reserve_bytes": 5065558648,
+        "legacy_total_bytes": 20393075320,
+        "tightest_stage": 0,
+        "peak_event": "loss_logits",
+        "per_stage": [
+          {
+            "stage": 0,
+            "peak_bytes": 15327516672,
+            "breakdown": {
+              "persistent": 5158361088,
+              "act_live": 8646754304,
+              "gather_buf": 463339520,
+              "grad_buf": 0,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 1059061760,
+              "framework": 0
+            },
+            "peak_event": "loss_logits",
+            "oom": false,
+            "bucket_peaks": {
+              "persistent": 5158361088,
+              "act_live": 8661442560,
+              "gather_buf": 463339520,
+              "grad_buf": 463339520,
+              "recomp_scratch": 309919744,
+              "swap_buf": 0,
+              "workspace": 1059061760
+            }
+          }
+        ],
+        "warnings": []
+      },
+      "measured": {
+        "model_active_bytes": 15563077000,
+        "allocator_pool_bytes": 16551936000,
+        "untracked_runtime_bytes": 4076699648,
+        "dynamic_bytes": 20628635648,
+        "total_bytes": 24212668416
+      },
+      "active": {
+        "predicted_bytes": 15327516672,
+        "measured_bytes": 15563077000,
+        "signed_error_bytes": -235560328,
+        "ape_pct": 1.513584543724869,
+        "ratio": 0.9848641545627513
+      },
+      "dynamic": {
+        "predicted_bytes": 15327516672,
+        "measured_bytes": 20628635648,
+        "signed_error_bytes": -5301118976,
+        "ape_pct": 25.697865173715247,
+        "ratio": 0.7430213482628476
+      },
+      "legacy_total": {
+        "predicted_bytes": 20393075320,
+        "measured_bytes": 24212668416,
+        "signed_error_bytes": -3819593096,
+        "ape_pct": 15.775184421540134,
+        "ratio": 0.8422481557845987
+      }
+    },
+    {
+      "name": "c23-qwen3-30l-dp8",
+      "family": "qwen3",
+      "split": "calibration",
+      "label_sha256": "2aabb33c3147399be307cf8615170c88237771aa90e1300068d61eeb1d8d64f5",
+      "config_sha256": "2bb45636b2d9aa096d0d69ce98fb448f87caea19c412040ea80aefb200167cf5",
+      "collection_attempt_id": "706e78cf6d374142bf0eeeee2d81be6f",
+      "prediction": {
+        "raw_physical_active_bytes": 2179072512,
+        "legacy_reserve_bytes": 3033491364,
+        "legacy_total_bytes": 5212563876,
+        "tightest_stage": 0,
+        "peak_event": "loss_logits",
+        "per_stage": [
+          {
+            "stage": 0,
+            "peak_bytes": 2179072512,
+            "breakdown": {
+              "persistent": 167772672,
+              "act_live": 819855360,
+              "gather_buf": 132382720,
+              "grad_buf": 0,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 1059061760,
+              "framework": 0
+            },
+            "peak_event": "loss_logits",
+            "oom": false,
+            "bucket_peaks": {
+              "persistent": 167772672,
+              "act_live": 824066048,
+              "gather_buf": 132382720,
+              "grad_buf": 132382720,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 1059061760
+            }
+          }
+        ],
+        "warnings": []
+      },
+      "measured": {
+        "model_active_bytes": 8764561500,
+        "allocator_pool_bytes": 8775680000,
+        "untracked_runtime_bytes": 3022372864,
+        "dynamic_bytes": 11798052864,
+        "total_bytes": 15382609920
+      },
+      "active": {
+        "predicted_bytes": 2179072512,
+        "measured_bytes": 8764561500,
+        "signed_error_bytes": -6585488988,
+        "ape_pct": 75.1376892956938,
+        "ratio": 0.248623107043062
+      },
+      "dynamic": {
+        "predicted_bytes": 2179072512,
+        "measured_bytes": 11798052864,
+        "signed_error_bytes": -9618980352,
+        "ape_pct": 81.53023607269031,
+        "ratio": 0.18469763927309693
+      },
+      "legacy_total": {
+        "predicted_bytes": 5212563876,
+        "measured_bytes": 15382609920,
+        "signed_error_bytes": -10170046044,
+        "ape_pct": 66.11391757894879,
+        "ratio": 0.3388608242105121
+      }
+    },
+    {
+      "name": "c24-deepseek3-34l-tp2-cp2-ep2",
+      "family": "deepseek_v3",
+      "split": "calibration",
+      "label_sha256": "9834262c126d91f21ab54fc5a94664464022b9194f967fdb59dba64c0750c146",
+      "config_sha256": "f6d02da1e7a03dcb05e92d7c8e010573ee048688e932fa772bee69e8c4edc5c8",
+      "collection_attempt_id": "2c7f5823d6ab4c96aa5fabe6b4abf4e9",
+      "prediction": {
+        "raw_physical_active_bytes": 17149212672,
+        "legacy_reserve_bytes": 9178117512,
+        "legacy_total_bytes": 26327330184,
+        "tightest_stage": 0,
+        "peak_event": "loss_logits",
+        "per_stage": [
+          {
+            "stage": 0,
+            "peak_bytes": 17149212672,
+            "breakdown": {
+              "persistent": 5711017984,
+              "act_live": 9915793408,
+              "gather_buf": 463339520,
+              "grad_buf": 0,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 1059061760,
+              "framework": 0
+            },
+            "peak_event": "loss_logits",
+            "oom": false,
+            "bucket_peaks": {
+              "persistent": 5711017984,
+              "act_live": 9930481664,
+              "gather_buf": 463339520,
+              "grad_buf": 463339520,
+              "recomp_scratch": 309919744,
+              "swap_buf": 0,
+              "workspace": 1059061760
+            }
+          }
+        ],
+        "warnings": []
+      },
+      "measured": {
+        "model_active_bytes": 17153723000,
+        "allocator_pool_bytes": 18067456000,
+        "untracked_runtime_bytes": 8264384512,
+        "dynamic_bytes": 26331840512,
+        "total_bytes": 31536971776
+      },
+      "active": {
+        "predicted_bytes": 17149212672,
+        "measured_bytes": 17153723000,
+        "signed_error_bytes": -4510328,
+        "ape_pct": 0.026293580699653363,
+        "ratio": 0.9997370641930035
+      },
+      "dynamic": {
+        "predicted_bytes": 17149212672,
+        "measured_bytes": 26331840512,
+        "signed_error_bytes": -9182627840,
+        "ape_pct": 34.87271554685012,
+        "ratio": 0.6512728445314989
+      },
+      "legacy_total": {
+        "predicted_bytes": 26327330184,
+        "measured_bytes": 31536971776,
+        "signed_error_bytes": -5209641592,
+        "ape_pct": 16.51915608449318,
+        "ratio": 0.8348084391550682
+      }
+    },
+    {
+      "name": "c25-qwen3-34l-dp8",
+      "family": "qwen3",
+      "split": "calibration",
+      "label_sha256": "510be6374b45da3c717274fad7254cb11c4506f8518eeff37e79a85a8b284646",
+      "config_sha256": "ad40dc9a324fd8285fb609e2d7bc533afb9195990fd6f2f16d991a6d135795ba",
+      "collection_attempt_id": "162541b98070492ba56ead9dc4521fac",
+      "prediction": {
+        "raw_physical_active_bytes": 2293105152,
+        "legacy_reserve_bytes": 3041035572,
+        "legacy_total_bytes": 5334140724,
+        "tightest_stage": 0,
+        "peak_event": "loss_logits",
+        "per_stage": [
+          {
+            "stage": 0,
+            "peak_bytes": 2293105152,
+            "breakdown": {
+              "persistent": 172491264,
+              "act_live": 929169408,
+              "gather_buf": 132382720,
+              "grad_buf": 0,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 1059061760,
+              "framework": 0
+            },
+            "peak_event": "loss_logits",
+            "oom": false,
+            "bucket_peaks": {
+              "persistent": 172491264,
+              "act_live": 933380096,
+              "gather_buf": 132382720,
+              "grad_buf": 132382720,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 1059061760
+            }
+          }
+        ],
+        "warnings": []
+      },
+      "measured": {
+        "model_active_bytes": 8935799500,
+        "allocator_pool_bytes": 8945664000,
+        "untracked_runtime_bytes": 3031171072,
+        "dynamic_bytes": 11976835072,
+        "total_bytes": 15559819264
+      },
+      "active": {
+        "predicted_bytes": 2293105152,
+        "measured_bytes": 8935799500,
+        "signed_error_bytes": -6642694348,
+        "ape_pct": 74.33799681830372,
+        "ratio": 0.25662003181696275
+      },
+      "dynamic": {
+        "predicted_bytes": 2293105152,
+        "measured_bytes": 11976835072,
+        "signed_error_bytes": -9683729920,
+        "ape_pct": 80.85383043003634,
+        "ratio": 0.19146169569963667
+      },
+      "legacy_total": {
+        "predicted_bytes": 5334140724,
+        "measured_bytes": 15559819264,
+        "signed_error_bytes": -10225678540,
+        "ape_pct": 65.71849175432685,
+        "ratio": 0.34281508245673153
+      }
+    },
+    {
+      "name": "c26-deepseek3-36l-tp2-cp2-ep2",
+      "family": "deepseek_v3",
+      "split": "calibration",
+      "label_sha256": "34b2fa62d20d1a6536ddf644ce586eb2833232d32b5493d1b972d2b3673096d1",
+      "config_sha256": "b0f4b8248f215fdaf1d7c9386704dd963f804c5938e52e8cbef1a277857194d6",
+      "collection_attempt_id": "a6a5db970bc54c4e9cbd1ad69ee425ee",
+      "prediction": {
+        "raw_physical_active_bytes": 18060060672,
+        "legacy_reserve_bytes": 4031389672,
+        "legacy_total_bytes": 22091450344,
+        "tightest_stage": 0,
+        "peak_event": "loss_logits",
+        "per_stage": [
+          {
+            "stage": 0,
+            "peak_bytes": 18060060672,
+            "breakdown": {
+              "persistent": 5987346432,
+              "act_live": 10550312960,
+              "gather_buf": 463339520,
+              "grad_buf": 0,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 1059061760,
+              "framework": 0
+            },
+            "peak_event": "loss_logits",
+            "oom": false,
+            "bucket_peaks": {
+              "persistent": 5987346432,
+              "act_live": 10565001216,
+              "gather_buf": 463339520,
+              "grad_buf": 463339520,
+              "recomp_scratch": 309919744,
+              "swap_buf": 0,
+              "workspace": 1059061760
+            }
+          }
+        ],
+        "warnings": []
+      },
+      "measured": {
+        "model_active_bytes": 17880703000,
+        "allocator_pool_bytes": 18724864000,
+        "untracked_runtime_bytes": 3187228672,
+        "dynamic_bytes": 21912092672,
+        "total_bytes": 25495076864
+      },
+      "active": {
+        "predicted_bytes": 18060060672,
+        "measured_bytes": 17880703000,
+        "signed_error_bytes": 179357672,
+        "ape_pct": 1.0030795321638082,
+        "ratio": 1.010030795321638
+      },
+      "dynamic": {
+        "predicted_bytes": 18060060672,
+        "measured_bytes": 21912092672,
+        "signed_error_bytes": -3852032000,
+        "ape_pct": 17.57948023340671,
+        "ratio": 0.8242051976659329
+      },
+      "legacy_total": {
+        "predicted_bytes": 22091450344,
+        "measured_bytes": 25495076864,
+        "signed_error_bytes": -3403626520,
+        "ape_pct": 13.350132412450371,
+        "ratio": 0.8664986758754962
+      }
+    },
+    {
+      "name": "c27-deepseek3-24l-tp2-pp2-dp2-interleave2",
+      "family": "deepseek_v3",
+      "split": "calibration",
+      "label_sha256": "0debbd776475cef71d8e8cca3998cc95e222ce5cdc11e3c0200c7eb66f833c53",
+      "config_sha256": "765dd9431397c083011e0cc954f11f20bc4f55096280d33f9da96ea08a66a647",
+      "collection_attempt_id": "d1da63fdfbba409aaf107fc556bd559a",
+      "prediction": {
+        "raw_physical_active_bytes": 15541696512,
+        "legacy_reserve_bytes": 3797018588,
+        "legacy_total_bytes": 19338715100,
+        "tightest_stage": 1,
+        "peak_event": "loss_logits",
+        "per_stage": [
+          {
+            "stage": 0,
+            "peak_bytes": 13750265856,
+            "breakdown": {
+              "persistent": 6026133504,
+              "act_live": 6305628160,
+              "gather_buf": 1192259584,
+              "grad_buf": 226244608,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 0,
+              "framework": 0
+            },
+            "peak_event": "bwd_grad@11",
+            "oom": false,
+            "bucket_peaks": {
+              "persistent": 6026133504,
+              "act_live": 6305628160,
+              "gather_buf": 1192259584,
+              "grad_buf": 463339520,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 117440512
+            }
+          },
+          {
+            "stage": 1,
+            "peak_bytes": 15541696512,
+            "breakdown": {
+              "persistent": 6356563968,
+              "act_live": 6603669504,
+              "gather_buf": 463339520,
+              "grad_buf": 0,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 2118123520,
+              "framework": 0
+            },
+            "peak_event": "loss_logits",
+            "oom": false,
+            "bucket_peaks": {
+              "persistent": 6356563968,
+              "act_live": 6633029632,
+              "gather_buf": 1357467648,
+              "grad_buf": 463339520,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 2118123520
+            }
+          }
+        ],
+        "warnings": []
+      },
+      "measured": {
+        "model_active_bytes": 20438718500,
+        "allocator_pool_bytes": 21698560000,
+        "untracked_runtime_bytes": 2537177088,
+        "dynamic_bytes": 24235737088,
+        "total_bytes": 27819769856
+      },
+      "active": {
+        "predicted_bytes": 15541696512,
+        "measured_bytes": 20438718500,
+        "signed_error_bytes": -4897021988,
+        "ape_pct": 23.95953536910839,
+        "ratio": 0.7604046463089161
+      },
+      "dynamic": {
+        "predicted_bytes": 15541696512,
+        "measured_bytes": 24235737088,
+        "signed_error_bytes": -8694040576,
+        "ape_pct": 35.872812716328475,
+        "ratio": 0.6412718728367153
+      },
+      "legacy_total": {
+        "predicted_bytes": 19338715100,
+        "measured_bytes": 27819769856,
+        "signed_error_bytes": -8481054756,
+        "ape_pct": 30.48571141997013,
+        "ratio": 0.6951428858002987
+      }
+    },
+    {
+      "name": "c28-qwen3-10l-tp4-dp2",
+      "family": "qwen3",
+      "split": "calibration",
+      "label_sha256": "b879c46abe9cc4a7212bbf92a5fb8fe909ad1333013ce0ab936e16e59e6e6f10",
+      "config_sha256": "1f46fcb43a105b4f25a2e8ac351c6ba95c30eb8538fd6a445a57507eb42201d0",
+      "collection_attempt_id": "be84b2fb4b65427fb30343bfb76aeecd",
+      "prediction": {
+        "raw_physical_active_bytes": 775129088,
+        "legacy_reserve_bytes": 1631153068,
+        "legacy_total_bytes": 2406282156,
+        "tightest_stage": 0,
+        "peak_event": "loss_logits",
+        "per_stage": [
+          {
+            "stage": 0,
+            "peak_bytes": 775129088,
+            "breakdown": {
+              "persistent": 144181248,
+              "act_live": 68321280,
+              "gather_buf": 33095680,
+              "grad_buf": 0,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 529530880,
+              "framework": 0
+            },
+            "peak_event": "loss_logits",
+            "oom": false,
+            "bucket_peaks": {
+              "persistent": 144181248,
+              "act_live": 69373952,
+              "gather_buf": 33095680,
+              "grad_buf": 33095680,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 529530880
+            }
+          }
+        ],
+        "warnings": []
+      },
+      "measured": {
+        "model_active_bytes": 2136380500,
+        "allocator_pool_bytes": 2144256000,
+        "untracked_runtime_bytes": 1623277568,
+        "dynamic_bytes": 3767533568,
+        "total_bytes": 7352614912
+      },
+      "active": {
+        "predicted_bytes": 775129088,
+        "measured_bytes": 2136380500,
+        "signed_error_bytes": -1361251412,
+        "ape_pct": 63.717648237287314,
+        "ratio": 0.36282351762712683
+      },
+      "dynamic": {
+        "predicted_bytes": 775129088,
+        "measured_bytes": 3767533568,
+        "signed_error_bytes": -2992404480,
+        "ape_pct": 79.42608674853882,
+        "ratio": 0.20573913251461173
+      },
+      "legacy_total": {
+        "predicted_bytes": 2406282156,
+        "measured_bytes": 7352614912,
+        "signed_error_bytes": -4946332756,
+        "ape_pct": 67.27311052190734,
+        "ratio": 0.32726889478092663
+      }
+    },
+    {
+      "name": "c29-qwen3-38l-dp8",
+      "family": "qwen3",
+      "split": "calibration",
+      "label_sha256": "1dc83b24cfb99ad1d69f73b3d210b41bcbb1831beb5f4d1b411de6d3d21534c1",
+      "config_sha256": "4b5550af82ee89902bcea4177e2b28cf98154abe0b68b1a262c9bc577dc34c15",
+      "collection_attempt_id": "99f8fad9aa8844b4a3e378e65af8d14c",
+      "prediction": {
+        "raw_physical_active_bytes": 2407137792,
+        "legacy_reserve_bytes": 3043861188,
+        "legacy_total_bytes": 5450998980,
+        "tightest_stage": 0,
+        "peak_event": "loss_logits",
+        "per_stage": [
+          {
+            "stage": 0,
+            "peak_bytes": 2407137792,
+            "breakdown": {
+              "persistent": 177209856,
+              "act_live": 1038483456,
+              "gather_buf": 132382720,
+              "grad_buf": 0,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 1059061760,
+              "framework": 0
+            },
+            "peak_event": "loss_logits",
+            "oom": false,
+            "bucket_peaks": {
+              "persistent": 177209856,
+              "act_live": 1042694144,
+              "gather_buf": 132382720,
+              "grad_buf": 132382720,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 1059061760
+            }
+          }
+        ],
+        "warnings": []
+      },
+      "measured": {
+        "model_active_bytes": 9107037500,
+        "allocator_pool_bytes": 9117696000,
+        "untracked_runtime_bytes": 3033202688,
+        "dynamic_bytes": 12150898688,
+        "total_bytes": 15734931456
+      },
+      "active": {
+        "predicted_bytes": 2407137792,
+        "measured_bytes": 9107037500,
+        "signed_error_bytes": -6699899708,
+        "ape_pct": 73.56837729063925,
+        "ratio": 0.2643162270936076
+      },
+      "dynamic": {
+        "predicted_bytes": 2407137792,
+        "measured_bytes": 12150898688,
+        "signed_error_bytes": -9743760896,
+        "ape_pct": 80.18963161648904,
+        "ratio": 0.1981036838351096
+      },
+      "legacy_total": {
+        "predicted_bytes": 5450998980,
+        "measured_bytes": 15734931456,
+        "signed_error_bytes": -10283932476,
+        "ape_pct": 65.35733889122574,
+        "ratio": 0.34642661108774264
+      }
+    },
+    {
+      "name": "c30-deepseek3-38l-tp2-cp2-ep2",
+      "family": "deepseek_v3",
+      "split": "calibration",
+      "label_sha256": "13c3a82504ec4cbda1d4e4ca7bc14963916a1dd18b4f45782f9ee5e60e1a70ec",
+      "config_sha256": "f23ed33c55da1d7c94d4afc63841dc83b95c9585b9c0c4b39259d17574f1dff2",
+      "collection_attempt_id": "d1282dc18ae747018515e3b053046539",
+      "prediction": {
+        "raw_physical_active_bytes": 18970908672,
+        "legacy_reserve_bytes": 4046284256,
+        "legacy_total_bytes": 23017192928,
+        "tightest_stage": 0,
+        "peak_event": "loss_logits",
+        "per_stage": [
+          {
+            "stage": 0,
+            "peak_bytes": 18970908672,
+            "breakdown": {
+              "persistent": 6263674880,
+              "act_live": 11184832512,
+              "gather_buf": 463339520,
+              "grad_buf": 0,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 1059061760,
+              "framework": 0
+            },
+            "peak_event": "loss_logits",
+            "oom": false,
+            "bucket_peaks": {
+              "persistent": 6263674880,
+              "act_live": 11199520768,
+              "gather_buf": 463339520,
+              "grad_buf": 463339520,
+              "recomp_scratch": 309919744,
+              "swap_buf": 0,
+              "workspace": 1059061760
+            }
+          }
+        ],
+        "warnings": []
+      },
+      "measured": {
+        "model_active_bytes": 18556820000,
+        "allocator_pool_bytes": 19380224000,
+        "untracked_runtime_bytes": 3222880256,
+        "dynamic_bytes": 22603104256,
+        "total_bytes": 26188185600
+      },
+      "active": {
+        "predicted_bytes": 18970908672,
+        "measured_bytes": 18556820000,
+        "signed_error_bytes": 414088672,
+        "ape_pct": 2.2314635373948772,
+        "ratio": 1.0223146353739487
+      },
+      "dynamic": {
+        "predicted_bytes": 18970908672,
+        "measured_bytes": 22603104256,
+        "signed_error_bytes": -3632195584,
+        "ape_pct": 16.06945463270087,
+        "ratio": 0.8393054536729913
+      },
+      "legacy_total": {
+        "predicted_bytes": 23017192928,
+        "measured_bytes": 26188185600,
+        "signed_error_bytes": -3170992672,
+        "ape_pct": 12.108485560756069,
+        "ratio": 0.8789151443924393
+      }
+    },
+    {
+      "name": "c31-qwen3-42l-dp8",
+      "family": "qwen3",
+      "split": "calibration",
+      "label_sha256": "a05c30e4966941100dd59fc3cb0e1460bed0b0e0d83b52427073a657abc02ca1",
+      "config_sha256": "243c11f195a4471e5de381a54a54b463a5f12b16a8d016d5d56c5183610011aa",
+      "collection_attempt_id": "2fd413a91695438a9f1478c14de654e3",
+      "prediction": {
+        "raw_physical_active_bytes": 2521170432,
+        "legacy_reserve_bytes": 957923412,
+        "legacy_total_bytes": 3479093844,
+        "tightest_stage": 0,
+        "peak_event": "loss_logits",
+        "per_stage": [
+          {
+            "stage": 0,
+            "peak_bytes": 2521170432,
+            "breakdown": {
+              "persistent": 181928448,
+              "act_live": 1147797504,
+              "gather_buf": 132382720,
+              "grad_buf": 0,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 1059061760,
+              "framework": 0
+            },
+            "peak_event": "loss_logits",
+            "oom": false,
+            "bucket_peaks": {
+              "persistent": 181928448,
+              "act_live": 1152008192,
+              "gather_buf": 132382720,
+              "grad_buf": 132382720,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 1059061760
+            }
+          }
+        ],
+        "warnings": []
+      },
+      "measured": {
+        "model_active_bytes": 9278275500,
+        "allocator_pool_bytes": 9289728000,
+        "untracked_runtime_bytes": 946470912,
+        "dynamic_bytes": 10236198912,
+        "total_bytes": 13821280256
+      },
+      "active": {
+        "predicted_bytes": 2521170432,
+        "measured_bytes": 9278275500,
+        "signed_error_bytes": -6757105068,
+        "ape_pct": 72.82716565163429,
+        "ratio": 0.27172834348365704
+      },
+      "dynamic": {
+        "predicted_bytes": 2521170432,
+        "measured_bytes": 10236198912,
+        "signed_error_bytes": -7715028480,
+        "ape_pct": 75.37005236343731,
+        "ratio": 0.2462994763656269
+      },
+      "legacy_total": {
+        "predicted_bytes": 3479093844,
+        "measured_bytes": 13821280256,
+        "signed_error_bytes": -10342186412,
+        "ape_pct": 74.82799147720284,
+        "ratio": 0.2517200852279715
+      }
+    },
+    {
+      "name": "c32-qwen3-46l-dp8",
+      "family": "qwen3",
+      "split": "calibration",
+      "label_sha256": "7a5e1f034b21f3fb2fbb003ccf7d43e7ffe29a6d8672b4952bb1b886b87ddc6c",
+      "config_sha256": "816e8769350132f179e467179047ade8a71ecadd981b25081b7a19fc1beea346",
+      "collection_attempt_id": "001770f5da404c66b1a7b12a2b7f24d3",
+      "prediction": {
+        "raw_physical_active_bytes": 2635203072,
+        "legacy_reserve_bytes": 3053706724,
+        "legacy_total_bytes": 5688909796,
+        "tightest_stage": 0,
+        "peak_event": "loss_logits",
+        "per_stage": [
+          {
+            "stage": 0,
+            "peak_bytes": 2635203072,
+            "breakdown": {
+              "persistent": 186647040,
+              "act_live": 1257111552,
+              "gather_buf": 132382720,
+              "grad_buf": 0,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 1059061760,
+              "framework": 0
+            },
+            "peak_event": "loss_logits",
+            "oom": false,
+            "bucket_peaks": {
+              "persistent": 186647040,
+              "act_live": 1261322240,
+              "gather_buf": 132382720,
+              "grad_buf": 132382720,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 1059061760
+            }
+          }
+        ],
+        "warnings": []
+      },
+      "measured": {
+        "model_active_bytes": 9449513500,
+        "allocator_pool_bytes": 9461760000,
+        "untracked_runtime_bytes": 3041460224,
+        "dynamic_bytes": 12503220224,
+        "total_bytes": 16086204416
+      },
+      "active": {
+        "predicted_bytes": 2635203072,
+        "measured_bytes": 9449513500,
+        "signed_error_bytes": -6814310428,
+        "ape_pct": 72.11281753288145,
+        "ratio": 0.27887182467118543
+      },
+      "dynamic": {
+        "predicted_bytes": 2635203072,
+        "measured_bytes": 12503220224,
+        "signed_error_bytes": -9868017152,
+        "ape_pct": 78.92380502950981,
+        "ratio": 0.2107619497049019
+      },
+      "legacy_total": {
+        "predicted_bytes": 5688909796,
+        "measured_bytes": 16086204416,
+        "signed_error_bytes": -10397294620,
+        "ape_pct": 64.63485326382165,
+        "ratio": 0.3536514673617834
+      }
+    },
+    {
+      "name": "c33-deepseek3-42l-tp2-cp2-ep2",
+      "family": "deepseek_v3",
+      "split": "calibration",
+      "label_sha256": "141ac153b67850cdb75f89e179c74e2edc46d3054d27577cd5f804ecb0a5210b",
+      "config_sha256": "41fdb45d7eb615d0defff474d407c8f13238ca70ae88a1edc267a79f044e6f95",
+      "collection_attempt_id": "5b4b9b13056a4aad92e629d3edb7c6c2",
+      "prediction": {
+        "raw_physical_active_bytes": 20792604672,
+        "legacy_reserve_bytes": 4526993840,
+        "legacy_total_bytes": 25319598512,
+        "tightest_stage": 0,
+        "peak_event": "loss_logits",
+        "per_stage": [
+          {
+            "stage": 0,
+            "peak_bytes": 20792604672,
+            "breakdown": {
+              "persistent": 6816331776,
+              "act_live": 12453871616,
+              "gather_buf": 463339520,
+              "grad_buf": 0,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 1059061760,
+              "framework": 0
+            },
+            "peak_event": "loss_logits",
+            "oom": false,
+            "bucket_peaks": {
+              "persistent": 6816331776,
+              "act_live": 12468559872,
+              "gather_buf": 463339520,
+              "grad_buf": 463339520,
+              "recomp_scratch": 309919744,
+              "swap_buf": 0,
+              "workspace": 1059061760
+            }
+          }
+        ],
+        "warnings": []
+      },
+      "measured": {
+        "model_active_bytes": 19684626000,
+        "allocator_pool_bytes": 20713472000,
+        "untracked_runtime_bytes": 3498147840,
+        "dynamic_bytes": 24211619840,
+        "total_bytes": 27795652608
+      },
+      "active": {
+        "predicted_bytes": 20792604672,
+        "measured_bytes": 19684626000,
+        "signed_error_bytes": 1107978672,
+        "ape_pct": 5.628649850903948,
+        "ratio": 1.0562864985090394
+      },
+      "dynamic": {
+        "predicted_bytes": 20792604672,
+        "measured_bytes": 24211619840,
+        "signed_error_bytes": -3419015168,
+        "ape_pct": 14.12138134744478,
+        "ratio": 0.8587861865255522
+      },
+      "legacy_total": {
+        "predicted_bytes": 25319598512,
+        "measured_bytes": 27795652608,
+        "signed_error_bytes": -2476054096,
+        "ape_pct": 8.908062461851877,
+        "ratio": 0.9109193753814813
+      }
+    },
+    {
+      "name": "c6-deepseek3-12l-tp2-cp4",
+      "family": "deepseek_v3",
+      "split": "calibration",
+      "label_sha256": "d865f17773b83c745322721e66d9a3e8708393746eae1eb5f5df6a3b89c351a4",
+      "config_sha256": "697f468ab3e276e43063c3d5c59573d322368c8c0fa9e14851f33d09d8f840c8",
+      "collection_attempt_id": "0e9f454ec1484742a7aec34ea522e95d",
+      "prediction": {
+        "raw_physical_active_bytes": 9489865728,
+        "legacy_reserve_bytes": 8351169876,
+        "legacy_total_bytes": 17841035604,
+        "tightest_stage": 0,
+        "peak_event": "loss_logits",
+        "per_stage": [
+          {
+            "stage": 0,
+            "peak_bytes": 9489865728,
+            "breakdown": {
+              "persistent": 3476413440,
+              "act_live": 5020581888,
+              "gather_buf": 463339520,
+              "grad_buf": 0,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 529530880,
+              "framework": 0
+            },
+            "peak_event": "loss_logits",
+            "oom": false,
+            "bucket_peaks": {
+              "persistent": 3476413440,
+              "act_live": 5027926016,
+              "gather_buf": 463339520,
+              "grad_buf": 463339520,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 529530880
+            }
+          }
+        ],
+        "warnings": []
+      },
+      "measured": {
+        "model_active_bytes": 7299875500,
+        "allocator_pool_bytes": 8237056000,
+        "untracked_runtime_bytes": 7413989376,
+        "dynamic_bytes": 15651045376,
+        "total_bytes": 19236126720
+      },
+      "active": {
+        "predicted_bytes": 9489865728,
+        "measured_bytes": 7299875500,
+        "signed_error_bytes": 2189990228,
+        "ape_pct": 30.000377787265002,
+        "ratio": 1.30000377787265
+      },
+      "dynamic": {
+        "predicted_bytes": 9489865728,
+        "measured_bytes": 15651045376,
+        "signed_error_bytes": -6161179648,
+        "ape_pct": 39.36593051763701,
+        "ratio": 0.60634069482363
+      },
+      "legacy_total": {
+        "predicted_bytes": 17841035604,
+        "measured_bytes": 19236126720,
+        "signed_error_bytes": -1395091116,
+        "ape_pct": 7.252453346283633,
+        "ratio": 0.9274754665371636
+      }
+    },
+    {
+      "name": "c8-deepseek3-4l-tp2-pp2-dp2-interleave2",
+      "family": "deepseek_v3",
+      "split": "calibration",
+      "label_sha256": "a038b9e41a69fa9fee971c6485b17a7c81228b593b469b961fd077e0a641c02f",
+      "config_sha256": "e208a0733b288a7b223f46539b394b89a3326971c446e1401836e74910fca475",
+      "collection_attempt_id": "ddfce160385942c89da05695932da25f",
+      "prediction": {
+        "raw_physical_active_bytes": 5513746432,
+        "legacy_reserve_bytes": 3405237988,
+        "legacy_total_bytes": 8918984420,
+        "tightest_stage": 1,
+        "peak_event": "loss_logits",
+        "per_stage": [
+          {
+            "stage": 0,
+            "peak_bytes": 2591092736,
+            "breakdown": {
+              "persistent": 1501241344,
+              "act_live": 802570240,
+              "gather_buf": 61036544,
+              "grad_buf": 226244608,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 0,
+              "framework": 0
+            },
+            "peak_event": "bwd_grad@1",
+            "oom": false,
+            "bucket_peaks": {
+              "persistent": 1501241344,
+              "act_live": 802570240,
+              "gather_buf": 463339520,
+              "grad_buf": 463339520,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 117440512
+            }
+          },
+          {
+            "stage": 1,
+            "peak_bytes": 5513746432,
+            "breakdown": {
+              "persistent": 1831671808,
+              "act_live": 1100611584,
+              "gather_buf": 463339520,
+              "grad_buf": 0,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 2118123520,
+              "framework": 0
+            },
+            "peak_event": "loss_logits",
+            "oom": false,
+            "bucket_peaks": {
+              "persistent": 1831671808,
+              "act_live": 1129971712,
+              "gather_buf": 463339520,
+              "grad_buf": 463339520,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 2118123520
+            }
+          }
+        ],
+        "warnings": []
+      },
+      "measured": {
+        "model_active_bytes": 10370953500,
+        "allocator_pool_bytes": 11485184000,
+        "untracked_runtime_bytes": 2291007488,
+        "dynamic_bytes": 13776191488,
+        "total_bytes": 17359175680
+      },
+      "active": {
+        "predicted_bytes": 5513746432,
+        "measured_bytes": 10370953500,
+        "signed_error_bytes": -4857207068,
+        "ape_pct": 46.83472033694876,
+        "ratio": 0.5316527966305123
+      },
+      "dynamic": {
+        "predicted_bytes": 5513746432,
+        "measured_bytes": 13776191488,
+        "signed_error_bytes": -8262445056,
+        "ape_pct": 59.97626458079617,
+        "ratio": 0.4002373541920384
+      },
+      "legacy_total": {
+        "predicted_bytes": 8918984420,
+        "measured_bytes": 17359175680,
+        "signed_error_bytes": -8440191260,
+        "ape_pct": 48.62092195843253,
+        "ratio": 0.5137907804156747
+      }
+    },
+    {
+      "name": "c9-deepseek3-6l-tp2-pp2-dp2-interleave1",
+      "family": "deepseek_v3",
+      "split": "calibration",
+      "label_sha256": "c981e7f40e65a11f02447eff4cf9f73781dd9006a828ee4bde98601ed54b9369",
+      "config_sha256": "adc707d82a3d5a3781dba97797cf2e4ce1dd75313a728757168b83d81ff4330d",
+      "collection_attempt_id": "16bd83b07e27401fb5863849c7fb6400",
+      "prediction": {
+        "raw_physical_active_bytes": 6516541440,
+        "legacy_reserve_bytes": 4460416536,
+        "legacy_total_bytes": 10976957976,
+        "tightest_stage": 1,
+        "peak_event": "loss_logits",
+        "per_stage": [
+          {
+            "stage": 0,
+            "peak_bytes": 4046376960,
+            "breakdown": {
+              "persistent": 1953730560,
+              "act_live": 1352876032,
+              "gather_buf": 513525760,
+              "grad_buf": 226244608,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 0,
+              "framework": 0
+            },
+            "peak_event": "bwd_grad@2",
+            "oom": false,
+            "bucket_peaks": {
+              "persistent": 1953730560,
+              "act_live": 1352876032,
+              "gather_buf": 513525760,
+              "grad_buf": 463339520,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 117440512
+            }
+          },
+          {
+            "stage": 1,
+            "peak_bytes": 6516541440,
+            "breakdown": {
+              "persistent": 2284161024,
+              "act_live": 1650917376,
+              "gather_buf": 463339520,
+              "grad_buf": 0,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 2118123520,
+              "framework": 0
+            },
+            "peak_event": "loss_logits",
+            "oom": false,
+            "bucket_peaks": {
+              "persistent": 2284161024,
+              "act_live": 1680277504,
+              "gather_buf": 678733824,
+              "grad_buf": 463339520,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 2118123520
+            }
+          }
+        ],
+        "warnings": []
+      },
+      "measured": {
+        "model_active_bytes": 10309825000,
+        "allocator_pool_bytes": 12439552000,
+        "untracked_runtime_bytes": 2330689536,
+        "dynamic_bytes": 14770241536,
+        "total_bytes": 18354274304
+      },
+      "active": {
+        "predicted_bytes": 6516541440,
+        "measured_bytes": 10309825000,
+        "signed_error_bytes": -3793283560,
+        "ape_pct": 36.79289958849932,
+        "ratio": 0.6320710041150068
+      },
+      "dynamic": {
+        "predicted_bytes": 6516541440,
+        "measured_bytes": 14770241536,
+        "signed_error_bytes": -8253700096,
+        "ape_pct": 55.88060341385063,
+        "ratio": 0.4411939658614937
+      },
+      "legacy_total": {
+        "predicted_bytes": 10976957976,
+        "measured_bytes": 18354274304,
+        "signed_error_bytes": -7377316328,
+        "ape_pct": 40.19399626381436,
+        "ratio": 0.5980600373618563
+      }
+    },
+    {
+      "name": "d1-deepseek3-8l-tp2-pp2-dp2-interleave2",
+      "family": "deepseek_v3",
+      "split": "validation",
+      "label_sha256": "9ed923bee630589ba8b11eb648150cb1f9d93299a6d3d5e128ef4d1d6b68c5cb",
+      "config_sha256": "0031a9289502ffc7d579759eeb83185d03cceed68f5aeba951e4cbf0030840e8",
+      "collection_attempt_id": "affff6f13cbc41599dc4857955fcb43b",
+      "prediction": {
+        "raw_physical_active_bytes": 7519336448,
+        "legacy_reserve_bytes": 3483594108,
+        "legacy_total_bytes": 11002930556,
+        "tightest_stage": 1,
+        "peak_event": "loss_logits",
+        "per_stage": [
+          {
+            "stage": 0,
+            "peak_bytes": 4822927360,
+            "breakdown": {
+              "persistent": 2406219776,
+              "act_live": 1903181824,
+              "gather_buf": 287281152,
+              "grad_buf": 226244608,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 0,
+              "framework": 0
+            },
+            "peak_event": "bwd_grad@3",
+            "oom": false,
+            "bucket_peaks": {
+              "persistent": 2406219776,
+              "act_live": 1903181824,
+              "gather_buf": 463339520,
+              "grad_buf": 463339520,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 117440512
+            }
+          },
+          {
+            "stage": 1,
+            "peak_bytes": 7519336448,
+            "breakdown": {
+              "persistent": 2736650240,
+              "act_live": 2201223168,
+              "gather_buf": 463339520,
+              "grad_buf": 0,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 2118123520,
+              "framework": 0
+            },
+            "peak_event": "loss_logits",
+            "oom": false,
+            "bucket_peaks": {
+              "persistent": 2736650240,
+              "act_live": 2230583296,
+              "gather_buf": 463339520,
+              "grad_buf": 463339520,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 2118123520
+            }
+          }
+        ],
+        "warnings": []
+      },
+      "measured": {
+        "model_active_bytes": 12384506500,
+        "allocator_pool_bytes": 13527040000,
+        "untracked_runtime_bytes": 2341060608,
+        "dynamic_bytes": 15868100608,
+        "total_bytes": 19451084800
+      },
+      "active": {
+        "predicted_bytes": 7519336448,
+        "measured_bytes": 12384506500,
+        "signed_error_bytes": -4865170052,
+        "ape_pct": 39.28432717121187,
+        "ratio": 0.6071567282878814
+      },
+      "dynamic": {
+        "predicted_bytes": 7519336448,
+        "measured_bytes": 15868100608,
+        "signed_error_bytes": -8348764160,
+        "ape_pct": 52.613506595684925,
+        "ratio": 0.4738649340431507
+      },
+      "legacy_total": {
+        "predicted_bytes": 11002930556,
+        "measured_bytes": 19451084800,
+        "signed_error_bytes": -8448154244,
+        "ape_pct": 43.432817916664476,
+        "ratio": 0.5656718208333553
+      }
+    },
+    {
+      "name": "d2-qwen3-6l-tp2-dp4",
+      "family": "qwen3",
+      "split": "validation",
+      "label_sha256": "1f4180847d05e35e12595993a2699f2c1ebb11c18792fb275ba98bd128a084d5",
+      "config_sha256": "d6307561a3901f3db6cc61749e1d5b2a21452b6fbca609cf61f1d37c90281484",
+      "collection_attempt_id": "ffef4e51a17341e7a4ea0d261c59713d",
+      "prediction": {
+        "raw_physical_active_bytes": 1346700288,
+        "legacy_reserve_bytes": 2722840608,
+        "legacy_total_bytes": 4069540896,
+        "tightest_stage": 0,
+        "peak_event": "loss_logits",
+        "per_stage": [
+          {
+            "stage": 0,
+            "peak_bytes": 1346700288,
+            "breakdown": {
+              "persistent": 139461632,
+              "act_live": 81985536,
+              "gather_buf": 66191360,
+              "grad_buf": 0,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 1059061760,
+              "framework": 0
+            },
+            "peak_event": "loss_logits",
+            "oom": false,
+            "bucket_peaks": {
+              "persistent": 139461632,
+              "act_live": 84090880,
+              "gather_buf": 66191360,
+              "grad_buf": 66191360,
+              "recomp_scratch": 0,
+              "swap_buf": 0,
+              "workspace": 1059061760
+            }
+          }
+        ],
+        "warnings": []
+      },
+      "measured": {
+        "model_active_bytes": 3970220000,
+        "allocator_pool_bytes": 3981312000,
+        "untracked_runtime_bytes": 2711748608,
+        "dynamic_bytes": 6693060608,
+        "total_bytes": 10277093376
+      },
+      "active": {
+        "predicted_bytes": 1346700288,
+        "measured_bytes": 3970220000,
+        "signed_error_bytes": -2623519712,
+        "ape_pct": 66.0799580879649,
+        "ratio": 0.33920041912035104
+      },
+      "dynamic": {
+        "predicted_bytes": 1346700288,
+        "measured_bytes": 6693060608,
+        "signed_error_bytes": -5346360320,
+        "ape_pct": 79.87915593666771,
+        "ratio": 0.20120844063332288
+      },
+      "legacy_total": {
+        "predicted_bytes": 4069540896,
+        "measured_bytes": 10277093376,
+        "signed_error_bytes": -6207552480,
+        "ape_pct": 60.40183009815245,
+        "ratio": 0.39598169901847546
+      }
+    }
+  ],
+  "diagnostics": [
+    {
+      "name": "c20-deepseek3-32l-tp2-cp2-ep2",
+      "reason": "manifest diagnostic-only"
+    },
+    {
+      "name": "h1-qwen3-26l-dp8-v11",
+      "reason": "duplicate HBM label hash"
+    },
+    {
+      "name": "h1-qwen3-30l-dp8-v12-v2",
+      "reason": "duplicate HBM label hash"
+    },
+    {
+      "name": "h1-qwen3-34l-dp8-v13",
+      "reason": "duplicate HBM label hash"
+    },
+    {
+      "name": "h1-qwen3-38l-dp8-v14",
+      "reason": "duplicate HBM label hash"
+    },
+    {
+      "name": "h1-qwen3-42l-dp8-v15",
+      "reason": "duplicate HBM label hash"
+    },
+    {
+      "name": "h1-qwen3-46l-dp8-v16",
+      "reason": "duplicate HBM label hash"
+    },
+    {
+      "name": "h1-qwen3-50l-dp8-v17",
+      "reason": "manifest diagnostic-only"
+    },
+    {
+      "name": "h2-deepseek3-30l-tp2-cp2-ep2-v11",
+      "reason": "duplicate HBM label hash"
+    },
+    {
+      "name": "h2-deepseek3-34l-tp2-cp2-ep2-v12",
+      "reason": "duplicate HBM label hash"
+    },
+    {
+      "name": "h2-deepseek3-36l-tp2-cp2-ep2-v13",
+      "reason": "duplicate HBM label hash"
+    },
+    {
+      "name": "h2-deepseek3-38l-tp2-cp2-ep2-v14",
+      "reason": "duplicate HBM label hash"
+    },
+    {
+      "name": "h2-deepseek3-42l-tp2-cp2-ep2-v16",
+      "reason": "duplicate HBM label hash"
+    },
+    {
+      "name": "h3-deepseek3-24l-tp2-pp2-dp2-interleave2-v13",
+      "reason": "duplicate HBM label hash"
+    },
+    {
+      "name": "h4-qwen3-10l-tp4-dp2-v13",
+      "reason": "duplicate HBM label hash"
+    }
+  ]
+}

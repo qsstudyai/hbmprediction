@@ -1,0 +1,111 @@
+{
+  "case": "d1-deepseek3-8l-tp2-pp2-dp2-interleave2",
+  "family": "deepseek3",
+  "source": {
+    "timing_archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-b3ds3-8l-tp2pp2dp2-interleave2-timing-v2",
+    "hbm_archive": ".npu-calibration/p1v2-b3ds3-8l-tp2pp2dp2-interleave2-hbm-v2",
+    "timing_label_sha256": "9791abfd805d16145604a27f8a865573312bfb1ebff46359ffa210043684cc15",
+    "hbm_label_sha256": "9ed923bee630589ba8b11eb648150cb1f9d93299a6d3d5e128ef4d1d6b68c5cb",
+    "protocol": {
+      "aggregation": "max_rank",
+      "rank_count": 8,
+      "rank_step_counts": {
+        "worker_0.log": 36,
+        "worker_1.log": 36,
+        "worker_2.log": 36,
+        "worker_3.log": 36,
+        "worker_4.log": 36,
+        "worker_5.log": 36,
+        "worker_6.log": 36,
+        "worker_7.log": 36
+      },
+      "rank_global_batch_sizes": {
+        "worker_0.log": [],
+        "worker_1.log": [],
+        "worker_2.log": [],
+        "worker_3.log": [],
+        "worker_4.log": [
+          4
+        ],
+        "worker_5.log": [
+          4
+        ],
+        "worker_6.log": [
+          4
+        ],
+        "worker_7.log": [
+          4
+        ]
+      },
+      "effective_global_batch_sizes": [
+        4
+      ],
+      "status": "valid"
+    },
+    "replicate_quality": null,
+    "frozen_prediction": null
+  },
+  "measured": {
+    "step_time_p50_ns": 402000000,
+    "step_time_p90_ns": 405700000,
+    "step_time_ns": 402000000,
+    "peak_hbm_total_bytes": 19451084800,
+    "peak_hbm_dynamic_bytes": 15868100608,
+    "oom": false,
+    "timing_protocol_valid": true,
+    "measurement_quality": {
+      "timing": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "timing",
+        "status": "valid",
+        "issues": [],
+        "effective_global_batch": 4,
+        "tokens_per_step": 16384,
+        "rank_count": 8,
+        "steady_step_count": 24,
+        "aggregation": "pXX(max_rank_per_global_step)"
+      },
+      "hbm": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          25,
+          25,
+          25,
+          25,
+          25,
+          25,
+          25,
+          25
+        ],
+        "per_rank_baseline_bytes": [
+          3584032768,
+          3584032768,
+          3584032768,
+          3582984192,
+          3582984192,
+          3582984192,
+          3584032768,
+          3584032768
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      }
+    }
+  },
+  "physical_base": {
+    "step_time_p50_ns": 424079316,
+    "step_time_p90_ns": 581827976,
+    "peak_hbm_total_bytes": 13355655698,
+    "peak_hbm_dynamic_bytes": 9771622930,
+    "oom": false
+  },
+  "metadata": {
+    "model_family": "deepseek3",
+    "world_size": 8,
+    "timing_run": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-b3ds3-8l-tp2pp2dp2-interleave2-timing-v2",
+    "hbm_run": ".npu-calibration/p1v2-b3ds3-8l-tp2pp2dp2-interleave2-hbm-v2"
+  }
+}

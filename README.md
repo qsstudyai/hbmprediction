@@ -6,15 +6,18 @@
 
 - 每个 Pipeline stage 的峰值显存及发生事件；
 - 参数、梯度、优化器状态、激活、workspace、FSDP gather 和 Swap buffer 拆解；
-- 最紧张的 stage 和 OOM 判断；
+- 每个 rank/stage 的 point、safe upper、峰值事件和四态 OOM 判断；
 - 配置适配过程发现的未精确建模项。
 
 ## 支持范围
 
-- Dense、MoE、DeepSeek MLA/shared expert/MTP；
+- Qwen3 独立 GQA/QK-Norm/RoPE/loss 合同；
+- Dense、MoE、DeepSeek-V3 MLA/shared expert/MTP；
+- DeepSeek-V4 独立源码合同：legacy MLA、hybrid CSA、压缩器、索引器、
+  hash router、MTP 和 Hyper-Connections；
 - DP/HSDP、TP、PP、CP、EP 和 sequence parallel；
 - MindFormers 1F1B 与 interleave stage placement；
-- FSDP reshard/prefetch、CPU offload；
+- FSDP reshard/prefetch/flatten padding，以及参数、梯度、优化器独立 offload；
 - full/select/exclude recompute、通信重计算；
 - layer/op 级 activation swap；
 - JSON/YAML 通用配置和 MindFormers PyNative YAML 适配。
@@ -26,8 +29,10 @@ python -m pip install -e '.[test]'
 python -m cost_eval examples/configs/dense.yaml
 ```
 
-CLI 输出 JSON，其中 `per_stage[].peak_bytes` 是各 stage 峰值，`oom` 是最终
-OOM 判断。也可以直接使用 Python API：
+CLI 输出 schema v2 JSON。`per_stage[].peak_bytes` 是 `total_point_bytes` 的兼容
+别名；同时提供 `physical_dynamic_peak_bytes`、`allocator_pool_peak_bytes`、
+`safe_upper_bytes` 和 `oom_status`。未知 runtime/hardware 或未完成 probe 的能力
+不会报告为 `definitely_safe`。也可以直接使用 Python API：
 
 ```python
 from cost_eval import ConfigAdapter
@@ -61,11 +66,33 @@ python examples/memory_report.py
 python -m cost_eval.calibration profile.json -o calibration-report.json
 ```
 
+仓库还保存了从相邻 `parallelsearch` 仓库按 SHA-256 导入的 Qwen3 / DeepSeek-V3
+实机证据层。它不复制 245 GiB 原始 profiler 数据：
+
+```bash
+python tools/import_parallelsearch_hbm.py
+python tools/analyze_real_npu.py
+python tools/evaluate_current_hbm.py --root validation/real_npu \
+  --runtime-profiles validation/real_npu/runtime_profiles_v1.json
+```
+
+分析结论和当前验证缺口见
+[`validation/real_npu/ANALYSIS.md`](validation/real_npu/ANALYSIS.md)。
+当前修正版的能力、校准指标和未完成门禁见
+[`validation/real_npu/MODEL_CARD.md`](validation/real_npu/MODEL_CARD.md)。
+
+DeepSeek-V4 合同固定到相邻 MindFormers commit，并对未覆盖结构直接报错；
+当前缩层动态图 probe 和合格 HBM blind 仍待补齐，因此 capability 状态会明确标为
+`source_derived_probe_pending_hbm_unvalidated`，不应解读为实机精度已经验收。
+
 ## 代码结构
 
 - `cost_eval/model_spec.py`：声明式算子图与 tensor 内存契约；
 - `cost_eval/layers/`：Dense、MoE、DeepSeek 图构建；
+- `cost_eval/source_contracts/`：按源文件和内容哈希固定的模型合同；
 - `cost_eval/shape_eval.py`：并行切分后的本地 shape 和通信生命周期；
+- `cost_eval/memory_actions.py` / `memory_ledger.py`：逐值 allocation/free 账本；
+- `cost_eval/allocator_model.py` / `runtime_profiles.py`：互斥 total HBM 分量；
 - `cost_eval/static_mem.py`：参数、梯度和优化器静态显存；
 - `cost_eval/mem_timeline.py`：前反向事件驱动峰值仿真；
 - `cost_eval/report.py`：统一评估入口与结果；

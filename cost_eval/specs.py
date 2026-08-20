@@ -41,6 +41,10 @@ class ParallelConfig:
     ulysses_degree_in_cp: Optional[int] = None
     moe_token_dispatcher: str = "alltoall"
     enable_loss_parallel: bool = False
+    parameter_offload: bool = False
+    gradient_offload: bool = False
+    optimizer_offload: bool = False
+    fsdp_flatten_alignment_bytes: int = 1
 
     def __post_init__(self) -> None:
         policy = self.reshard_after_forward_policy
@@ -57,6 +61,10 @@ class ParallelConfig:
         if self.pipeline_interleave is not None:
             object.__setattr__(self, "interleave", self.pipeline_interleave)
         object.__setattr__(self, "pipeline_interleave", self.interleave)
+        if self.cpu_offload:
+            object.__setattr__(self, "parameter_offload", True)
+            object.__setattr__(self, "gradient_offload", True)
+            object.__setattr__(self, "optimizer_offload", True)
         degrees = (
             self.dp_replicate,
             self.dp_shard,
@@ -72,10 +80,18 @@ class ParallelConfig:
             raise ValueError("所有并行度和 batch 数必须为正整数")
         if self.prefetch_depth < 0:
             raise ValueError("prefetch_depth 不能为负数")
+        if self.fsdp_flatten_alignment_bytes <= 0:
+            raise ValueError("fsdp_flatten_alignment_bytes 必须为正数")
         if self.pipeline_schedule != "1f1b":
             raise ValueError("当前显存时间线仅支持 MindFormers 1f1b schedule")
         if self.context_parallel_method not in {"colossal", "ulysses", "hybrid"}:
             raise ValueError("未知 context_parallel_method")
+        if self.moe_token_dispatcher not in {
+            "alltoall", "alltoall_deredundency", "alltoall_zero_redundancy"
+        }:
+            raise ValueError(
+                f"unsupported MoE dispatcher contract: {self.moe_token_dispatcher}"
+            )
         ulysses = self.ulysses_degree_in_cp
         if self.context_parallel_method == "ulysses":
             ulysses = self.cp if ulysses is None else ulysses
@@ -174,10 +190,36 @@ class OptimizerSpec:
 class HardwareSpec:
     max_device_memory: int
     framework_reserve: int = 0
+    usable_device_memory: Optional[int] = None
+    device_baseline_bytes: int = 0
+    allocator_pool_point_bytes: int = 0
+    allocator_pool_slack_point_bytes: int = 0
+    untracked_runtime_point_bytes: int = 0
+    allocator_granularity_bytes: int = 512
+    calibrated_upper_margin_bytes: int = 0
+    ood_margin_bytes: int = 0
+    hardware_profile: str = "unknown"
+    runtime_profile: str = "unknown"
+    source_profile: str = "unknown"
 
     def __post_init__(self) -> None:
-        if self.max_device_memory <= 0 or self.framework_reserve < 0:
+        numeric = (
+            self.framework_reserve,
+            self.device_baseline_bytes,
+            self.allocator_pool_point_bytes,
+            self.allocator_pool_slack_point_bytes,
+            self.untracked_runtime_point_bytes,
+            self.calibrated_upper_margin_bytes,
+            self.ood_margin_bytes,
+        )
+        if self.max_device_memory <= 0 or any(value < 0 for value in numeric):
             raise ValueError("设备内存必须为正数，框架预留不能为负数")
+        if self.allocator_granularity_bytes <= 0:
+            raise ValueError("allocator_granularity_bytes 必须为正数")
+        usable = self.usable_device_memory or self.max_device_memory
+        if usable <= 0 or usable > self.max_device_memory:
+            raise ValueError("usable_device_memory 必须位于 (0, max_device_memory]")
+        object.__setattr__(self, "usable_device_memory", usable)
 
 
 @dataclass(frozen=True)

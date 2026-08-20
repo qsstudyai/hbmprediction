@@ -294,8 +294,22 @@ class ConfigAdapter:
         if "max_device_memory" not in hardware_values:
             raise ValueError("hardware.max_device_memory 是必填项")
         hardware = HardwareSpec(
-            parse_bytes(hardware_values.pop("max_device_memory")),
-            parse_bytes(hardware_values.pop("framework_reserve", 0)),
+            max_device_memory=parse_bytes(hardware_values.pop("max_device_memory")),
+            framework_reserve=parse_bytes(hardware_values.pop("framework_reserve", 0)),
+            usable_device_memory=(
+                parse_bytes(hardware_values.pop("usable_device_memory"))
+                if "usable_device_memory" in hardware_values else None
+            ),
+            device_baseline_bytes=parse_bytes(hardware_values.pop("device_baseline", 0)),
+            allocator_pool_point_bytes=parse_bytes(hardware_values.pop("allocator_pool_point", 0)),
+            allocator_pool_slack_point_bytes=parse_bytes(hardware_values.pop("allocator_pool_slack_point", 0)),
+            untracked_runtime_point_bytes=parse_bytes(hardware_values.pop("untracked_runtime_point", 0)),
+            allocator_granularity_bytes=parse_bytes(hardware_values.pop("allocator_granularity", 512)),
+            calibrated_upper_margin_bytes=parse_bytes(hardware_values.pop("calibrated_upper_margin", 0)),
+            ood_margin_bytes=parse_bytes(hardware_values.pop("ood_margin", 0)),
+            hardware_profile=str(hardware_values.pop("hardware_profile", "unknown")),
+            runtime_profile=str(hardware_values.pop("runtime_profile", "unknown")),
+            source_profile=str(hardware_values.pop("source_profile", "unknown")),
         )
         if hardware_values:
             raise ValueError(

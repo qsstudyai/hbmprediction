@@ -24,6 +24,8 @@ class StageStaticMemory:
     breakdown: StaticBreakdown
     edge_parameter_bytes: int = 0
     decoder_persistent_bytes: int = 0
+    host_pinned_bytes: int = 0
+    host_breakdown: StaticBreakdown | None = None
 
     @property
     def total(self): return self.persistent_bytes
@@ -40,7 +42,7 @@ def _unique_layer_params(layer):
     seen = set()
     for op in layer.ops:
         for weight in op.params:
-            identity = weight.storage_id or weight.name
+            identity = weight.storage_key
             if identity not in seen:
                 seen.add(identity)
                 yield weight
@@ -48,14 +50,12 @@ def _unique_layer_params(layer):
 
 def _state_bytes(weight, optimizer) -> StaticBreakdown:
     """Persistent bytes for one local FSDP shard, honoring parameter dtype."""
-    if not weight.trainable:
-        return StaticBreakdown(weight.local_bytes, 0, 0, 0)
-    numel = weight.local_numel
-    parameter = numel * weight.dtype_bytes
-    gradient = numel * weight.dtype_bytes
-    master = 0 if weight.dtype_bytes == 4 else numel * optimizer.master_weight_bytes
-    state = numel * optimizer.optimizer_state_bytes
-    return StaticBreakdown(parameter, gradient, master, state)
+    from .optimizers import state_bytes
+    state = state_bytes(weight, optimizer)
+    return StaticBreakdown(
+        state.parameter, state.gradient,
+        state.master_weight, state.optimizer_state,
+    )
 
 
 def _add_breakdown(left, right):
@@ -65,6 +65,23 @@ def _add_breakdown(left, right):
     ))
 
 
+def _sharded_group_state(weights, degree, alignment_bytes, optimizer):
+    """Shard a flattened dtype/trainability group with explicit padding."""
+    weights = tuple(weights)
+    if not weights:
+        return StaticBreakdown(0, 0, 0, 0)
+    representative = weights[0]
+    dtype_bytes = representative.dtype_bytes
+    alignment_numel = max(1, (alignment_bytes + dtype_bytes - 1) // dtype_bytes)
+    total_numel = sum(weight.local_numel for weight in weights)
+    shard_unit = degree * alignment_numel
+    padded_numel = ((total_numel + shard_unit - 1) // shard_unit) * shard_unit
+    shard = representative.__class__(
+        **{**representative.__dict__, "local_numel": padded_numel // degree}
+    )
+    return _state_bytes(shard, optimizer)
+
+
 class StaticMem:
     def compute(self, graph, optimizer, pm, cpu_offload: bool = None):
         if not hasattr(pm, "pc"):
@@ -72,28 +89,32 @@ class StaticMem:
             pc = pm
             layer_count = sum(len(v) for v in graph.stages.values())
             pm = ParallelModel(pc, layer_count)
-        if cpu_offload is None:
-            cpu_offload = pm.pc.cpu_offload
+        from .offload_model import OffloadPolicy
+        policy = OffloadPolicy.from_parallel(pm.pc)
+        if cpu_offload is True:
+            policy = OffloadPolicy(True, True, True)
         result = {}
         for stage, layers in graph.stages.items():
             decoder_breakdown = StaticBreakdown(0, 0, 0, 0)
             for layer in layers:
+                groups = {}
                 for weight in _unique_layer_params(layer):
-                    degree = (
-                        pm.efsdp_degree()
-                        if weight.is_expert
-                        else pm.fsdp_degree()
+                    degree = 1 if weight.fsdp_replicated else (
+                        pm.efsdp_degree() if weight.is_expert else pm.fsdp_degree()
                     )
-                    if weight.local_numel % degree:
-                        raise ValueError(
-                            f"{weight.name} local_numel={weight.local_numel} "
-                            f"不被 FSDP degree={degree} 整除"
-                        )
-                    shard = weight.__class__(
-                        **{**weight.__dict__, "local_numel": weight.local_numel // degree}
+                    key = (
+                        degree, weight.dtype_bytes, weight.trainable,
+                        weight.is_expert, weight.fsdp_replicated,
                     )
+                    groups.setdefault(key, []).append(weight)
+                for key, weights in groups.items():
                     decoder_breakdown = _add_breakdown(
-                        decoder_breakdown, _state_bytes(shard, optimizer)
+                        decoder_breakdown,
+                        _sharded_group_state(
+                            weights, key[0],
+                            pm.pc.fsdp_flatten_alignment_bytes,
+                            optimizer,
+                        ),
                     )
             edge_breakdown = StaticBreakdown(0, 0, 0, 0)
             edge_global_bytes = 0
@@ -106,27 +127,29 @@ class StaticMem:
                 (graph.stage_params or {}).get(stage, ())
             )
             for weight in edge_weights:
-                identity = weight.storage_id or weight.name
+                identity = weight.storage_key
                 if identity in seen_edge_storage:
                     continue
                 seen_edge_storage.add(identity)
-                degree = pm.fsdp_degree()
-                if weight.local_numel % degree:
-                    raise ValueError(f"{weight.name} 不被 dense FSDP degree={degree} 整除")
-                shard = weight.__class__(
-                    **{**weight.__dict__, "local_numel": weight.local_numel // degree}
-                )
+                degree = 1 if weight.fsdp_replicated else pm.fsdp_degree()
                 edge_breakdown = _add_breakdown(
-                    edge_breakdown, _state_bytes(shard, optimizer)
+                    edge_breakdown,
+                    _sharded_group_state(
+                        (weight,), degree,
+                        pm.pc.fsdp_flatten_alignment_bytes,
+                        optimizer,
+                    ),
                 )
                 from math import prod
                 edge_global_bytes += prod(weight.global_shape) * weight.dtype_bytes
             breakdown = _add_breakdown(decoder_breakdown, edge_breakdown)
-            total = 0 if cpu_offload else breakdown.total
-            if cpu_offload:
-                breakdown = StaticBreakdown(0, 0, 0, 0)
+            breakdown, host_breakdown = policy.split(breakdown)
+            decoder_resident, _ = policy.split(decoder_breakdown)
+            total = breakdown.total
             result[stage] = StageStaticMemory(
                 stage, total, breakdown, edge_global_bytes,
-                0 if cpu_offload else decoder_breakdown.total,
+                decoder_resident.total,
+                host_breakdown.total,
+                host_breakdown,
             )
         return result

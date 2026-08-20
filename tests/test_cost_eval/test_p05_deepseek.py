@@ -156,7 +156,10 @@ class DeepSeekP05Tests(unittest.TestCase):
         graph = ShapeEval().resolve(spec, pm)
         self.assertEqual(
             [op.name for op in graph.edge_ops[0]],
-            ["embedding", "final_norm", "lm_head"],
+            [
+                "embedding", "final_norm", "lm_head",
+                "loss_cast_fp32", "loss_fwd_softmax", "loss_reduce",
+            ],
         )
         # Static memory is sourced from edge ops; stage_params is compatibility-only.
         graph_without_compat = graph.__class__(

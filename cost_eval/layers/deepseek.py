@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from ..model_spec import DimTable, LayerSpec, OpSpec, OpType, TensorRef
 from .dense import hyper_connection_ops
+from .moe_dispatch import build_dispatch_tensors
 
 
 def _norm_weight(name: str, dim="H") -> TensorRef:
@@ -31,21 +32,21 @@ def build_mla_attention(dims: DimTable) -> tuple[OpSpec, ...]:
 
     qdim = "n_heads*(qk_nope_head_dim+qk_rope_head_dim)"
     q_up_w = TensorRef("mla_q_up_w", ("q_lora_rank", qdim), {1: "tp"}, True)
-    qa_full = TensorRef("mla_q_a_norm", ("S", "B", "q_lora_rank"))
-    query = TensorRef("mla_query", ("S", "B", "n_heads", "qk_nope_head_dim+qk_rope_head_dim"), {2: "tp"})
-    query_rope = TensorRef("mla_query_rope", ("S", "B", "n_heads", "qk_nope_head_dim+qk_rope_head_dim"), {2: "tp"})
+    qa_full = TensorRef("mla_q_a_norm", ("S", "B", "q_lora_rank"), {0: "cp"})
+    query = TensorRef("mla_query", ("S", "B", "n_heads", "qk_nope_head_dim+qk_rope_head_dim"), {0: "cp", 2: "tp"})
+    query_rope = TensorRef("mla_query_rope", ("S", "B", "n_heads", "qk_nope_head_dim+qk_rope_head_dim"), {0: "cp", 2: "tp"})
 
     kvdim = "n_heads*(qk_nope_head_dim+v_head_dim)"
     kv_up_w = TensorRef("mla_kv_up_w", ("kv_lora_rank", kvdim), {1: "tp"}, True)
-    ckv_full = TensorRef("mla_compressed_kv_norm", ("S", "B", "kv_lora_rank"))
-    kv = TensorRef("mla_kv", ("S", "B", "n_heads", "qk_nope_head_dim+v_head_dim"), {2: "tp"})
-    key = TensorRef("mla_key", ("S", "B", "n_heads", "qk_nope_head_dim+qk_rope_head_dim"), {2: "tp"})
-    value = TensorRef("mla_value", ("S", "B", "n_heads", "v_head_dim"), {2: "tp"})
-    kpe_full = TensorRef("mla_k_pe", ("S", "B", "qk_rope_head_dim"))
-    attn = TensorRef("mla_attn", ("S", "B", "n_heads", "v_head_dim"), {2: "tp"})
-    lse = TensorRef("mla_lse", ("S", "B", "n_heads"), {2: "tp"})
+    ckv_full = TensorRef("mla_compressed_kv_norm", ("S", "B", "kv_lora_rank"), {0: "cp"})
+    kv = TensorRef("mla_kv", ("S", "B", "n_heads", "qk_nope_head_dim+v_head_dim"), {0: "cp", 2: "tp"})
+    key = TensorRef("mla_key", ("S", "B", "n_heads", "qk_nope_head_dim+qk_rope_head_dim"), {0: "cp", 2: "tp"})
+    value = TensorRef("mla_value", ("S", "B", "n_heads", "v_head_dim"), {0: "cp", 2: "tp"})
+    kpe_full = TensorRef("mla_k_pe", ("S", "B", "qk_rope_head_dim"), {0: "cp"})
+    attn = TensorRef("mla_attn", ("S", "B", "n_heads", "v_head_dim"), {0: "cp", 2: "tp"})
+    lse = TensorRef("mla_lse", ("S", "B", "n_heads"), {0: "cp", 2: "tp"})
     out_w = TensorRef("mla_o_w", ("n_heads*v_head_dim", "H"), {0: "tp"}, True)
-    partial = TensorRef("mla_o", ("S", "B", "H"), partial="tp")
+    partial = TensorRef("mla_o", ("S", "B", "H"), {0: "cp"}, partial="tp")
     sharded = TensorRef("mla_o", ("S", "B", "H"), {0: "sp"})
     h1 = TensorRef("h1", ("S", "B", "H"), {0: "sp"})
 
@@ -85,7 +86,7 @@ def _moe_tail(dims: DimTable) -> tuple[OpSpec, ...]:
     ln2_w = _norm_weight("ln2_weight")
     ln2 = TensorRef("ln2", ("S", "B", "H"), {0: "sp"})
     router_w = TensorRef("router_w", ("H", "n_experts"), is_weight=True, dtype_bytes=4)
-    logits = TensorRef("logits", ("S", "B", "n_experts"), dtype_bytes=4)
+    logits = TensorRef("logits", ("S", "B", "n_experts"), {0: "sp"}, dtype_bytes=4)
     dispatched = TensorRef("dispatched", ("T_routed", "H"), {0: "ep"})
     w1 = TensorRef("expert_w1", ("n_experts", "H", "2*moe_F"), {0: "ep"}, True)
     gate = TensorRef("expert_gate", ("T_routed", "2*moe_F"), {0: "ep"})
@@ -93,14 +94,15 @@ def _moe_tail(dims: DimTable) -> tuple[OpSpec, ...]:
     w2 = TensorRef("expert_w2", ("n_experts", "moe_F", "H"), {0: "ep"}, True)
     expert_out = TensorRef("expert_out", ("T_routed", "H"), {0: "ep"})
     routed = TensorRef("routed_combined", ("S", "B", "H"), {0: "sp"})
+    routing = build_dispatch_tensors("router")
     ops = [
         OpSpec("ln2", OpType.NORM, (h1, ln2_w), ln2, (ln2_w,), (h1,), module_paths=("pre_mlp_layernorm",)),
-        OpSpec("router", OpType.MOE_ROUTER, (ln2, router_w), logits, (router_w,), (logits,), module_paths=("mlp.router",)),
-        OpSpec("dispatch", OpType.DISPATCH, (ln2,), dispatched, saves=(dispatched,), module_paths=("mlp.experts.dispatch",)),
-        OpSpec("expert_fc1", OpType.MOE_GEMM, (dispatched, w1), gate, (w1,), (dispatched,), module_paths=("mlp.experts.weight1",)),
+        OpSpec("router", OpType.MOE_ROUTER, (ln2, router_w), logits, (router_w,), (logits, routing.topk_scores, routing.topk_indices, routing.token_counts, routing.expert_offsets), module_paths=("mlp.router",)),
+        OpSpec("dispatch", OpType.DISPATCH, (ln2, routing.topk_indices), dispatched, saves=(dispatched, routing.permute_map, routing.inverse_map), module_paths=("mlp.experts.dispatch",)),
+        OpSpec("expert_fc1", OpType.MOE_GEMM, (dispatched, w1), gate, (w1,), (dispatched,), attrs={"workspace_like_output": True}, module_paths=("mlp.experts.weight1",)),
         OpSpec("expert_swiglu", OpType.ELEMENTWISE, (gate,), act, saves=(gate,)),
-        OpSpec("expert_fc2", OpType.MOE_GEMM, (act, w2), expert_out, (w2,), (act,), module_paths=("mlp.experts.weight2",)),
-        OpSpec("combine", OpType.COMBINE, (expert_out,), routed, saves=(routed,), module_paths=("mlp.experts.combine",)),
+        OpSpec("expert_fc2", OpType.MOE_GEMM, (act, w2), expert_out, (w2,), (act,), attrs={"workspace_like_output": True}, module_paths=("mlp.experts.weight2",)),
+        OpSpec("combine", OpType.COMBINE, (expert_out, routing.inverse_map), routed, saves=(routed, routing.inverse_map), module_paths=("mlp.experts.combine",)),
     ]
     final_input = routed
     if dims.n_shared and dims.shared_F:
@@ -135,17 +137,18 @@ def _dense_tail() -> tuple[OpSpec, ...]:
     h1 = TensorRef("h1", ("S", "B", "H"), {0: "sp"})
     ln2_w = _norm_weight("ln2_weight")
     ln2 = TensorRef("ln2", ("S", "B", "H"), {0: "sp"})
+    ln2_full = TensorRef("ln2", ("S", "B", "H"), {0: "cp"})
     fc1_w = TensorRef("fc1_w", ("H", "2*F"), {1: "tp"}, True)
-    gate = TensorRef("gate", ("S", "B", "2*F"), {2: "tp"})
-    act = TensorRef("act", ("S", "B", "F"), {2: "tp"})
+    gate = TensorRef("gate", ("S", "B", "2*F"), {0: "cp", 2: "tp"})
+    act = TensorRef("act", ("S", "B", "F"), {0: "cp", 2: "tp"})
     fc2_w = TensorRef("fc2_w", ("F", "H"), {0: "tp"}, True)
-    partial = TensorRef("o2", ("S", "B", "H"), partial="tp")
+    partial = TensorRef("o2", ("S", "B", "H"), {0: "cp"}, partial="tp")
     sharded = TensorRef("o2", ("S", "B", "H"), {0: "sp"})
     h2 = TensorRef("h2", ("S", "B", "H"), {0: "sp"})
     return (
         OpSpec("ln2", OpType.NORM, (h1, ln2_w), ln2, (ln2_w,), (h1,),
                module_paths=("pre_mlp_layernorm",)),
-        OpSpec("fc1", OpType.MATMUL, (ln2, fc1_w), gate, (fc1_w,), (ln2,),
+        OpSpec("fc1", OpType.MATMUL, (ln2_full, fc1_w), gate, (fc1_w,), (ln2_full,),
                module_paths=("mlp.linear_fc1",)),
         OpSpec("swiglu", OpType.ELEMENTWISE, (gate,), act, saves=(gate,)),
         OpSpec("fc2", OpType.MATMUL, (act, fc2_w), partial, (fc2_w,), (act,),

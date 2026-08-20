@@ -20,6 +20,9 @@ class OpType(Enum):
     MOE_GEMM = "moe_gemm"
     DISPATCH = "dispatch"
     COMBINE = "combine"
+    COMPRESS = "compress"
+    INDEXER = "indexer"
+    SPARSE_ATTN = "sparse_attn"
 
 
 @dataclass(frozen=True)
@@ -51,6 +54,13 @@ class DimTable:
     tie_word_embeddings: bool = False
     hc_mult: int = 0
     enable_hyper_connections: bool = False
+    o_lora_rank: int = 0
+    o_groups: int = 0
+    index_n_heads: int = 0
+    index_head_dim: int = 0
+    index_topk: int = 0
+    num_hash_layers: int = 0
+    sliding_window: int = 0
 
     def __post_init__(self) -> None:
         required = {
@@ -73,6 +83,22 @@ class DimTable:
             raise ValueError("capacity_factor 必须为正数")
         if self.hc_mult < 0:
             raise ValueError("hc_mult 不能为负数")
+        optional_nonnegative = {
+            "o_lora_rank": self.o_lora_rank,
+            "o_groups": self.o_groups,
+            "index_n_heads": self.index_n_heads,
+            "index_head_dim": self.index_head_dim,
+            "index_topk": self.index_topk,
+            "num_hash_layers": self.num_hash_layers,
+            "sliding_window": self.sliding_window,
+        }
+        invalid_optional = [
+            name for name, value in optional_nonnegative.items() if value < 0
+        ]
+        if invalid_optional:
+            raise ValueError(
+                "可选维度不能为负数: " + ", ".join(invalid_optional)
+            )
 
     def as_dict(self) -> dict[str, Union[int, float]]:
         values = dict(self.__dict__)
@@ -100,6 +126,11 @@ class TensorRef:
     trainable: bool = True
     swappable: bool = True
     recomputable: bool = True
+    fsdp_replicated: bool = False
+    # ``value_id`` identifies a data-flow value.  It is deliberately separate
+    # from ``storage_id``: the latter is reserved for proven aliases/shared
+    # storage (for example tied embedding/output weights).
+    value_id: Optional[str] = None
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "shard", dict(self.shard))
@@ -126,6 +157,7 @@ class OpSpec:
     workspace: Optional[DimExpr] = None
     attrs: Mapping[str, object] = field(default_factory=dict)
     module_paths: Sequence[str] = field(default_factory=tuple)
+    backward_workspace: Optional[DimExpr] = None
 
 
 @dataclass(frozen=True)

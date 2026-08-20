@@ -2,7 +2,7 @@
 
 from .config_adapter import ConfigAdapter, EvaluationInputs
 from .model_spec import DimTable, LayerSpec, ModelSpec, OpSpec, OpType, TensorRef
-from .report import Evaluator, ModelSummary, PeakMemoryReport
+from .report import Evaluator, ModelSummary, PeakMemoryReport, RankPeak
 from .specs import (
     HardwareSpec,
     OptimizerSpec,
@@ -25,6 +25,7 @@ __all__ = [
     "OptimizerSpec",
     "ParallelConfig",
     "PeakMemoryReport",
+    "RankPeak",
     "RecomputeSpec",
     "SwapSpec",
     "TensorRef",

@@ -1,0 +1,151 @@
+{
+  "schema": "hbmprediction.frozen-prediction.v2",
+  "config": "/home/qs50063523/mycode/parallelsearch/real_tests/configs/qwen3_4l_dp8.yaml",
+  "config_sha256": "502c8a16ec1febbc6a05d36be3e4a4c88966b6b2ac12bfffffed331fb15d93cb",
+  "model_source_sha256": "cf46cfd99ad7197d33473820c1fcdc4b7e68296bc5f6df8e78b4ffa535fe5042",
+  "runtime_profiles": "/home/qs50063523/mycode/hbmprediction/validation/real_npu/runtime_profiles_v1.json",
+  "runtime_profiles_sha256": "5842b70c766a5cb0c19f84e1e352fd6db3ba8c97c859b673c54b2c22ffae89e2",
+  "prediction": {
+    "per_stage": [
+      {
+        "stage": 0,
+        "peak_bytes": 13258243692,
+        "breakdown": {
+          "persistent": 137111552,
+          "act_live": 2269790208,
+          "gather_buf": 0,
+          "grad_buf": 0,
+          "recomp_scratch": 0,
+          "swap_buf": 0,
+          "workspace": 4236247040,
+          "framework": 6615094892
+        },
+        "peak_event": "loss_bwd_dlogits",
+        "oom": false,
+        "bucket_peaks": {
+          "persistent": 137111552,
+          "act_live": 2269790208,
+          "gather_buf": 132382720,
+          "grad_buf": 132382720,
+          "recomp_scratch": 0,
+          "swap_buf": 0,
+          "workspace": 4236247040
+        },
+        "physical_dynamic_peak_bytes": 6643148800,
+        "allocator_pool_peak_bytes": 6653640300,
+        "device_baseline_bytes": 3584032768,
+        "untracked_runtime_point_bytes": 3020570624,
+        "fragmentation_point_bytes": 0,
+        "total_point_bytes": 13258243692,
+        "safe_upper_bytes": 14470301287,
+        "oom_status": "risky"
+      }
+    ],
+    "tightest_stage": 0,
+    "oom": false,
+    "static_per_stage": {
+      "0": {
+        "stage": 0,
+        "persistent_bytes": 137111552,
+        "breakdown": {
+          "parameter": 34277888,
+          "gradient": 34277888,
+          "master_weight": 0,
+          "optimizer_state": 68555776
+        },
+        "edge_parameter_bytes": 264766464,
+        "decoder_persistent_bytes": 4726784,
+        "host_pinned_bytes": 0,
+        "host_breakdown": {
+          "parameter": 0,
+          "gradient": 0,
+          "master_weight": 0,
+          "optimizer_state": 0
+        }
+      }
+    },
+    "summary": {
+      "name": "qwen3",
+      "num_layers": 4,
+      "world_size": 8
+    },
+    "warnings": [],
+    "schema_version": "hbmprediction.report.v2",
+    "tightest_rank": 0,
+    "tightest_event": "loss_bwd_dlogits",
+    "oom_status": "risky",
+    "capability_status": "experimental",
+    "fingerprints": {
+      "hardware": "unknown",
+      "runtime": "/home/qs50063523/mycode/hbmprediction/validation/real_npu/runtime_profiles_v1.json:qwen3:tp1-cp1-pp1-ep1-dp8x1-i1",
+      "source": "unknown",
+      "model_source_commit": "75e57dc680c0a349d3ad9ec2641cdcce4f98f986"
+    },
+    "per_rank": [
+      {
+        "rank": 0,
+        "stage": 0,
+        "peak_bytes": 13258243692,
+        "safe_upper_bytes": 14470301287,
+        "peak_event": "loss_bwd_dlogits",
+        "oom_status": "risky"
+      },
+      {
+        "rank": 1,
+        "stage": 0,
+        "peak_bytes": 13258243692,
+        "safe_upper_bytes": 14470301287,
+        "peak_event": "loss_bwd_dlogits",
+        "oom_status": "risky"
+      },
+      {
+        "rank": 2,
+        "stage": 0,
+        "peak_bytes": 13258243692,
+        "safe_upper_bytes": 14470301287,
+        "peak_event": "loss_bwd_dlogits",
+        "oom_status": "risky"
+      },
+      {
+        "rank": 3,
+        "stage": 0,
+        "peak_bytes": 13258243692,
+        "safe_upper_bytes": 14470301287,
+        "peak_event": "loss_bwd_dlogits",
+        "oom_status": "risky"
+      },
+      {
+        "rank": 4,
+        "stage": 0,
+        "peak_bytes": 13258243692,
+        "safe_upper_bytes": 14470301287,
+        "peak_event": "loss_bwd_dlogits",
+        "oom_status": "risky"
+      },
+      {
+        "rank": 5,
+        "stage": 0,
+        "peak_bytes": 13258243692,
+        "safe_upper_bytes": 14470301287,
+        "peak_event": "loss_bwd_dlogits",
+        "oom_status": "risky"
+      },
+      {
+        "rank": 6,
+        "stage": 0,
+        "peak_bytes": 13258243692,
+        "safe_upper_bytes": 14470301287,
+        "peak_event": "loss_bwd_dlogits",
+        "oom_status": "risky"
+      },
+      {
+        "rank": 7,
+        "stage": 0,
+        "peak_bytes": 13258243692,
+        "safe_upper_bytes": 14470301287,
+        "peak_event": "loss_bwd_dlogits",
+        "oom_status": "risky"
+      }
+    ]
+  }
+}

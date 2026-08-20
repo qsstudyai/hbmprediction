@@ -1,0 +1,22 @@
+{
+  "schema": "p1.frozen-prediction.v1",
+  "name": "h2-deepseek3-34l-tp2cp2ep2-v12",
+  "world_size": 8,
+  "inputs": {
+    "config": ".npu-calibration/p1v12-h2-deepseek3-34l-tp2cp2ep2-timing/profile_config.yaml",
+    "config_sha256": "f6d02da1e7a03dcb05e92d7c8e010573ee048688e932fa772bee69e8c4edc5c8",
+    "profile": "output/ascend_910b2_8_p1_v12_candidate.json",
+    "profile_sha256": "a74f3076f7aa864b28218e5e5498966a3a3d6a97fc72989524914525ba5cc4bd"
+  },
+  "prediction": {
+    "step_time_p50_ns": 2330331014,
+    "step_time_p90_ns": 2739957936,
+    "peak_hbm_total_bytes": 24866473843,
+    "peak_hbm_dynamic_bytes": 21282441075,
+    "oom": false,
+    "warnings": [
+      "p90_method=conservative_per_event_quantile; resource-correlated samples unavailable",
+      "使用覆盖感知特征残差模型 p1.feature-residual.v3；confidence=0.985，distance=0.060；低覆盖场景自动回退到物理基线"
+    ]
+  }
+}

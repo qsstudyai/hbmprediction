@@ -1,0 +1,3484 @@
+{
+  "manifest": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3_calibration_manifest.json",
+  "profile": "/home/qs50063523/mycode/parallelsearch/output/ascend_910b2_8_p1_v16_candidate.json",
+  "cases": [
+    {
+      "name": "c6-deepseek3-12l-tp2-cp4",
+      "family": "deepseek3",
+      "split": "calibration",
+      "timing": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-c6ds3-12l-tp2cp4-timing-v1",
+        "protocol": {
+          "run_mode": "timing",
+          "step_aggregation": "max_rank",
+          "timing_hbm_separated": true,
+          "holdout_eligible": true
+        },
+        "metadata_protocol": {
+          "aggregation": "max_rank",
+          "rank_count": 8,
+          "rank_step_counts": {
+            "worker_0.log": 36,
+            "worker_1.log": 36,
+            "worker_2.log": 36,
+            "worker_3.log": 36,
+            "worker_4.log": 36,
+            "worker_5.log": 36,
+            "worker_6.log": 36,
+            "worker_7.log": 36
+          },
+          "rank_global_batch_sizes": {
+            "worker_0.log": [
+              4
+            ],
+            "worker_1.log": [
+              4
+            ],
+            "worker_2.log": [
+              4
+            ],
+            "worker_3.log": [
+              4
+            ],
+            "worker_4.log": [
+              4
+            ],
+            "worker_5.log": [
+              4
+            ],
+            "worker_6.log": [
+              4
+            ],
+            "worker_7.log": [
+              4
+            ]
+          },
+          "effective_global_batch_sizes": [
+            4
+          ],
+          "status": "valid"
+        },
+        "p50_ns": 1101000000,
+        "p90_ns": 1151800000,
+        "eligible": true,
+        "measurement_quality": {
+          "schema": "p1.measurement-contract.v2",
+          "kind": "timing",
+          "status": "valid",
+          "issues": [],
+          "effective_global_batch": 4,
+          "tokens_per_step": 16384,
+          "rank_count": 8,
+          "steady_step_count": 24,
+          "aggregation": "pXX(max_rank_per_global_step)"
+        }
+      },
+      "hbm": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-c6ds3-12l-tp2cp4-hbm-v4",
+        "case_result": true
+      },
+      "physical_base": {
+        "step_time_p50_ns": 878991067,
+        "step_time_p90_ns": 1096303256,
+        "peak_hbm_total_bytes": 14966320189,
+        "peak_hbm_dynamic_bytes": 11382287421,
+        "oom": false
+      },
+      "labels": {
+        "step_time_p50_ns": 1101000000,
+        "step_time_p90_ns": 1151800000,
+        "step_time_ns": 1101000000,
+        "peak_hbm_total_bytes": 19236126720,
+        "peak_hbm_dynamic_bytes": 15651045376,
+        "oom": false,
+        "timing_protocol_valid": true,
+        "measurement_quality": {
+          "timing": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "timing",
+            "status": "valid",
+            "issues": [],
+            "effective_global_batch": 4,
+            "tokens_per_step": 16384,
+            "rank_count": 8,
+            "steady_step_count": 24,
+            "aggregation": "pXX(max_rank_per_global_step)"
+          },
+          "hbm": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "hbm",
+            "status": "valid",
+            "issues": [],
+            "per_rank_sample_counts": [
+              113,
+              113,
+              113,
+              113,
+              113,
+              113,
+              113,
+              113
+            ],
+            "per_rank_baseline_bytes": [
+              3585081344,
+              3584032768,
+              3582984192,
+              3582984192,
+              3582984192,
+              3584032768,
+              3582984192,
+              3584032768
+            ],
+            "peak_observability": "sufficient",
+            "label": "total_peak_used_bytes"
+          }
+        }
+      }
+    },
+    {
+      "name": "c8-deepseek3-4l-tp2-pp2-dp2-interleave2",
+      "family": "deepseek3",
+      "split": "calibration",
+      "timing": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-c8ds3-timing-v2",
+        "protocol": {
+          "run_mode": "timing",
+          "step_aggregation": "max_rank",
+          "timing_hbm_separated": true,
+          "holdout_eligible": true
+        },
+        "metadata_protocol": {
+          "aggregation": "max_rank",
+          "rank_count": 8,
+          "rank_step_counts": {
+            "worker_0.log": 36,
+            "worker_1.log": 36,
+            "worker_2.log": 36,
+            "worker_3.log": 36,
+            "worker_4.log": 36,
+            "worker_5.log": 36,
+            "worker_6.log": 36,
+            "worker_7.log": 36
+          },
+          "rank_global_batch_sizes": {
+            "worker_0.log": [],
+            "worker_1.log": [],
+            "worker_2.log": [],
+            "worker_3.log": [],
+            "worker_4.log": [
+              4
+            ],
+            "worker_5.log": [
+              4
+            ],
+            "worker_6.log": [
+              4
+            ],
+            "worker_7.log": [
+              4
+            ]
+          },
+          "effective_global_batch_sizes": [
+            4
+          ],
+          "status": "valid"
+        },
+        "p50_ns": 283000000,
+        "p90_ns": 293400000,
+        "eligible": true,
+        "measurement_quality": {
+          "schema": "p1.measurement-contract.v2",
+          "kind": "timing",
+          "status": "valid",
+          "issues": [],
+          "effective_global_batch": 4,
+          "tokens_per_step": 16384,
+          "rank_count": 8,
+          "steady_step_count": 24,
+          "aggregation": "pXX(max_rank_per_global_step)"
+        }
+      },
+      "hbm": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-c8ds3-hbm-v4",
+        "case_result": true
+      },
+      "physical_base": {
+        "step_time_p50_ns": 301737950,
+        "step_time_p90_ns": 397599702,
+        "peak_hbm_total_bytes": 10838813010,
+        "peak_hbm_dynamic_bytes": 7254780242,
+        "oom": false
+      },
+      "labels": {
+        "step_time_p50_ns": 283000000,
+        "step_time_p90_ns": 293400000,
+        "step_time_ns": 283000000,
+        "peak_hbm_total_bytes": 17359175680,
+        "peak_hbm_dynamic_bytes": 13776191488,
+        "oom": false,
+        "timing_protocol_valid": true,
+        "measurement_quality": {
+          "timing": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "timing",
+            "status": "valid",
+            "issues": [],
+            "effective_global_batch": 4,
+            "tokens_per_step": 16384,
+            "rank_count": 8,
+            "steady_step_count": 24,
+            "aggregation": "pXX(max_rank_per_global_step)"
+          },
+          "hbm": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "hbm",
+            "status": "valid",
+            "issues": [],
+            "per_rank_sample_counts": [
+              35,
+              35,
+              35,
+              35,
+              35,
+              35,
+              35,
+              35
+            ],
+            "per_rank_baseline_bytes": [
+              3586129920,
+              3582984192,
+              3584032768,
+              3585081344,
+              3582984192,
+              3582984192,
+              3584032768,
+              3582984192
+            ],
+            "peak_observability": "sufficient",
+            "label": "total_peak_used_bytes"
+          }
+        }
+      }
+    },
+    {
+      "name": "c9-deepseek3-6l-tp2-pp2-dp2-interleave1",
+      "family": "deepseek3",
+      "split": "calibration",
+      "timing": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-c9ds3-timing-v1",
+        "protocol": {
+          "run_mode": "timing",
+          "step_aggregation": "max_rank",
+          "timing_hbm_separated": true,
+          "holdout_eligible": true
+        },
+        "metadata_protocol": {
+          "aggregation": "max_rank",
+          "rank_count": 8,
+          "rank_step_counts": {
+            "worker_0.log": 36,
+            "worker_1.log": 36,
+            "worker_2.log": 36,
+            "worker_3.log": 36,
+            "worker_4.log": 36,
+            "worker_5.log": 36,
+            "worker_6.log": 36,
+            "worker_7.log": 36
+          },
+          "rank_global_batch_sizes": {
+            "worker_0.log": [],
+            "worker_1.log": [],
+            "worker_2.log": [],
+            "worker_3.log": [],
+            "worker_4.log": [
+              4
+            ],
+            "worker_5.log": [
+              4
+            ],
+            "worker_6.log": [
+              4
+            ],
+            "worker_7.log": [
+              4
+            ]
+          },
+          "effective_global_batch_sizes": [
+            4
+          ],
+          "status": "valid"
+        },
+        "p50_ns": 325000000,
+        "p90_ns": 328700000,
+        "eligible": true,
+        "measurement_quality": {
+          "schema": "p1.measurement-contract.v2",
+          "kind": "timing",
+          "status": "valid",
+          "issues": [],
+          "effective_global_batch": 4,
+          "tokens_per_step": 16384,
+          "rank_count": 8,
+          "steady_step_count": 24,
+          "aggregation": "pXX(max_rank_per_global_step)"
+        }
+      },
+      "hbm": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-c9ds3-hbm-v1",
+        "case_result": true
+      },
+      "physical_base": {
+        "step_time_p50_ns": 325000000,
+        "step_time_p90_ns": 462929159,
+        "peak_hbm_total_bytes": 12097234354,
+        "peak_hbm_dynamic_bytes": 8513201586,
+        "oom": false
+      },
+      "labels": {
+        "step_time_p50_ns": 325000000,
+        "step_time_p90_ns": 328700000,
+        "step_time_ns": 325000000,
+        "peak_hbm_total_bytes": 18354274304,
+        "peak_hbm_dynamic_bytes": 14770241536,
+        "oom": false,
+        "timing_protocol_valid": true,
+        "measurement_quality": {
+          "timing": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "timing",
+            "status": "valid",
+            "issues": [],
+            "effective_global_batch": 4,
+            "tokens_per_step": 16384,
+            "rank_count": 8,
+            "steady_step_count": 24,
+            "aggregation": "pXX(max_rank_per_global_step)"
+          },
+          "hbm": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "hbm",
+            "status": "valid",
+            "issues": [],
+            "per_rank_sample_counts": [
+              29,
+              29,
+              29,
+              29,
+              29,
+              29,
+              29,
+              29
+            ],
+            "per_rank_baseline_bytes": [
+              3585081344,
+              3584032768,
+              3584032768,
+              3584032768,
+              3582984192,
+              3584032768,
+              3584032768,
+              3584032768
+            ],
+            "peak_observability": "sufficient",
+            "label": "total_peak_used_bytes"
+          }
+        }
+      }
+    },
+    {
+      "name": "c12-qwen3-4l-tp2-dp4",
+      "family": "qwen3",
+      "split": "calibration",
+      "timing": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-c12qwen3-4l-tp2dp4-timing-v4",
+        "protocol": {
+          "run_mode": "timing",
+          "step_aggregation": "max_rank",
+          "timing_hbm_separated": true,
+          "holdout_eligible": true
+        },
+        "metadata_protocol": {
+          "aggregation": "max_rank",
+          "rank_count": 8,
+          "rank_step_counts": {
+            "worker_0.log": 32,
+            "worker_1.log": 32,
+            "worker_2.log": 32,
+            "worker_3.log": 32,
+            "worker_4.log": 32,
+            "worker_5.log": 32,
+            "worker_6.log": 32,
+            "worker_7.log": 32
+          },
+          "rank_global_batch_sizes": {
+            "worker_0.log": [
+              4
+            ],
+            "worker_1.log": [
+              4
+            ],
+            "worker_2.log": [
+              4
+            ],
+            "worker_3.log": [
+              4
+            ],
+            "worker_4.log": [
+              4
+            ],
+            "worker_5.log": [
+              4
+            ],
+            "worker_6.log": [
+              4
+            ],
+            "worker_7.log": [
+              4
+            ]
+          },
+          "effective_global_batch_sizes": [
+            4
+          ],
+          "status": "valid"
+        },
+        "p50_ns": 113000000,
+        "p90_ns": 117400000,
+        "eligible": true,
+        "measurement_quality": {
+          "schema": "p1.measurement-contract.v2",
+          "kind": "timing",
+          "status": "valid",
+          "issues": [],
+          "effective_global_batch": 4,
+          "tokens_per_step": 16384,
+          "rank_count": 8,
+          "steady_step_count": 24,
+          "aggregation": "pXX(max_rank_per_global_step)"
+        }
+      },
+      "hbm": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-c12qwen3-4l-tp2dp4-hbm-v3",
+        "case_result": true
+      },
+      "physical_base": {
+        "step_time_p50_ns": 113000171,
+        "step_time_p90_ns": 135429959,
+        "peak_hbm_total_bytes": 6118304414,
+        "peak_hbm_dynamic_bytes": 2534271646,
+        "oom": false
+      },
+      "labels": {
+        "step_time_p50_ns": 113000000,
+        "step_time_p90_ns": 117400000,
+        "step_time_ns": 113000000,
+        "peak_hbm_total_bytes": 9169797120,
+        "peak_hbm_dynamic_bytes": 5584715776,
+        "oom": false,
+        "timing_protocol_valid": true,
+        "measurement_quality": {
+          "timing": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "timing",
+            "status": "valid",
+            "issues": [],
+            "effective_global_batch": 4,
+            "tokens_per_step": 16384,
+            "rank_count": 8,
+            "steady_step_count": 24,
+            "aggregation": "pXX(max_rank_per_global_step)"
+          },
+          "hbm": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "hbm",
+            "status": "valid",
+            "issues": [],
+            "per_rank_sample_counts": [
+              21,
+              21,
+              21,
+              21,
+              21,
+              21,
+              21,
+              21
+            ],
+            "per_rank_baseline_bytes": [
+              3585081344,
+              3584032768,
+              3582984192,
+              3584032768,
+              3582984192,
+              3584032768,
+              3582984192,
+              3585081344
+            ],
+            "peak_observability": "sufficient",
+            "label": "total_peak_used_bytes"
+          }
+        }
+      }
+    },
+    {
+      "name": "c14-deepseek3-16l-tp2-pp2-dp2-interleave2",
+      "family": "deepseek3",
+      "split": "calibration",
+      "timing": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v3-c14-deepseek3-16l-pp2i2-timing-v3",
+        "protocol": {
+          "run_mode": "timing",
+          "step_aggregation": "max_rank",
+          "timing_hbm_separated": true,
+          "holdout_eligible": true
+        },
+        "metadata_protocol": {
+          "aggregation": "max_rank",
+          "rank_count": 8,
+          "rank_step_counts": {
+            "worker_0.log": 36,
+            "worker_1.log": 36,
+            "worker_2.log": 36,
+            "worker_3.log": 36,
+            "worker_4.log": 36,
+            "worker_5.log": 36,
+            "worker_6.log": 36,
+            "worker_7.log": 36
+          },
+          "rank_global_batch_sizes": {
+            "worker_0.log": [],
+            "worker_1.log": [],
+            "worker_2.log": [],
+            "worker_3.log": [],
+            "worker_4.log": [
+              4
+            ],
+            "worker_5.log": [
+              4
+            ],
+            "worker_6.log": [
+              4
+            ],
+            "worker_7.log": [
+              4
+            ]
+          },
+          "effective_global_batch_sizes": [
+            4
+          ],
+          "status": "valid"
+        },
+        "p50_ns": 687500000,
+        "p90_ns": 714700000,
+        "eligible": true,
+        "measurement_quality": {
+          "schema": "p1.measurement-contract.v2",
+          "kind": "timing",
+          "status": "valid",
+          "issues": [],
+          "effective_global_batch": 4,
+          "tokens_per_step": 16384,
+          "rank_count": 8,
+          "steady_step_count": 24,
+          "aggregation": "pXX(max_rank_per_global_step)"
+        }
+      },
+      "hbm": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v3-c14-deepseek3-16l-pp2i2-hbm-v1",
+        "case_result": true
+      },
+      "physical_base": {
+        "step_time_p50_ns": 668762049,
+        "step_time_p90_ns": 950284525,
+        "peak_hbm_total_bytes": 18389341076,
+        "peak_hbm_dynamic_bytes": 14805308308,
+        "oom": false
+      },
+      "labels": {
+        "step_time_p50_ns": 687500000,
+        "step_time_p90_ns": 714700000,
+        "step_time_ns": 687500000,
+        "peak_hbm_total_bytes": 23629660160,
+        "peak_hbm_dynamic_bytes": 20045627392,
+        "oom": false,
+        "timing_protocol_valid": true,
+        "measurement_quality": {
+          "timing": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "timing",
+            "status": "valid",
+            "issues": [],
+            "effective_global_batch": 4,
+            "tokens_per_step": 16384,
+            "rank_count": 8,
+            "steady_step_count": 24,
+            "aggregation": "pXX(max_rank_per_global_step)"
+          },
+          "hbm": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "hbm",
+            "status": "valid",
+            "issues": [],
+            "per_rank_sample_counts": [
+              397,
+              397,
+              397,
+              397,
+              397,
+              397,
+              397,
+              397
+            ],
+            "per_rank_baseline_bytes": [
+              3586129920,
+              3585081344,
+              3584032768,
+              3585081344,
+              3584032768,
+              3582984192,
+              3582984192,
+              3585081344
+            ],
+            "peak_observability": "sufficient",
+            "label": "total_peak_used_bytes"
+          }
+        }
+      }
+    },
+    {
+      "name": "c15-deepseek3-16l-tp2-cp2-ep2",
+      "family": "deepseek3",
+      "split": "calibration",
+      "timing": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v3-b4-deepseek3-16l-tp2cp2ep2-timing",
+        "protocol": {
+          "run_mode": "timing",
+          "step_aggregation": "max_rank",
+          "timing_hbm_separated": true,
+          "holdout_eligible": true
+        },
+        "metadata_protocol": {
+          "aggregation": "max_rank",
+          "rank_count": 8,
+          "rank_step_counts": {
+            "worker_0.log": 36,
+            "worker_1.log": 36,
+            "worker_2.log": 36,
+            "worker_3.log": 36,
+            "worker_4.log": 36,
+            "worker_5.log": 36,
+            "worker_6.log": 36,
+            "worker_7.log": 36
+          },
+          "rank_global_batch_sizes": {
+            "worker_0.log": [
+              4
+            ],
+            "worker_1.log": [
+              4
+            ],
+            "worker_2.log": [
+              4
+            ],
+            "worker_3.log": [
+              4
+            ],
+            "worker_4.log": [
+              4
+            ],
+            "worker_5.log": [
+              4
+            ],
+            "worker_6.log": [
+              4
+            ],
+            "worker_7.log": [
+              4
+            ]
+          },
+          "effective_global_batch_sizes": [
+            4
+          ],
+          "status": "valid"
+        },
+        "p50_ns": 1267000000,
+        "p90_ns": 1374700000,
+        "eligible": true,
+        "measurement_quality": {
+          "schema": "p1.measurement-contract.v2",
+          "kind": "timing",
+          "status": "valid",
+          "issues": [],
+          "effective_global_batch": 4,
+          "tokens_per_step": 16384,
+          "rank_count": 8,
+          "steady_step_count": 24,
+          "aggregation": "pXX(max_rank_per_global_step)"
+        }
+      },
+      "hbm": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v3-b4-deepseek3-16l-tp2cp2ep2-hbm",
+        "case_result": true
+      },
+      "physical_base": {
+        "step_time_p50_ns": 534519829,
+        "step_time_p90_ns": 741947990,
+        "peak_hbm_total_bytes": 13948270224,
+        "peak_hbm_dynamic_bytes": 10364237456,
+        "oom": false
+      },
+      "labels": {
+        "step_time_p50_ns": 1267000000,
+        "step_time_p90_ns": 1374700000,
+        "step_time_ns": 1267000000,
+        "peak_hbm_total_bytes": 23261609984,
+        "peak_hbm_dynamic_bytes": 19678625792,
+        "oom": false,
+        "timing_protocol_valid": true,
+        "measurement_quality": {
+          "timing": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "timing",
+            "status": "valid",
+            "issues": [],
+            "effective_global_batch": 4,
+            "tokens_per_step": 16384,
+            "rank_count": 8,
+            "steady_step_count": 24,
+            "aggregation": "pXX(max_rank_per_global_step)"
+          },
+          "hbm": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "hbm",
+            "status": "valid",
+            "issues": [],
+            "per_rank_sample_counts": [
+              171,
+              171,
+              171,
+              171,
+              171,
+              171,
+              171,
+              171
+            ],
+            "per_rank_baseline_bytes": [
+              3585081344,
+              3582984192,
+              3584032768,
+              3584032768,
+              3584032768,
+              3582984192,
+              3582984192,
+              3584032768
+            ],
+            "peak_observability": "sufficient",
+            "label": "total_peak_used_bytes"
+          }
+        }
+      }
+    },
+    {
+      "name": "c16-deepseek3-20l-tp2-cp2-ep2",
+      "family": "deepseek3",
+      "split": "calibration",
+      "timing": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v5-h2-deepseek3-20l-tp2cp2ep2-timing",
+        "protocol": {
+          "run_mode": "timing",
+          "step_aggregation": "max_rank",
+          "timing_hbm_separated": true,
+          "holdout_eligible": true
+        },
+        "metadata_protocol": {
+          "aggregation": "max_rank",
+          "rank_count": 8,
+          "rank_step_counts": {
+            "worker_0.log": 36,
+            "worker_1.log": 36,
+            "worker_2.log": 36,
+            "worker_3.log": 36,
+            "worker_4.log": 36,
+            "worker_5.log": 36,
+            "worker_6.log": 36,
+            "worker_7.log": 36
+          },
+          "rank_global_batch_sizes": {
+            "worker_0.log": [
+              4
+            ],
+            "worker_1.log": [
+              4
+            ],
+            "worker_2.log": [
+              4
+            ],
+            "worker_3.log": [
+              4
+            ],
+            "worker_4.log": [
+              4
+            ],
+            "worker_5.log": [
+              4
+            ],
+            "worker_6.log": [
+              4
+            ],
+            "worker_7.log": [
+              4
+            ]
+          },
+          "effective_global_batch_sizes": [
+            4
+          ],
+          "status": "valid"
+        },
+        "p50_ns": 1623500000,
+        "p90_ns": 1707200000,
+        "eligible": true,
+        "measurement_quality": {
+          "schema": "p1.measurement-contract.v2",
+          "kind": "timing",
+          "status": "valid",
+          "issues": [],
+          "effective_global_batch": 4,
+          "tokens_per_step": 16384,
+          "rank_count": 8,
+          "steady_step_count": 24,
+          "aggregation": "pXX(max_rank_per_global_step)"
+        }
+      },
+      "hbm": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v5-h2-deepseek3-20l-tp2cp2ep2-hbm-v2",
+        "case_result": true
+      },
+      "physical_base": {
+        "step_time_p50_ns": 648419886,
+        "step_time_p90_ns": 901057778,
+        "peak_hbm_total_bytes": 15813516144,
+        "peak_hbm_dynamic_bytes": 12229483376,
+        "oom": false
+      },
+      "labels": {
+        "step_time_p50_ns": 1623500000,
+        "step_time_p90_ns": 1707200000,
+        "step_time_ns": 1623500000,
+        "peak_hbm_total_bytes": 21576548352,
+        "peak_hbm_dynamic_bytes": 17993564160,
+        "oom": false,
+        "timing_protocol_valid": true,
+        "measurement_quality": {
+          "timing": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "timing",
+            "status": "valid",
+            "issues": [],
+            "effective_global_batch": 4,
+            "tokens_per_step": 16384,
+            "rank_count": 8,
+            "steady_step_count": 24,
+            "aggregation": "pXX(max_rank_per_global_step)"
+          },
+          "hbm": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "hbm",
+            "status": "valid",
+            "issues": [],
+            "per_rank_sample_counts": [
+              208,
+              208,
+              208,
+              208,
+              208,
+              208,
+              208,
+              208
+            ],
+            "per_rank_baseline_bytes": [
+              3585081344,
+              3584032768,
+              3583508480,
+              3584032768,
+              3582984192,
+              3582984192,
+              3582984192,
+              3584032768
+            ],
+            "peak_observability": "sufficient",
+            "label": "total_peak_used_bytes"
+          }
+        }
+      }
+    },
+    {
+      "name": "c17-qwen3-6l-dp8",
+      "family": "qwen3",
+      "split": "calibration",
+      "timing": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v6-h1-qwen3-6l-dp8-timing",
+        "protocol": {
+          "run_mode": "timing",
+          "step_aggregation": "max_rank",
+          "timing_hbm_separated": true,
+          "holdout_eligible": true
+        },
+        "metadata_protocol": {
+          "aggregation": "max_rank",
+          "rank_count": 8,
+          "rank_step_counts": {
+            "worker_0.log": 36,
+            "worker_1.log": 36,
+            "worker_2.log": 36,
+            "worker_3.log": 36,
+            "worker_4.log": 36,
+            "worker_5.log": 36,
+            "worker_6.log": 36,
+            "worker_7.log": 36
+          },
+          "rank_global_batch_sizes": {
+            "worker_0.log": [
+              8
+            ],
+            "worker_1.log": [
+              8
+            ],
+            "worker_2.log": [
+              8
+            ],
+            "worker_3.log": [
+              8
+            ],
+            "worker_4.log": [
+              8
+            ],
+            "worker_5.log": [
+              8
+            ],
+            "worker_6.log": [
+              8
+            ],
+            "worker_7.log": [
+              8
+            ]
+          },
+          "effective_global_batch_sizes": [
+            8
+          ],
+          "status": "valid"
+        },
+        "p50_ns": 182000000,
+        "p90_ns": 191700000,
+        "eligible": true,
+        "measurement_quality": {
+          "schema": "p1.measurement-contract.v2",
+          "kind": "timing",
+          "status": "valid",
+          "issues": [],
+          "effective_global_batch": 8,
+          "tokens_per_step": 32768,
+          "rank_count": 8,
+          "steady_step_count": 24,
+          "aggregation": "pXX(max_rank_per_global_step)"
+        }
+      },
+      "hbm": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v6-h1-qwen3-6l-dp8-hbm",
+        "case_result": true
+      },
+      "physical_base": {
+        "step_time_p50_ns": 144117526,
+        "step_time_p90_ns": 172770776,
+        "peak_hbm_total_bytes": 6844766325,
+        "peak_hbm_dynamic_bytes": 3260733557,
+        "oom": false
+      },
+      "labels": {
+        "step_time_p50_ns": 182000000,
+        "step_time_p90_ns": 191700000,
+        "step_time_ns": 182000000,
+        "peak_hbm_total_bytes": 12457082880,
+        "peak_hbm_dynamic_bytes": 8870952960,
+        "oom": false,
+        "timing_protocol_valid": true,
+        "measurement_quality": {
+          "timing": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "timing",
+            "status": "valid",
+            "issues": [],
+            "effective_global_batch": 8,
+            "tokens_per_step": 32768,
+            "rank_count": 8,
+            "steady_step_count": 24,
+            "aggregation": "pXX(max_rank_per_global_step)"
+          },
+          "hbm": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "hbm",
+            "status": "valid",
+            "issues": [],
+            "per_rank_sample_counts": [
+              29,
+              29,
+              29,
+              29,
+              29,
+              29,
+              29,
+              29
+            ],
+            "per_rank_baseline_bytes": [
+              3586129920,
+              3584032768,
+              3584032768,
+              3582459904,
+              3583508480,
+              3582984192,
+              3582984192,
+              3584032768
+            ],
+            "peak_observability": "sufficient",
+            "label": "total_peak_used_bytes"
+          }
+        }
+      }
+    },
+    {
+      "name": "c18-qwen3-10l-dp8",
+      "family": "qwen3",
+      "split": "calibration",
+      "timing": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v7-h1-qwen3-10l-dp8-timing",
+        "protocol": {
+          "run_mode": "timing",
+          "step_aggregation": "max_rank",
+          "timing_hbm_separated": true,
+          "holdout_eligible": true
+        },
+        "metadata_protocol": {
+          "aggregation": "max_rank",
+          "rank_count": 8,
+          "rank_step_counts": {
+            "worker_0.log": 36,
+            "worker_1.log": 36,
+            "worker_2.log": 36,
+            "worker_3.log": 36,
+            "worker_4.log": 36,
+            "worker_5.log": 36,
+            "worker_6.log": 36,
+            "worker_7.log": 36
+          },
+          "rank_global_batch_sizes": {
+            "worker_0.log": [
+              8
+            ],
+            "worker_1.log": [
+              8
+            ],
+            "worker_2.log": [
+              8
+            ],
+            "worker_3.log": [
+              8
+            ],
+            "worker_4.log": [
+              8
+            ],
+            "worker_5.log": [
+              8
+            ],
+            "worker_6.log": [
+              8
+            ],
+            "worker_7.log": [
+              8
+            ]
+          },
+          "effective_global_batch_sizes": [
+            8
+          ],
+          "status": "valid"
+        },
+        "p50_ns": 308000000,
+        "p90_ns": 344100000,
+        "eligible": true,
+        "measurement_quality": {
+          "schema": "p1.measurement-contract.v2",
+          "kind": "timing",
+          "status": "valid",
+          "issues": [],
+          "effective_global_batch": 8,
+          "tokens_per_step": 32768,
+          "rank_count": 8,
+          "steady_step_count": 24,
+          "aggregation": "pXX(max_rank_per_global_step)"
+        }
+      },
+      "hbm": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v7-h1-qwen3-10l-dp8-hbm",
+        "case_result": true
+      },
+      "physical_base": {
+        "step_time_p50_ns": 233023412,
+        "step_time_p90_ns": 279457815,
+        "peak_hbm_total_bytes": 6961525058,
+        "peak_hbm_dynamic_bytes": 3377492290,
+        "oom": false
+      },
+      "labels": {
+        "step_time_p50_ns": 308000000,
+        "step_time_p90_ns": 344100000,
+        "step_time_ns": 308000000,
+        "peak_hbm_total_bytes": 14502854656,
+        "peak_hbm_dynamic_bytes": 10919870464,
+        "oom": false,
+        "timing_protocol_valid": true,
+        "measurement_quality": {
+          "timing": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "timing",
+            "status": "valid",
+            "issues": [],
+            "effective_global_batch": 8,
+            "tokens_per_step": 32768,
+            "rank_count": 8,
+            "steady_step_count": 24,
+            "aggregation": "pXX(max_rank_per_global_step)"
+          },
+          "hbm": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "hbm",
+            "status": "valid",
+            "issues": [],
+            "per_rank_sample_counts": [
+              46,
+              46,
+              46,
+              46,
+              46,
+              46,
+              46,
+              46
+            ],
+            "per_rank_baseline_bytes": [
+              3584032768,
+              3584032768,
+              3582984192,
+              3582984192,
+              3583508480,
+              3582984192,
+              3584032768,
+              3584032768
+            ],
+            "peak_observability": "sufficient",
+            "label": "total_peak_used_bytes"
+          }
+        }
+      }
+    },
+    {
+      "name": "c19-deepseek3-28l-tp2-cp2-ep2",
+      "family": "deepseek3",
+      "split": "calibration",
+      "timing": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v9-h2-deepseek3-28l-tp2cp2ep2-timing",
+        "protocol": {
+          "run_mode": "timing",
+          "step_aggregation": "max_rank",
+          "timing_hbm_separated": true,
+          "holdout_eligible": true
+        },
+        "metadata_protocol": {
+          "aggregation": "max_rank",
+          "rank_count": 8,
+          "rank_step_counts": {
+            "worker_0.log": 36,
+            "worker_1.log": 36,
+            "worker_2.log": 36,
+            "worker_3.log": 36,
+            "worker_4.log": 36,
+            "worker_5.log": 36,
+            "worker_6.log": 36,
+            "worker_7.log": 36
+          },
+          "rank_global_batch_sizes": {
+            "worker_0.log": [
+              4
+            ],
+            "worker_1.log": [
+              4
+            ],
+            "worker_2.log": [
+              4
+            ],
+            "worker_3.log": [
+              4
+            ],
+            "worker_4.log": [
+              4
+            ],
+            "worker_5.log": [
+              4
+            ],
+            "worker_6.log": [
+              4
+            ],
+            "worker_7.log": [
+              4
+            ]
+          },
+          "effective_global_batch_sizes": [
+            4
+          ],
+          "status": "valid"
+        },
+        "p50_ns": 1840500000,
+        "p90_ns": 2024600000,
+        "eligible": true,
+        "measurement_quality": {
+          "schema": "p1.measurement-contract.v2",
+          "kind": "timing",
+          "status": "valid",
+          "issues": [],
+          "effective_global_batch": 4,
+          "tokens_per_step": 16384,
+          "rank_count": 8,
+          "steady_step_count": 24,
+          "aggregation": "pXX(max_rank_per_global_step)"
+        }
+      },
+      "hbm": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v9-h2-deepseek3-28l-tp2cp2ep2-hbm",
+        "case_result": true
+      },
+      "physical_base": {
+        "step_time_p50_ns": 876220002,
+        "step_time_p90_ns": 1219277356,
+        "peak_hbm_total_bytes": 19544007984,
+        "peak_hbm_dynamic_bytes": 15959975216,
+        "oom": false
+      },
+      "labels": {
+        "step_time_p50_ns": 1840500000,
+        "step_time_p90_ns": 2024600000,
+        "step_time_ns": 1840500000,
+        "peak_hbm_total_bytes": 22558015488,
+        "peak_hbm_dynamic_bytes": 18975031296,
+        "oom": false,
+        "timing_protocol_valid": true,
+        "measurement_quality": {
+          "timing": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "timing",
+            "status": "valid",
+            "issues": [],
+            "effective_global_batch": 4,
+            "tokens_per_step": 16384,
+            "rank_count": 8,
+            "steady_step_count": 24,
+            "aggregation": "pXX(max_rank_per_global_step)"
+          },
+          "hbm": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "hbm",
+            "status": "valid",
+            "issues": [],
+            "per_rank_sample_counts": [
+              288,
+              288,
+              288,
+              288,
+              288,
+              288,
+              288,
+              288
+            ],
+            "per_rank_baseline_bytes": [
+              3585081344,
+              3584032768,
+              3582984192,
+              3584032768,
+              3582984192,
+              3584032768,
+              3582984192,
+              3582984192
+            ],
+            "peak_observability": "sufficient",
+            "label": "total_peak_used_bytes"
+          }
+        }
+      }
+    },
+    {
+      "name": "c20-deepseek3-32l-tp2-cp2-ep2",
+      "family": "deepseek3",
+      "split": "calibration",
+      "timing": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v10-h2-deepseek3-32l-tp2cp2ep2-timing",
+        "protocol": {
+          "run_mode": "timing",
+          "step_aggregation": "max_rank",
+          "timing_hbm_separated": true,
+          "holdout_eligible": true
+        },
+        "metadata_protocol": {
+          "aggregation": "max_rank",
+          "rank_count": 8,
+          "rank_step_counts": {
+            "worker_0.log": 36,
+            "worker_1.log": 36,
+            "worker_2.log": 36,
+            "worker_3.log": 36,
+            "worker_4.log": 36,
+            "worker_5.log": 36,
+            "worker_6.log": 36,
+            "worker_7.log": 36
+          },
+          "rank_global_batch_sizes": {
+            "worker_0.log": [
+              4
+            ],
+            "worker_1.log": [
+              4
+            ],
+            "worker_2.log": [
+              4
+            ],
+            "worker_3.log": [
+              4
+            ],
+            "worker_4.log": [
+              4
+            ],
+            "worker_5.log": [
+              4
+            ],
+            "worker_6.log": [
+              4
+            ],
+            "worker_7.log": [
+              4
+            ]
+          },
+          "effective_global_batch_sizes": [
+            4
+          ],
+          "status": "valid"
+        },
+        "p50_ns": 2265500000,
+        "p90_ns": 2527100000,
+        "eligible": true,
+        "measurement_quality": {
+          "schema": "p1.measurement-contract.v2",
+          "kind": "timing",
+          "status": "valid",
+          "issues": [],
+          "effective_global_batch": 4,
+          "tokens_per_step": 16384,
+          "rank_count": 8,
+          "steady_step_count": 24,
+          "aggregation": "pXX(max_rank_per_global_step)"
+        }
+      },
+      "hbm": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v10-h2-deepseek3-32l-tp2cp2ep2-hbm",
+        "case_result": true,
+        "measurement_quality": {
+          "schema": "p1.measurement-contract.v2",
+          "kind": "hbm",
+          "status": "diagnostic_only",
+          "issues": [
+            "contaminated_device_baseline: cross-rank spread=12272533504 exceeds 2975072256"
+          ],
+          "per_rank_sample_counts": [
+            409,
+            409,
+            409,
+            409,
+            409,
+            409,
+            409,
+            409
+          ],
+          "per_rank_baseline_bytes": [
+            14875623424,
+            14875099136,
+            17769168896,
+            17770217472,
+            8520728576,
+            5497683968,
+            10223616000,
+            16925589504
+          ],
+          "peak_observability": "low_or_incomplete",
+          "label": "total_peak_used_bytes"
+        }
+      },
+      "physical_base": {
+        "step_time_p50_ns": 990120059,
+        "step_time_p90_ns": 1378387143,
+        "peak_hbm_total_bytes": 21409253904,
+        "peak_hbm_dynamic_bytes": 17825221136,
+        "oom": false
+      },
+      "labels": {
+        "step_time_p50_ns": 2265500000,
+        "step_time_p90_ns": 2527100000,
+        "step_time_ns": 2265500000,
+        "peak_hbm_total_bytes": null,
+        "peak_hbm_dynamic_bytes": null,
+        "oom": false,
+        "timing_protocol_valid": true,
+        "measurement_quality": {
+          "timing": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "timing",
+            "status": "valid",
+            "issues": [],
+            "effective_global_batch": 4,
+            "tokens_per_step": 16384,
+            "rank_count": 8,
+            "steady_step_count": 24,
+            "aggregation": "pXX(max_rank_per_global_step)"
+          },
+          "hbm": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "hbm",
+            "status": "diagnostic_only",
+            "issues": [
+              "contaminated_device_baseline: cross-rank spread=12272533504 exceeds 2975072256"
+            ],
+            "per_rank_sample_counts": [
+              409,
+              409,
+              409,
+              409,
+              409,
+              409,
+              409,
+              409
+            ],
+            "per_rank_baseline_bytes": [
+              14875623424,
+              14875099136,
+              17769168896,
+              17770217472,
+              8520728576,
+              5497683968,
+              10223616000,
+              16925589504
+            ],
+            "peak_observability": "low_or_incomplete",
+            "label": "total_peak_used_bytes"
+          }
+        }
+      }
+    },
+    {
+      "name": "c21-qwen3-26l-dp8",
+      "family": "qwen3",
+      "split": "calibration",
+      "timing": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v11-h1-qwen3-26l-dp8-timing",
+        "protocol": {
+          "run_mode": "timing",
+          "step_aggregation": "max_rank",
+          "timing_hbm_separated": true,
+          "holdout_eligible": true
+        },
+        "metadata_protocol": {
+          "aggregation": "max_rank",
+          "rank_count": 8,
+          "rank_step_counts": {
+            "worker_0.log": 36,
+            "worker_1.log": 36,
+            "worker_2.log": 36,
+            "worker_3.log": 36,
+            "worker_4.log": 36,
+            "worker_5.log": 36,
+            "worker_6.log": 36,
+            "worker_7.log": 36
+          },
+          "rank_global_batch_sizes": {
+            "worker_0.log": [
+              8
+            ],
+            "worker_1.log": [
+              8
+            ],
+            "worker_2.log": [
+              8
+            ],
+            "worker_3.log": [
+              8
+            ],
+            "worker_4.log": [
+              8
+            ],
+            "worker_5.log": [
+              8
+            ],
+            "worker_6.log": [
+              8
+            ],
+            "worker_7.log": [
+              8
+            ]
+          },
+          "effective_global_batch_sizes": [
+            8
+          ],
+          "status": "valid"
+        },
+        "p50_ns": 689000000,
+        "p90_ns": 709000000,
+        "eligible": true,
+        "measurement_quality": {
+          "schema": "p1.measurement-contract.v2",
+          "kind": "timing",
+          "status": "valid",
+          "issues": [],
+          "effective_global_batch": 8,
+          "tokens_per_step": 32768,
+          "rank_count": 8,
+          "steady_step_count": 24,
+          "aggregation": "pXX(max_rank_per_global_step)"
+        }
+      },
+      "hbm": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v11-h1-qwen3-26l-dp8-hbm",
+        "case_result": true
+      },
+      "physical_base": {
+        "step_time_p50_ns": 588646957,
+        "step_time_p90_ns": 706205973,
+        "peak_hbm_total_bytes": 7428559989,
+        "peak_hbm_dynamic_bytes": 3844527221,
+        "oom": false
+      },
+      "labels": {
+        "step_time_p50_ns": 689000000,
+        "step_time_p90_ns": 709000000,
+        "step_time_ns": 689000000,
+        "peak_hbm_total_bytes": 15206449152,
+        "peak_hbm_dynamic_bytes": 11622416384,
+        "oom": false,
+        "timing_protocol_valid": true,
+        "measurement_quality": {
+          "timing": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "timing",
+            "status": "valid",
+            "issues": [],
+            "effective_global_batch": 8,
+            "tokens_per_step": 32768,
+            "rank_count": 8,
+            "steady_step_count": 24,
+            "aggregation": "pXX(max_rank_per_global_step)"
+          },
+          "hbm": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "hbm",
+            "status": "valid",
+            "issues": [],
+            "per_rank_sample_counts": [
+              111,
+              111,
+              111,
+              111,
+              111,
+              111,
+              111,
+              111
+            ],
+            "per_rank_baseline_bytes": [
+              3585081344,
+              3584032768,
+              3584032768,
+              3584032768,
+              3582984192,
+              3584032768,
+              3583508480,
+              3584032768
+            ],
+            "peak_observability": "sufficient",
+            "label": "total_peak_used_bytes"
+          }
+        }
+      }
+    },
+    {
+      "name": "c22-deepseek3-30l-tp2-cp2-ep2",
+      "family": "deepseek3",
+      "split": "calibration",
+      "timing": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v11-h2-deepseek3-30l-tp2cp2ep2-timing",
+        "protocol": {
+          "run_mode": "timing",
+          "step_aggregation": "max_rank",
+          "timing_hbm_separated": true,
+          "holdout_eligible": true
+        },
+        "metadata_protocol": {
+          "aggregation": "max_rank",
+          "rank_count": 8,
+          "rank_step_counts": {
+            "worker_0.log": 36,
+            "worker_1.log": 36,
+            "worker_2.log": 36,
+            "worker_3.log": 36,
+            "worker_4.log": 36,
+            "worker_5.log": 36,
+            "worker_6.log": 36,
+            "worker_7.log": 36
+          },
+          "rank_global_batch_sizes": {
+            "worker_0.log": [
+              4
+            ],
+            "worker_1.log": [
+              4
+            ],
+            "worker_2.log": [
+              4
+            ],
+            "worker_3.log": [
+              4
+            ],
+            "worker_4.log": [
+              4
+            ],
+            "worker_5.log": [
+              4
+            ],
+            "worker_6.log": [
+              4
+            ],
+            "worker_7.log": [
+              4
+            ]
+          },
+          "effective_global_batch_sizes": [
+            4
+          ],
+          "status": "valid"
+        },
+        "p50_ns": 2097500000,
+        "p90_ns": 2244000000,
+        "eligible": true,
+        "measurement_quality": {
+          "schema": "p1.measurement-contract.v2",
+          "kind": "timing",
+          "status": "valid",
+          "issues": [],
+          "effective_global_batch": 4,
+          "tokens_per_step": 16384,
+          "rank_count": 8,
+          "steady_step_count": 24,
+          "aggregation": "pXX(max_rank_per_global_step)"
+        }
+      },
+      "hbm": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v11-h2-deepseek3-30l-tp2cp2ep2-hbm",
+        "case_result": true
+      },
+      "physical_base": {
+        "step_time_p50_ns": 933170031,
+        "step_time_p90_ns": 1298832250,
+        "peak_hbm_total_bytes": 20476630944,
+        "peak_hbm_dynamic_bytes": 16892598176,
+        "oom": false
+      },
+      "labels": {
+        "step_time_p50_ns": 2097500000,
+        "step_time_p90_ns": 2244000000,
+        "step_time_ns": 2097500000,
+        "peak_hbm_total_bytes": 24212668416,
+        "peak_hbm_dynamic_bytes": 20628635648,
+        "oom": false,
+        "timing_protocol_valid": true,
+        "measurement_quality": {
+          "timing": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "timing",
+            "status": "valid",
+            "issues": [],
+            "effective_global_batch": 4,
+            "tokens_per_step": 16384,
+            "rank_count": 8,
+            "steady_step_count": 24,
+            "aggregation": "pXX(max_rank_per_global_step)"
+          },
+          "hbm": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "hbm",
+            "status": "valid",
+            "issues": [],
+            "per_rank_sample_counts": [
+              282,
+              282,
+              282,
+              282,
+              282,
+              282,
+              282,
+              282
+            ],
+            "per_rank_baseline_bytes": [
+              3585081344,
+              3584557056,
+              3582984192,
+              3584032768,
+              3582984192,
+              3584032768,
+              3583508480,
+              3584032768
+            ],
+            "peak_observability": "sufficient",
+            "label": "total_peak_used_bytes"
+          }
+        }
+      }
+    },
+    {
+      "name": "c23-qwen3-30l-dp8",
+      "family": "qwen3",
+      "split": "calibration",
+      "timing": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h1-qwen3-30l-dp8-timing-v2",
+        "protocol": {
+          "run_mode": "timing",
+          "step_aggregation": "max_rank",
+          "timing_hbm_separated": true,
+          "holdout_eligible": true
+        },
+        "metadata_protocol": {
+          "aggregation": "max_rank",
+          "rank_count": 8,
+          "rank_step_counts": {
+            "worker_0.log": 36,
+            "worker_1.log": 36,
+            "worker_2.log": 36,
+            "worker_3.log": 36,
+            "worker_4.log": 36,
+            "worker_5.log": 36,
+            "worker_6.log": 36,
+            "worker_7.log": 36
+          },
+          "rank_global_batch_sizes": {
+            "worker_0.log": [
+              8
+            ],
+            "worker_1.log": [
+              8
+            ],
+            "worker_2.log": [
+              8
+            ],
+            "worker_3.log": [
+              8
+            ],
+            "worker_4.log": [
+              8
+            ],
+            "worker_5.log": [
+              8
+            ],
+            "worker_6.log": [
+              8
+            ],
+            "worker_7.log": [
+              8
+            ]
+          },
+          "effective_global_batch_sizes": [
+            8
+          ],
+          "status": "valid"
+        },
+        "p50_ns": 806000000,
+        "p90_ns": 837000000,
+        "eligible": true,
+        "measurement_quality": {
+          "schema": "p1.measurement-contract.v2",
+          "kind": "timing",
+          "status": "valid",
+          "issues": [],
+          "effective_global_batch": 8,
+          "tokens_per_step": 32768,
+          "rank_count": 8,
+          "steady_step_count": 24,
+          "aggregation": "pXX(max_rank_per_global_step)"
+        }
+      },
+      "hbm": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h1-qwen3-30l-dp8-hbm",
+        "case_result": true
+      },
+      "physical_base": {
+        "step_time_p50_ns": 677552843,
+        "step_time_p90_ns": 812893013,
+        "peak_hbm_total_bytes": 7545318722,
+        "peak_hbm_dynamic_bytes": 3961285954,
+        "oom": false
+      },
+      "labels": {
+        "step_time_p50_ns": 806000000,
+        "step_time_p90_ns": 837000000,
+        "step_time_ns": 806000000,
+        "peak_hbm_total_bytes": 15382609920,
+        "peak_hbm_dynamic_bytes": 11798052864,
+        "oom": false,
+        "timing_protocol_valid": true,
+        "measurement_quality": {
+          "timing": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "timing",
+            "status": "valid",
+            "issues": [],
+            "effective_global_batch": 8,
+            "tokens_per_step": 32768,
+            "rank_count": 8,
+            "steady_step_count": 24,
+            "aggregation": "pXX(max_rank_per_global_step)"
+          },
+          "hbm": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "hbm",
+            "status": "valid",
+            "issues": [],
+            "per_rank_sample_counts": [
+              31,
+              31,
+              31,
+              31,
+              31,
+              31,
+              31,
+              31
+            ],
+            "per_rank_baseline_bytes": [
+              3584032768,
+              3584557056,
+              3584032768,
+              3585081344,
+              3584032768,
+              3584032768,
+              3582984192,
+              3582984192
+            ],
+            "peak_observability": "sufficient",
+            "label": "total_peak_used_bytes"
+          }
+        }
+      }
+    },
+    {
+      "name": "c24-deepseek3-34l-tp2-cp2-ep2",
+      "family": "deepseek3",
+      "split": "calibration",
+      "timing": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h2-deepseek3-34l-tp2cp2ep2-timing",
+        "protocol": {
+          "run_mode": "timing",
+          "step_aggregation": "max_rank",
+          "timing_hbm_separated": true,
+          "holdout_eligible": true
+        },
+        "metadata_protocol": {
+          "aggregation": "max_rank",
+          "rank_count": 8,
+          "rank_step_counts": {
+            "worker_0.log": 36,
+            "worker_1.log": 36,
+            "worker_2.log": 36,
+            "worker_3.log": 36,
+            "worker_4.log": 36,
+            "worker_5.log": 36,
+            "worker_6.log": 36,
+            "worker_7.log": 36
+          },
+          "rank_global_batch_sizes": {
+            "worker_0.log": [
+              4
+            ],
+            "worker_1.log": [
+              4
+            ],
+            "worker_2.log": [
+              4
+            ],
+            "worker_3.log": [
+              4
+            ],
+            "worker_4.log": [
+              4
+            ],
+            "worker_5.log": [
+              4
+            ],
+            "worker_6.log": [
+              4
+            ],
+            "worker_7.log": [
+              4
+            ]
+          },
+          "effective_global_batch_sizes": [
+            4
+          ],
+          "status": "valid"
+        },
+        "p50_ns": 2293000000,
+        "p90_ns": 2421800000,
+        "eligible": true,
+        "measurement_quality": {
+          "schema": "p1.measurement-contract.v2",
+          "kind": "timing",
+          "status": "valid",
+          "issues": [],
+          "effective_global_batch": 4,
+          "tokens_per_step": 16384,
+          "rank_count": 8,
+          "steady_step_count": 24,
+          "aggregation": "pXX(max_rank_per_global_step)"
+        }
+      },
+      "hbm": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h2-deepseek3-34l-tp2cp2ep2-hbm",
+        "case_result": true
+      },
+      "physical_base": {
+        "step_time_p50_ns": 1047070088,
+        "step_time_p90_ns": 1457942038,
+        "peak_hbm_total_bytes": 22341876864,
+        "peak_hbm_dynamic_bytes": 18757844096,
+        "oom": false
+      },
+      "labels": {
+        "step_time_p50_ns": 2293000000,
+        "step_time_p90_ns": 2421800000,
+        "step_time_ns": 2293000000,
+        "peak_hbm_total_bytes": 31536971776,
+        "peak_hbm_dynamic_bytes": 26331840512,
+        "oom": false,
+        "timing_protocol_valid": true,
+        "measurement_quality": {
+          "timing": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "timing",
+            "status": "valid",
+            "issues": [],
+            "effective_global_batch": 4,
+            "tokens_per_step": 16384,
+            "rank_count": 8,
+            "steady_step_count": 24,
+            "aggregation": "pXX(max_rank_per_global_step)"
+          },
+          "hbm": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "hbm",
+            "status": "valid",
+            "issues": [],
+            "per_rank_sample_counts": [
+              86,
+              86,
+              86,
+              86,
+              86,
+              86,
+              86,
+              86
+            ],
+            "per_rank_baseline_bytes": [
+              5207228416,
+              5205131264,
+              5206179840,
+              5206179840,
+              5205131264,
+              5205131264,
+              5205131264,
+              5205655552
+            ],
+            "peak_observability": "sufficient",
+            "label": "total_peak_used_bytes"
+          }
+        }
+      }
+    },
+    {
+      "name": "c25-qwen3-34l-dp8",
+      "family": "qwen3",
+      "split": "calibration",
+      "timing": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v13-h1-qwen3-34l-dp8-timing",
+        "protocol": {
+          "run_mode": "timing",
+          "step_aggregation": "max_rank",
+          "timing_hbm_separated": true,
+          "holdout_eligible": true
+        },
+        "metadata_protocol": {
+          "aggregation": "max_rank",
+          "rank_count": 8,
+          "rank_step_counts": {
+            "worker_0.log": 36,
+            "worker_1.log": 36,
+            "worker_2.log": 36,
+            "worker_3.log": 36,
+            "worker_4.log": 36,
+            "worker_5.log": 36,
+            "worker_6.log": 36,
+            "worker_7.log": 36
+          },
+          "rank_global_batch_sizes": {
+            "worker_0.log": [
+              8
+            ],
+            "worker_1.log": [
+              8
+            ],
+            "worker_2.log": [
+              8
+            ],
+            "worker_3.log": [
+              8
+            ],
+            "worker_4.log": [
+              8
+            ],
+            "worker_5.log": [
+              8
+            ],
+            "worker_6.log": [
+              8
+            ],
+            "worker_7.log": [
+              8
+            ]
+          },
+          "effective_global_batch_sizes": [
+            8
+          ],
+          "status": "valid"
+        },
+        "p50_ns": 893500000,
+        "p90_ns": 966000000,
+        "eligible": true,
+        "measurement_quality": {
+          "schema": "p1.measurement-contract.v2",
+          "kind": "timing",
+          "status": "valid",
+          "issues": [],
+          "effective_global_batch": 8,
+          "tokens_per_step": 32768,
+          "rank_count": 8,
+          "steady_step_count": 24,
+          "aggregation": "pXX(max_rank_per_global_step)"
+        }
+      },
+      "hbm": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v13-h1-qwen3-34l-dp8-hbm",
+        "case_result": true
+      },
+      "physical_base": {
+        "step_time_p50_ns": 766458729,
+        "step_time_p90_ns": 919580052,
+        "peak_hbm_total_bytes": 7662077454,
+        "peak_hbm_dynamic_bytes": 4078044686,
+        "oom": false
+      },
+      "labels": {
+        "step_time_p50_ns": 893500000,
+        "step_time_p90_ns": 966000000,
+        "step_time_ns": 893500000,
+        "peak_hbm_total_bytes": 15559819264,
+        "peak_hbm_dynamic_bytes": 11976835072,
+        "oom": false,
+        "timing_protocol_valid": true,
+        "measurement_quality": {
+          "timing": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "timing",
+            "status": "valid",
+            "issues": [],
+            "effective_global_batch": 8,
+            "tokens_per_step": 32768,
+            "rank_count": 8,
+            "steady_step_count": 24,
+            "aggregation": "pXX(max_rank_per_global_step)"
+          },
+          "hbm": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "hbm",
+            "status": "valid",
+            "issues": [],
+            "per_rank_sample_counts": [
+              36,
+              36,
+              36,
+              36,
+              36,
+              36,
+              36,
+              36
+            ],
+            "per_rank_baseline_bytes": [
+              3586129920,
+              3584032768,
+              3584032768,
+              3582984192,
+              3584032768,
+              3582984192,
+              3583508480,
+              3583508480
+            ],
+            "peak_observability": "sufficient",
+            "label": "total_peak_used_bytes"
+          }
+        }
+      }
+    },
+    {
+      "name": "c26-deepseek3-36l-tp2-cp2-ep2",
+      "family": "deepseek3",
+      "split": "calibration",
+      "timing": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v13-h2-deepseek3-36l-tp2cp2ep2-timing",
+        "protocol": {
+          "run_mode": "timing",
+          "step_aggregation": "max_rank",
+          "timing_hbm_separated": true,
+          "holdout_eligible": true
+        },
+        "metadata_protocol": {
+          "aggregation": "max_rank",
+          "rank_count": 8,
+          "rank_step_counts": {
+            "worker_0.log": 36,
+            "worker_1.log": 36,
+            "worker_2.log": 36,
+            "worker_3.log": 36,
+            "worker_4.log": 36,
+            "worker_5.log": 36,
+            "worker_6.log": 36,
+            "worker_7.log": 36
+          },
+          "rank_global_batch_sizes": {
+            "worker_0.log": [
+              4
+            ],
+            "worker_1.log": [
+              4
+            ],
+            "worker_2.log": [
+              4
+            ],
+            "worker_3.log": [
+              4
+            ],
+            "worker_4.log": [
+              4
+            ],
+            "worker_5.log": [
+              4
+            ],
+            "worker_6.log": [
+              4
+            ],
+            "worker_7.log": [
+              4
+            ]
+          },
+          "effective_global_batch_sizes": [
+            4
+          ],
+          "status": "valid"
+        },
+        "p50_ns": 2435500000,
+        "p90_ns": 2639600000,
+        "eligible": true,
+        "measurement_quality": {
+          "schema": "p1.measurement-contract.v2",
+          "kind": "timing",
+          "status": "valid",
+          "issues": [],
+          "effective_global_batch": 4,
+          "tokens_per_step": 16384,
+          "rank_count": 8,
+          "steady_step_count": 24,
+          "aggregation": "pXX(max_rank_per_global_step)"
+        }
+      },
+      "hbm": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v13-h2-deepseek3-36l-tp2cp2ep2-hbm",
+        "case_result": true
+      },
+      "physical_base": {
+        "step_time_p50_ns": 1104020117,
+        "step_time_p90_ns": 1537496932,
+        "peak_hbm_total_bytes": 23274499824,
+        "peak_hbm_dynamic_bytes": 19690467056,
+        "oom": false
+      },
+      "labels": {
+        "step_time_p50_ns": 2435500000,
+        "step_time_p90_ns": 2639600000,
+        "step_time_ns": 2435500000,
+        "peak_hbm_total_bytes": 25495076864,
+        "peak_hbm_dynamic_bytes": 21912092672,
+        "oom": false,
+        "timing_protocol_valid": true,
+        "measurement_quality": {
+          "timing": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "timing",
+            "status": "valid",
+            "issues": [],
+            "effective_global_batch": 4,
+            "tokens_per_step": 16384,
+            "rank_count": 8,
+            "steady_step_count": 24,
+            "aggregation": "pXX(max_rank_per_global_step)"
+          },
+          "hbm": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "hbm",
+            "status": "valid",
+            "issues": [],
+            "per_rank_sample_counts": [
+              95,
+              95,
+              95,
+              95,
+              95,
+              95,
+              95,
+              95
+            ],
+            "per_rank_baseline_bytes": [
+              3586129920,
+              3584032768,
+              3584032768,
+              3584032768,
+              3584032768,
+              3582984192,
+              3584032768,
+              3583508480
+            ],
+            "peak_observability": "sufficient",
+            "label": "total_peak_used_bytes"
+          }
+        }
+      }
+    },
+    {
+      "name": "c27-deepseek3-24l-tp2-pp2-dp2-interleave2",
+      "family": "deepseek3",
+      "split": "calibration",
+      "timing": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h3-deepseek3-24l-pp2i2-timing",
+        "protocol": {
+          "run_mode": "timing",
+          "step_aggregation": "max_rank",
+          "timing_hbm_separated": true,
+          "holdout_eligible": true
+        },
+        "metadata_protocol": {
+          "aggregation": "max_rank",
+          "rank_count": 8,
+          "rank_step_counts": {
+            "worker_0.log": 36,
+            "worker_1.log": 36,
+            "worker_2.log": 36,
+            "worker_3.log": 36,
+            "worker_4.log": 36,
+            "worker_5.log": 36,
+            "worker_6.log": 36,
+            "worker_7.log": 36
+          },
+          "rank_global_batch_sizes": {
+            "worker_0.log": [],
+            "worker_1.log": [],
+            "worker_2.log": [],
+            "worker_3.log": [],
+            "worker_4.log": [
+              4
+            ],
+            "worker_5.log": [
+              4
+            ],
+            "worker_6.log": [
+              4
+            ],
+            "worker_7.log": [
+              4
+            ]
+          },
+          "effective_global_batch_sizes": [
+            4
+          ],
+          "status": "valid"
+        },
+        "p50_ns": 968500000,
+        "p90_ns": 977000000,
+        "eligible": true,
+        "measurement_quality": {
+          "schema": "p1.measurement-contract.v2",
+          "kind": "timing",
+          "status": "valid",
+          "issues": [],
+          "effective_global_batch": 4,
+          "tokens_per_step": 16384,
+          "rank_count": 8,
+          "steady_step_count": 24,
+          "aggregation": "pXX(max_rank_per_global_step)"
+        }
+      },
+      "hbm": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h3-deepseek3-24l-pp2i2-hbm",
+        "case_result": true
+      },
+      "physical_base": {
+        "step_time_p50_ns": 913444781,
+        "step_time_p90_ns": 1318741072,
+        "peak_hbm_total_bytes": 23423026453,
+        "peak_hbm_dynamic_bytes": 19838993685,
+        "oom": false
+      },
+      "labels": {
+        "step_time_p50_ns": 968500000,
+        "step_time_p90_ns": 977000000,
+        "step_time_ns": 968500000,
+        "peak_hbm_total_bytes": 27819769856,
+        "peak_hbm_dynamic_bytes": 24235737088,
+        "oom": false,
+        "timing_protocol_valid": true,
+        "measurement_quality": {
+          "timing": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "timing",
+            "status": "valid",
+            "issues": [],
+            "effective_global_batch": 4,
+            "tokens_per_step": 16384,
+            "rank_count": 8,
+            "steady_step_count": 24,
+            "aggregation": "pXX(max_rank_per_global_step)"
+          },
+          "hbm": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "hbm",
+            "status": "valid",
+            "issues": [],
+            "per_rank_sample_counts": [
+              26,
+              26,
+              26,
+              26,
+              26,
+              26,
+              26,
+              26
+            ],
+            "per_rank_baseline_bytes": [
+              3586129920,
+              3584032768,
+              3584032768,
+              3584032768,
+              3584032768,
+              3584032768,
+              3584032768,
+              3582984192
+            ],
+            "peak_observability": "sufficient",
+            "label": "total_peak_used_bytes"
+          }
+        }
+      }
+    },
+    {
+      "name": "c28-qwen3-10l-tp4-dp2",
+      "family": "qwen3",
+      "split": "calibration",
+      "timing": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h4-qwen3-10l-tp4dp2-timing",
+        "protocol": {
+          "run_mode": "timing",
+          "step_aggregation": "max_rank",
+          "timing_hbm_separated": true,
+          "holdout_eligible": true
+        },
+        "metadata_protocol": {
+          "aggregation": "max_rank",
+          "rank_count": 8,
+          "rank_step_counts": {
+            "worker_0.log": 36,
+            "worker_1.log": 36,
+            "worker_2.log": 36,
+            "worker_3.log": 36,
+            "worker_4.log": 36,
+            "worker_5.log": 36,
+            "worker_6.log": 36,
+            "worker_7.log": 36
+          },
+          "rank_global_batch_sizes": {
+            "worker_0.log": [
+              2
+            ],
+            "worker_1.log": [
+              2
+            ],
+            "worker_2.log": [
+              2
+            ],
+            "worker_3.log": [
+              2
+            ],
+            "worker_4.log": [
+              2
+            ],
+            "worker_5.log": [
+              2
+            ],
+            "worker_6.log": [
+              2
+            ],
+            "worker_7.log": [
+              2
+            ]
+          },
+          "effective_global_batch_sizes": [
+            2
+          ],
+          "status": "valid"
+        },
+        "p50_ns": 296500000,
+        "p90_ns": 319000000,
+        "eligible": true,
+        "measurement_quality": {
+          "schema": "p1.measurement-contract.v2",
+          "kind": "timing",
+          "status": "valid",
+          "issues": [],
+          "effective_global_batch": 2,
+          "tokens_per_step": 8192,
+          "rank_count": 8,
+          "steady_step_count": 24,
+          "aggregation": "pXX(max_rank_per_global_step)"
+        }
+      },
+      "hbm": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h4-qwen3-10l-tp4dp2-hbm-v2",
+        "case_result": true
+      },
+      "physical_base": {
+        "step_time_p50_ns": 264139785,
+        "step_time_p90_ns": 316797455,
+        "peak_hbm_total_bytes": 5833483774,
+        "peak_hbm_dynamic_bytes": 2249451006,
+        "oom": false
+      },
+      "labels": {
+        "step_time_p50_ns": 296500000,
+        "step_time_p90_ns": 319000000,
+        "step_time_ns": 296500000,
+        "peak_hbm_total_bytes": 7352614912,
+        "peak_hbm_dynamic_bytes": 3767533568,
+        "oom": false,
+        "timing_protocol_valid": true,
+        "measurement_quality": {
+          "timing": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "timing",
+            "status": "valid",
+            "issues": [],
+            "effective_global_batch": 2,
+            "tokens_per_step": 8192,
+            "rank_count": 8,
+            "steady_step_count": 24,
+            "aggregation": "pXX(max_rank_per_global_step)"
+          },
+          "hbm": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "hbm",
+            "status": "valid",
+            "issues": [],
+            "per_rank_sample_counts": [
+              31,
+              31,
+              31,
+              31,
+              31,
+              31,
+              31,
+              31
+            ],
+            "per_rank_baseline_bytes": [
+              3585081344,
+              3584032768,
+              3582984192,
+              3583508480,
+              3583508480,
+              3582984192,
+              3584032768,
+              3584032768
+            ],
+            "peak_observability": "sufficient",
+            "label": "total_peak_used_bytes"
+          }
+        }
+      }
+    },
+    {
+      "name": "c29-qwen3-38l-dp8",
+      "family": "qwen3",
+      "split": "calibration",
+      "timing": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v14-h1-qwen3-38l-dp8-timing",
+        "protocol": {
+          "run_mode": "timing",
+          "step_aggregation": "max_rank",
+          "timing_hbm_separated": true,
+          "holdout_eligible": true
+        },
+        "metadata_protocol": {
+          "aggregation": "max_rank",
+          "rank_count": 8,
+          "rank_step_counts": {
+            "worker_0.log": 36,
+            "worker_1.log": 36,
+            "worker_2.log": 36,
+            "worker_3.log": 36,
+            "worker_4.log": 36,
+            "worker_5.log": 36,
+            "worker_6.log": 36,
+            "worker_7.log": 36
+          },
+          "rank_global_batch_sizes": {
+            "worker_0.log": [
+              8
+            ],
+            "worker_1.log": [
+              8
+            ],
+            "worker_2.log": [
+              8
+            ],
+            "worker_3.log": [
+              8
+            ],
+            "worker_4.log": [
+              8
+            ],
+            "worker_5.log": [
+              8
+            ],
+            "worker_6.log": [
+              8
+            ],
+            "worker_7.log": [
+              8
+            ]
+          },
+          "effective_global_batch_sizes": [
+            8
+          ],
+          "status": "valid"
+        },
+        "p50_ns": 1068000000,
+        "p90_ns": 1186000000,
+        "eligible": true,
+        "measurement_quality": {
+          "schema": "p1.measurement-contract.v2",
+          "kind": "timing",
+          "status": "valid",
+          "issues": [],
+          "effective_global_batch": 8,
+          "tokens_per_step": 32768,
+          "rank_count": 8,
+          "steady_step_count": 24,
+          "aggregation": "pXX(max_rank_per_global_step)"
+        }
+      },
+      "hbm": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v14-h1-qwen3-38l-dp8-hbm",
+        "case_result": true
+      },
+      "physical_base": {
+        "step_time_p50_ns": 855364615,
+        "step_time_p90_ns": 1026267091,
+        "peak_hbm_total_bytes": 7778836187,
+        "peak_hbm_dynamic_bytes": 4194803419,
+        "oom": false
+      },
+      "labels": {
+        "step_time_p50_ns": 1068000000,
+        "step_time_p90_ns": 1186000000,
+        "step_time_ns": 1068000000,
+        "peak_hbm_total_bytes": 15734931456,
+        "peak_hbm_dynamic_bytes": 12150898688,
+        "oom": false,
+        "timing_protocol_valid": true,
+        "measurement_quality": {
+          "timing": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "timing",
+            "status": "valid",
+            "issues": [],
+            "effective_global_batch": 8,
+            "tokens_per_step": 32768,
+            "rank_count": 8,
+            "steady_step_count": 24,
+            "aggregation": "pXX(max_rank_per_global_step)"
+          },
+          "hbm": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "hbm",
+            "status": "valid",
+            "issues": [],
+            "per_rank_sample_counts": [
+              40,
+              40,
+              40,
+              40,
+              40,
+              40,
+              40,
+              40
+            ],
+            "per_rank_baseline_bytes": [
+              3585081344,
+              3584032768,
+              3582984192,
+              3584032768,
+              3584032768,
+              3584032768,
+              3584032768,
+              3584032768
+            ],
+            "peak_observability": "sufficient",
+            "label": "total_peak_used_bytes"
+          }
+        }
+      }
+    },
+    {
+      "name": "c30-deepseek3-38l-tp2-cp2-ep2",
+      "family": "deepseek3",
+      "split": "calibration",
+      "timing": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v14-h2-deepseek3-38l-tp2cp2ep2-timing",
+        "protocol": {
+          "run_mode": "timing",
+          "step_aggregation": "max_rank",
+          "timing_hbm_separated": true,
+          "holdout_eligible": true
+        },
+        "metadata_protocol": {
+          "aggregation": "max_rank",
+          "rank_count": 8,
+          "rank_step_counts": {
+            "worker_0.log": 36,
+            "worker_1.log": 36,
+            "worker_2.log": 36,
+            "worker_3.log": 36,
+            "worker_4.log": 36,
+            "worker_5.log": 36,
+            "worker_6.log": 36,
+            "worker_7.log": 36
+          },
+          "rank_global_batch_sizes": {
+            "worker_0.log": [
+              4
+            ],
+            "worker_1.log": [
+              4
+            ],
+            "worker_2.log": [
+              4
+            ],
+            "worker_3.log": [
+              4
+            ],
+            "worker_4.log": [
+              4
+            ],
+            "worker_5.log": [
+              4
+            ],
+            "worker_6.log": [
+              4
+            ],
+            "worker_7.log": [
+              4
+            ]
+          },
+          "effective_global_batch_sizes": [
+            4
+          ],
+          "status": "valid"
+        },
+        "p50_ns": 2450000000,
+        "p90_ns": 2581000000,
+        "eligible": true,
+        "measurement_quality": {
+          "schema": "p1.measurement-contract.v2",
+          "kind": "timing",
+          "status": "valid",
+          "issues": [],
+          "effective_global_batch": 4,
+          "tokens_per_step": 16384,
+          "rank_count": 8,
+          "steady_step_count": 24,
+          "aggregation": "pXX(max_rank_per_global_step)"
+        }
+      },
+      "hbm": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v14-h2-deepseek3-38l-tp2cp2ep2-hbm",
+        "case_result": true
+      },
+      "physical_base": {
+        "step_time_p50_ns": 1160970146,
+        "step_time_p90_ns": 1617051826,
+        "peak_hbm_total_bytes": 24207122784,
+        "peak_hbm_dynamic_bytes": 20623090016,
+        "oom": false
+      },
+      "labels": {
+        "step_time_p50_ns": 2450000000,
+        "step_time_p90_ns": 2581000000,
+        "step_time_ns": 2450000000,
+        "peak_hbm_total_bytes": 26188185600,
+        "peak_hbm_dynamic_bytes": 22603104256,
+        "oom": false,
+        "timing_protocol_valid": true,
+        "measurement_quality": {
+          "timing": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "timing",
+            "status": "valid",
+            "issues": [],
+            "effective_global_batch": 4,
+            "tokens_per_step": 16384,
+            "rank_count": 8,
+            "steady_step_count": 24,
+            "aggregation": "pXX(max_rank_per_global_step)"
+          },
+          "hbm": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "hbm",
+            "status": "valid",
+            "issues": [],
+            "per_rank_sample_counts": [
+              99,
+              99,
+              99,
+              99,
+              99,
+              99,
+              99,
+              99
+            ],
+            "per_rank_baseline_bytes": [
+              3584557056,
+              3582984192,
+              3582984192,
+              3584032768,
+              3584032768,
+              3582984192,
+              3584032768,
+              3585081344
+            ],
+            "peak_observability": "sufficient",
+            "label": "total_peak_used_bytes"
+          }
+        }
+      }
+    },
+    {
+      "name": "c31-qwen3-42l-dp8",
+      "family": "qwen3",
+      "split": "calibration",
+      "timing": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v15-h1-qwen3-42l-dp8-timing",
+        "protocol": {
+          "run_mode": "timing",
+          "step_aggregation": "max_rank",
+          "timing_hbm_separated": true,
+          "holdout_eligible": true
+        },
+        "metadata_protocol": {
+          "aggregation": "max_rank",
+          "rank_count": 8,
+          "rank_step_counts": {
+            "worker_0.log": 36,
+            "worker_1.log": 36,
+            "worker_2.log": 36,
+            "worker_3.log": 36,
+            "worker_4.log": 36,
+            "worker_5.log": 36,
+            "worker_6.log": 36,
+            "worker_7.log": 36
+          },
+          "rank_global_batch_sizes": {
+            "worker_0.log": [
+              8
+            ],
+            "worker_1.log": [
+              8
+            ],
+            "worker_2.log": [
+              8
+            ],
+            "worker_3.log": [
+              8
+            ],
+            "worker_4.log": [
+              8
+            ],
+            "worker_5.log": [
+              8
+            ],
+            "worker_6.log": [
+              8
+            ],
+            "worker_7.log": [
+              8
+            ]
+          },
+          "effective_global_batch_sizes": [
+            8
+          ],
+          "status": "valid"
+        },
+        "p50_ns": 1139500000,
+        "p90_ns": 1251400000,
+        "eligible": true,
+        "measurement_quality": {
+          "schema": "p1.measurement-contract.v2",
+          "kind": "timing",
+          "status": "valid",
+          "issues": [],
+          "effective_global_batch": 8,
+          "tokens_per_step": 32768,
+          "rank_count": 8,
+          "steady_step_count": 24,
+          "aggregation": "pXX(max_rank_per_global_step)"
+        }
+      },
+      "hbm": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v15-h1-qwen3-42l-dp8-hbm",
+        "case_result": true
+      },
+      "physical_base": {
+        "step_time_p50_ns": 944270501,
+        "step_time_p90_ns": 1132954130,
+        "peak_hbm_total_bytes": 7895594920,
+        "peak_hbm_dynamic_bytes": 4311562152,
+        "oom": false
+      },
+      "labels": {
+        "step_time_p50_ns": 1139500000,
+        "step_time_p90_ns": 1251400000,
+        "step_time_ns": 1139500000,
+        "peak_hbm_total_bytes": 13821280256,
+        "peak_hbm_dynamic_bytes": 10236198912,
+        "oom": false,
+        "timing_protocol_valid": true,
+        "measurement_quality": {
+          "timing": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "timing",
+            "status": "valid",
+            "issues": [],
+            "effective_global_batch": 8,
+            "tokens_per_step": 32768,
+            "rank_count": 8,
+            "steady_step_count": 24,
+            "aggregation": "pXX(max_rank_per_global_step)"
+          },
+          "hbm": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "hbm",
+            "status": "valid",
+            "issues": [],
+            "per_rank_sample_counts": [
+              48,
+              48,
+              48,
+              48,
+              48,
+              48,
+              48,
+              48
+            ],
+            "per_rank_baseline_bytes": [
+              3585081344,
+              3584032768,
+              3584032768,
+              3584032768,
+              3584032768,
+              3584032768,
+              3584032768,
+              3585081344
+            ],
+            "peak_observability": "sufficient",
+            "label": "total_peak_used_bytes"
+          }
+        }
+      }
+    },
+    {
+      "name": "c32-qwen3-46l-dp8",
+      "family": "qwen3",
+      "split": "calibration",
+      "timing": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v16-h1-qwen3-46l-dp8-timing",
+        "protocol": {
+          "run_mode": "timing",
+          "step_aggregation": "max_rank",
+          "timing_hbm_separated": true,
+          "holdout_eligible": true
+        },
+        "metadata_protocol": {
+          "aggregation": "max_rank",
+          "rank_count": 8,
+          "rank_step_counts": {
+            "worker_0.log": 36,
+            "worker_1.log": 36,
+            "worker_2.log": 36,
+            "worker_3.log": 36,
+            "worker_4.log": 36,
+            "worker_5.log": 36,
+            "worker_6.log": 36,
+            "worker_7.log": 36
+          },
+          "rank_global_batch_sizes": {
+            "worker_0.log": [
+              8
+            ],
+            "worker_1.log": [
+              8
+            ],
+            "worker_2.log": [
+              8
+            ],
+            "worker_3.log": [
+              8
+            ],
+            "worker_4.log": [
+              8
+            ],
+            "worker_5.log": [
+              8
+            ],
+            "worker_6.log": [
+              8
+            ],
+            "worker_7.log": [
+              8
+            ]
+          },
+          "effective_global_batch_sizes": [
+            8
+          ],
+          "status": "valid"
+        },
+        "p50_ns": 1390000000,
+        "p90_ns": 1457100000,
+        "eligible": true,
+        "measurement_quality": {
+          "schema": "p1.measurement-contract.v2",
+          "kind": "timing",
+          "status": "valid",
+          "issues": [],
+          "effective_global_batch": 8,
+          "tokens_per_step": 32768,
+          "rank_count": 8,
+          "steady_step_count": 24,
+          "aggregation": "pXX(max_rank_per_global_step)"
+        }
+      },
+      "hbm": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v16-h1-qwen3-46l-dp8-hbm",
+        "case_result": true
+      },
+      "physical_base": {
+        "step_time_p50_ns": 1033176387,
+        "step_time_p90_ns": 1239641169,
+        "peak_hbm_total_bytes": 8012353653,
+        "peak_hbm_dynamic_bytes": 4428320885,
+        "oom": false
+      },
+      "labels": {
+        "step_time_p50_ns": 1390000000,
+        "step_time_p90_ns": 1457100000,
+        "step_time_ns": 1390000000,
+        "peak_hbm_total_bytes": 16086204416,
+        "peak_hbm_dynamic_bytes": 12503220224,
+        "oom": false,
+        "timing_protocol_valid": true,
+        "measurement_quality": {
+          "timing": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "timing",
+            "status": "valid",
+            "issues": [],
+            "effective_global_batch": 8,
+            "tokens_per_step": 32768,
+            "rank_count": 8,
+            "steady_step_count": 24,
+            "aggregation": "pXX(max_rank_per_global_step)"
+          },
+          "hbm": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "hbm",
+            "status": "valid",
+            "issues": [],
+            "per_rank_sample_counts": [
+              53,
+              53,
+              53,
+              53,
+              53,
+              53,
+              53,
+              53
+            ],
+            "per_rank_baseline_bytes": [
+              3585081344,
+              3584032768,
+              3584032768,
+              3584032768,
+              3582984192,
+              3582984192,
+              3584032768,
+              3582984192
+            ],
+            "peak_observability": "sufficient",
+            "label": "total_peak_used_bytes"
+          }
+        }
+      }
+    },
+    {
+      "name": "c33-deepseek3-42l-tp2-cp2-ep2",
+      "family": "deepseek3",
+      "split": "calibration",
+      "timing": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v16-h2-deepseek3-42l-tp2cp2ep2-timing",
+        "protocol": {
+          "run_mode": "timing",
+          "step_aggregation": "max_rank",
+          "timing_hbm_separated": true,
+          "holdout_eligible": true
+        },
+        "metadata_protocol": {
+          "aggregation": "max_rank",
+          "rank_count": 8,
+          "rank_step_counts": {
+            "worker_0.log": 36,
+            "worker_1.log": 36,
+            "worker_2.log": 36,
+            "worker_3.log": 36,
+            "worker_4.log": 36,
+            "worker_5.log": 36,
+            "worker_6.log": 36,
+            "worker_7.log": 36
+          },
+          "rank_global_batch_sizes": {
+            "worker_0.log": [
+              4
+            ],
+            "worker_1.log": [
+              4
+            ],
+            "worker_2.log": [
+              4
+            ],
+            "worker_3.log": [
+              4
+            ],
+            "worker_4.log": [
+              4
+            ],
+            "worker_5.log": [
+              4
+            ],
+            "worker_6.log": [
+              4
+            ],
+            "worker_7.log": [
+              4
+            ]
+          },
+          "effective_global_batch_sizes": [
+            4
+          ],
+          "status": "valid"
+        },
+        "p50_ns": 2756000000,
+        "p90_ns": 3080200000,
+        "eligible": true,
+        "measurement_quality": {
+          "schema": "p1.measurement-contract.v2",
+          "kind": "timing",
+          "status": "valid",
+          "issues": [],
+          "effective_global_batch": 4,
+          "tokens_per_step": 16384,
+          "rank_count": 8,
+          "steady_step_count": 24,
+          "aggregation": "pXX(max_rank_per_global_step)"
+        }
+      },
+      "hbm": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v16-h2-deepseek3-42l-tp2cp2ep2-hbm-v2",
+        "case_result": true
+      },
+      "physical_base": {
+        "step_time_p50_ns": 1274870204,
+        "step_time_p90_ns": 1776161615,
+        "peak_hbm_total_bytes": 26072368704,
+        "peak_hbm_dynamic_bytes": 22488335936,
+        "oom": false
+      },
+      "labels": {
+        "step_time_p50_ns": 2756000000,
+        "step_time_p90_ns": 3080200000,
+        "step_time_ns": 2756000000,
+        "peak_hbm_total_bytes": 27795652608,
+        "peak_hbm_dynamic_bytes": 24211619840,
+        "oom": false,
+        "timing_protocol_valid": true,
+        "measurement_quality": {
+          "timing": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "timing",
+            "status": "valid",
+            "issues": [],
+            "effective_global_batch": 4,
+            "tokens_per_step": 16384,
+            "rank_count": 8,
+            "steady_step_count": 24,
+            "aggregation": "pXX(max_rank_per_global_step)"
+          },
+          "hbm": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "hbm",
+            "status": "valid",
+            "issues": [],
+            "per_rank_sample_counts": [
+              117,
+              117,
+              117,
+              117,
+              117,
+              117,
+              117,
+              117
+            ],
+            "per_rank_baseline_bytes": [
+              3584032768,
+              3584032768,
+              3584032768,
+              3584032768,
+              3582984192,
+              3582984192,
+              3584032768,
+              3584032768
+            ],
+            "peak_observability": "sufficient",
+            "label": "total_peak_used_bytes"
+          }
+        }
+      }
+    },
+    {
+      "name": "d1-deepseek3-8l-tp2-pp2-dp2-interleave2",
+      "family": "deepseek3",
+      "split": "validation",
+      "timing": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-b3ds3-8l-tp2pp2dp2-interleave2-timing-v2",
+        "protocol": {
+          "run_mode": "timing",
+          "step_aggregation": "max_rank",
+          "timing_hbm_separated": true,
+          "holdout_eligible": true
+        },
+        "metadata_protocol": {
+          "aggregation": "max_rank",
+          "rank_count": 8,
+          "rank_step_counts": {
+            "worker_0.log": 36,
+            "worker_1.log": 36,
+            "worker_2.log": 36,
+            "worker_3.log": 36,
+            "worker_4.log": 36,
+            "worker_5.log": 36,
+            "worker_6.log": 36,
+            "worker_7.log": 36
+          },
+          "rank_global_batch_sizes": {
+            "worker_0.log": [],
+            "worker_1.log": [],
+            "worker_2.log": [],
+            "worker_3.log": [],
+            "worker_4.log": [
+              4
+            ],
+            "worker_5.log": [
+              4
+            ],
+            "worker_6.log": [
+              4
+            ],
+            "worker_7.log": [
+              4
+            ]
+          },
+          "effective_global_batch_sizes": [
+            4
+          ],
+          "status": "valid"
+        },
+        "p50_ns": 402000000,
+        "p90_ns": 405700000,
+        "eligible": true,
+        "measurement_quality": {
+          "schema": "p1.measurement-contract.v2",
+          "kind": "timing",
+          "status": "valid",
+          "issues": [],
+          "effective_global_batch": 4,
+          "tokens_per_step": 16384,
+          "rank_count": 8,
+          "steady_step_count": 24,
+          "aggregation": "pXX(max_rank_per_global_step)"
+        }
+      },
+      "hbm": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-b3ds3-8l-tp2pp2dp2-interleave2-hbm-v2",
+        "case_result": true
+      },
+      "physical_base": {
+        "step_time_p50_ns": 424079316,
+        "step_time_p90_ns": 581827976,
+        "peak_hbm_total_bytes": 13355655698,
+        "peak_hbm_dynamic_bytes": 9771622930,
+        "oom": false
+      },
+      "labels": {
+        "step_time_p50_ns": 402000000,
+        "step_time_p90_ns": 405700000,
+        "step_time_ns": 402000000,
+        "peak_hbm_total_bytes": 19451084800,
+        "peak_hbm_dynamic_bytes": 15868100608,
+        "oom": false,
+        "timing_protocol_valid": true,
+        "measurement_quality": {
+          "timing": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "timing",
+            "status": "valid",
+            "issues": [],
+            "effective_global_batch": 4,
+            "tokens_per_step": 16384,
+            "rank_count": 8,
+            "steady_step_count": 24,
+            "aggregation": "pXX(max_rank_per_global_step)"
+          },
+          "hbm": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "hbm",
+            "status": "valid",
+            "issues": [],
+            "per_rank_sample_counts": [
+              25,
+              25,
+              25,
+              25,
+              25,
+              25,
+              25,
+              25
+            ],
+            "per_rank_baseline_bytes": [
+              3584032768,
+              3584032768,
+              3584032768,
+              3582984192,
+              3582984192,
+              3582984192,
+              3584032768,
+              3584032768
+            ],
+            "peak_observability": "sufficient",
+            "label": "total_peak_used_bytes"
+          }
+        }
+      }
+    },
+    {
+      "name": "d2-qwen3-6l-tp2-dp4",
+      "family": "qwen3",
+      "split": "validation",
+      "timing": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-c13qwen3-6l-tp2dp4-timing-v1",
+        "protocol": {
+          "run_mode": "timing",
+          "step_aggregation": "max_rank",
+          "timing_hbm_separated": true,
+          "holdout_eligible": true
+        },
+        "metadata_protocol": {
+          "aggregation": "max_rank",
+          "rank_count": 8,
+          "rank_step_counts": {
+            "worker_0.log": 32,
+            "worker_1.log": 32,
+            "worker_2.log": 32,
+            "worker_3.log": 32,
+            "worker_4.log": 32,
+            "worker_5.log": 32,
+            "worker_6.log": 32,
+            "worker_7.log": 32
+          },
+          "rank_global_batch_sizes": {
+            "worker_0.log": [
+              4
+            ],
+            "worker_1.log": [
+              4
+            ],
+            "worker_2.log": [
+              4
+            ],
+            "worker_3.log": [
+              4
+            ],
+            "worker_4.log": [
+              4
+            ],
+            "worker_5.log": [
+              4
+            ],
+            "worker_6.log": [
+              4
+            ],
+            "worker_7.log": [
+              4
+            ]
+          },
+          "effective_global_batch_sizes": [
+            4
+          ],
+          "status": "valid"
+        },
+        "p50_ns": 185500000,
+        "p90_ns": 189700000,
+        "eligible": true,
+        "measurement_quality": {
+          "schema": "p1.measurement-contract.v2",
+          "kind": "timing",
+          "status": "valid",
+          "issues": [],
+          "effective_global_batch": 4,
+          "tokens_per_step": 16384,
+          "rank_count": 8,
+          "steady_step_count": 24,
+          "aggregation": "pXX(max_rank_per_global_step)"
+        }
+      },
+      "hbm": {
+        "archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-c13qwen3-6l-tp2dp4-hbm-v3",
+        "case_result": true
+      },
+      "physical_base": {
+        "step_time_p50_ns": 163380043,
+        "step_time_p90_ns": 195885791,
+        "peak_hbm_total_bytes": 6148701947,
+        "peak_hbm_dynamic_bytes": 2564669179,
+        "oom": false
+      },
+      "labels": {
+        "step_time_p50_ns": 185500000,
+        "step_time_p90_ns": 189700000,
+        "step_time_ns": 185500000,
+        "peak_hbm_total_bytes": 10277093376,
+        "peak_hbm_dynamic_bytes": 6693060608,
+        "oom": false,
+        "timing_protocol_valid": true,
+        "measurement_quality": {
+          "timing": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "timing",
+            "status": "valid",
+            "issues": [],
+            "effective_global_batch": 4,
+            "tokens_per_step": 16384,
+            "rank_count": 8,
+            "steady_step_count": 24,
+            "aggregation": "pXX(max_rank_per_global_step)"
+          },
+          "hbm": {
+            "schema": "p1.measurement-contract.v2",
+            "kind": "hbm",
+            "status": "valid",
+            "issues": [],
+            "per_rank_sample_counts": [
+              25,
+              25,
+              25,
+              25,
+              25,
+              25,
+              25,
+              25
+            ],
+            "per_rank_baseline_bytes": [
+              3585081344,
+              3584032768,
+              3583508480,
+              3584032768,
+              3582984192,
+              3584032768,
+              3582984192,
+              3584032768
+            ],
+            "peak_observability": "sufficient",
+            "label": "total_peak_used_bytes"
+          }
+        }
+      }
+    },
+    {
+      "name": "h1-qwen3-50l-dp8-v17",
+      "family": "qwen3",
+      "split": "holdout",
+      "eligible": false,
+      "reason": "ValueError: profiler archive 中没有 case_result.json: /home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v17-h1-qwen3-50l-dp8-timing"
+    },
+    {
+      "name": "h2-deepseek3-44l-tp2-cp2-ep2-v17",
+      "family": "deepseek3",
+      "split": "holdout",
+      "eligible": false,
+      "reason": "ValueError: profiler archive 中没有 case_result.json: /home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v17-h2-deepseek3-44l-tp2cp2ep2-timing"
+    },
+    {
+      "name": "h3-deepseek3-40l-tp2-pp2-dp2-interleave2-v17",
+      "family": "deepseek3",
+      "split": "holdout",
+      "eligible": false,
+      "reason": "ValueError: profiler archive 中没有 case_result.json: /home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v17-h3-deepseek3-40l-pp2i2-timing"
+    },
+    {
+      "name": "h4-qwen3-18l-tp4-dp2-v17",
+      "family": "qwen3",
+      "split": "holdout",
+      "eligible": false,
+      "reason": "ValueError: profiler archive 中没有 case_result.json: /home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v17-h4-qwen3-18l-tp4dp2-timing"
+    }
+  ]
+}

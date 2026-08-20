@@ -1,0 +1,203 @@
+{
+  "schema": "hbmprediction.real-npu-analysis.v1",
+  "source_commit": "fa9340cf8a208df50837b1a6269f19e750092ded",
+  "integrity": {
+    "status": "valid",
+    "copied_files_checked": 136,
+    "copied_bytes_checked": 715981,
+    "errors": []
+  },
+  "coverage": {
+    "manifest_cases": 40,
+    "formal_eligible_rows": 38,
+    "unique_formal_hbm_labels": 25,
+    "unique_labels_by_family": {
+      "deepseek_v3": 14,
+      "qwen3": 11
+    },
+    "rows_by_split": {
+      "calibration": 24,
+      "diagnostic": 1,
+      "historical_frozen_holdout": 13,
+      "validation": 2
+    },
+    "eligible_rows_by_split": {
+      "calibration": 23,
+      "historical_frozen_holdout": 13,
+      "validation": 2
+    },
+    "actual_oom_labels": 0,
+    "baseline_bytes_min": 3582459904,
+    "baseline_bytes_max": 5207228416,
+    "per_rank_sample_count_min": 21
+  },
+  "physical_base_error": {
+    "deepseek_v3": {
+      "total": {
+        "count": 14,
+        "mean_ape_pct": 22.167,
+        "max_ape_pct": 40.037
+      },
+      "dynamic": {
+        "count": 14,
+        "mean_ape_pct": 26.273,
+        "max_ape_pct": 47.338
+      }
+    },
+    "overall": {
+      "total": {
+        "count": 25,
+        "mean_ape_pct": 31.919,
+        "max_ape_pct": 51.999
+      },
+      "dynamic": {
+        "count": 25,
+        "mean_ape_pct": 41.759,
+        "max_ape_pct": 69.07
+      }
+    },
+    "qwen3": {
+      "total": {
+        "count": 11,
+        "mean_ape_pct": 44.331,
+        "max_ape_pct": 51.999
+      },
+      "dynamic": {
+        "count": 11,
+        "mean_ape_pct": 61.468,
+        "max_ape_pct": 69.07
+      }
+    }
+  },
+  "historical_frozen_holdout_error": {
+    "case_count": 13,
+    "cases": [
+      "h1-qwen3-26l-dp8-v11",
+      "h1-qwen3-30l-dp8-v12-v2",
+      "h1-qwen3-34l-dp8-v13",
+      "h1-qwen3-38l-dp8-v14",
+      "h1-qwen3-42l-dp8-v15",
+      "h1-qwen3-46l-dp8-v16",
+      "h2-deepseek3-30l-tp2-cp2-ep2-v11",
+      "h2-deepseek3-34l-tp2-cp2-ep2-v12",
+      "h2-deepseek3-36l-tp2-cp2-ep2-v13",
+      "h2-deepseek3-38l-tp2-cp2-ep2-v14",
+      "h2-deepseek3-42l-tp2-cp2-ep2-v16",
+      "h3-deepseek3-24l-tp2-pp2-dp2-interleave2-v13",
+      "h4-qwen3-10l-tp4-dp2-v13"
+    ],
+    "metrics": {
+      "deepseek_v3": {
+        "total": {
+          "count": 6,
+          "mean_ape_pct": 12.506,
+          "max_ape_pct": 22.447
+        },
+        "dynamic": {
+          "count": 6,
+          "mean_ape_pct": 13.632,
+          "max_ape_pct": 26.347
+        }
+      },
+      "overall": {
+        "total": {
+          "count": 13,
+          "mean_ape_pct": 10.112,
+          "max_ape_pct": 28.446
+        },
+        "dynamic": {
+          "count": 13,
+          "mean_ape_pct": 13.425,
+          "max_ape_pct": 55.542
+        }
+      },
+      "qwen3": {
+        "total": {
+          "count": 7,
+          "mean_ape_pct": 8.06,
+          "max_ape_pct": 28.446
+        },
+        "dynamic": {
+          "count": 7,
+          "mean_ape_pct": 13.248,
+          "max_ape_pct": 55.542
+        }
+      }
+    },
+    "interpretation": "historical content-addressed predictions; not a valid current-v17 blind holdout"
+  },
+  "measured_layer_trends": {
+    "deepseek_v3:tp2-cp2-ep2": {
+      "measured_total": {
+        "case_count": 8,
+        "slope_gib_per_layer": 0.2242,
+        "intercept_gib": 16.7512,
+        "r_squared": 0.4449
+      },
+      "measured_dynamic": {
+        "case_count": 8,
+        "slope_gib_per_layer": 0.2147,
+        "intercept_gib": 13.5154,
+        "r_squared": 0.5407
+      }
+    },
+    "deepseek_v3:tp2-pp2-dp2-interleave": {
+      "measured_total": {
+        "case_count": 5,
+        "slope_gib_per_layer": 0.488,
+        "intercept_gib": 14.1977,
+        "r_squared": 1.0
+      },
+      "measured_dynamic": {
+        "case_count": 5,
+        "slope_gib_per_layer": 0.488,
+        "intercept_gib": 10.8607,
+        "r_squared": 1.0
+      }
+    },
+    "qwen3:dp8": {
+      "measured_total": {
+        "case_count": 8,
+        "slope_gib_per_layer": 0.0511,
+        "intercept_gib": 12.344,
+        "r_squared": 0.4343
+      },
+      "measured_dynamic": {
+        "case_count": 8,
+        "slope_gib_per_layer": 0.0511,
+        "intercept_gib": 9.0053,
+        "r_squared": 0.434
+      }
+    }
+  },
+  "v17_acceptance": {
+    "status": "fail",
+    "required_holdout_cases": 4,
+    "eligible_holdout_cases": 0,
+    "required_actual_oom_cases": 1,
+    "actual_oom_labels": 0,
+    "diagnostic_holdouts": [
+      {
+        "name": "h1-qwen3-50l-dp8-v17",
+        "family": "qwen3",
+        "reason": "ValueError: profiler archive 中没有 case_result.json: /home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v17-h1-qwen3-50l-dp8-timing"
+      },
+      {
+        "name": "h2-deepseek3-44l-tp2-cp2-ep2-v17",
+        "family": "deepseek_v3",
+        "reason": "ValueError: profiler archive 中没有 case_result.json: /home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v17-h2-deepseek3-44l-tp2cp2ep2-timing"
+      },
+      {
+        "name": "h3-deepseek3-40l-tp2-pp2-dp2-interleave2-v17",
+        "family": "deepseek_v3",
+        "reason": "ValueError: profiler archive 中没有 case_result.json: /home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v17-h3-deepseek3-40l-pp2i2-timing"
+      },
+      {
+        "name": "h4-qwen3-18l-tp4-dp2-v17",
+        "family": "qwen3",
+        "reason": "ValueError: profiler archive 中没有 case_result.json: /home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v17-h4-qwen3-18l-tp4dp2-timing"
+      }
+    ]
+  },
+  "conclusion": "The evidence supports calibration and historical error analysis for Qwen3 and DeepSeek-V3, but it does not establish current blind-holdout generalization or the OOM decision boundary."
+}

@@ -3,8 +3,9 @@ from math import prod
 from cost_eval.layers import build_dense_decoder, build_moe_decoder
 from cost_eval.model_spec import DimTable, ModelSpec, OpType
 from cost_eval.parallel_model import ParallelModel
+from cost_eval.report import Evaluator
 from cost_eval.shape_eval import ShapeEval, eval_expr
-from cost_eval.specs import OptimizerSpec, ParallelConfig
+from cost_eval.specs import HardwareSpec, OptimizerSpec, ParallelConfig
 from cost_eval.static_mem import StaticMem
 
 DENSE_DIMS = DimTable(
@@ -133,3 +134,41 @@ def test_static_memory_single_device_and_sharding_conservation():
         sharded_graph, OptimizerSpec.adamw(), sharded_pm, True
     )
     assert offloaded[0] == 0
+
+
+def test_fp32_gradient_increases_persistent_and_transient_gradient_memory():
+    layer = build_dense_decoder(DENSE_DIMS)
+    spec = ModelSpec(
+        "dense-fp32-grad",
+        DENSE_DIMS,
+        ("dense", "dense"),
+        {"dense": layer},
+    )
+    parallel = ParallelConfig(dp_shard=2)
+    pm = ParallelModel(parallel, DENSE_DIMS.n_layers)
+    graph = ShapeEval().resolve(spec, pm)
+
+    bf16 = StaticMem().compute(graph, OptimizerSpec.adamw(), pm)[0]
+    fp32 = StaticMem().compute(
+        graph, OptimizerSpec.adamw(fp32_grad=True), pm
+    )[0]
+    assert fp32.breakdown.gradient > bf16.breakdown.gradient
+    assert fp32.persistent_bytes - bf16.persistent_bytes == (
+        fp32.breakdown.gradient - bf16.breakdown.gradient
+    )
+
+    bf16_report = Evaluator(
+        spec,
+        parallel,
+        OptimizerSpec.adamw(),
+        HardwareSpec(10**12),
+    ).evaluate()
+    fp32_report = Evaluator(
+        spec,
+        parallel,
+        OptimizerSpec.adamw(fp32_grad=True),
+        HardwareSpec(10**12),
+    ).evaluate()
+    assert fp32_report.per_stage[0].bucket_peaks.grad_buf > (
+        bf16_report.per_stage[0].bucket_peaks.grad_buf
+    )

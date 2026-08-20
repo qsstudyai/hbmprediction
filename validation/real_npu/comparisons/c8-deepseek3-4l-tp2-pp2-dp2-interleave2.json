@@ -1,0 +1,111 @@
+{
+  "case": "c8-deepseek3-4l-tp2-pp2-dp2-interleave2",
+  "family": "deepseek3",
+  "source": {
+    "timing_archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-c8ds3-timing-v2",
+    "hbm_archive": ".npu-calibration/p1v2-c8ds3-hbm-v4",
+    "timing_label_sha256": "a2fb76de674ab1865ee40c43fe6234980e3b8119d2064b78730608c7bc6f6596",
+    "hbm_label_sha256": "a038b9e41a69fa9fee971c6485b17a7c81228b593b469b961fd077e0a641c02f",
+    "protocol": {
+      "aggregation": "max_rank",
+      "rank_count": 8,
+      "rank_step_counts": {
+        "worker_0.log": 36,
+        "worker_1.log": 36,
+        "worker_2.log": 36,
+        "worker_3.log": 36,
+        "worker_4.log": 36,
+        "worker_5.log": 36,
+        "worker_6.log": 36,
+        "worker_7.log": 36
+      },
+      "rank_global_batch_sizes": {
+        "worker_0.log": [],
+        "worker_1.log": [],
+        "worker_2.log": [],
+        "worker_3.log": [],
+        "worker_4.log": [
+          4
+        ],
+        "worker_5.log": [
+          4
+        ],
+        "worker_6.log": [
+          4
+        ],
+        "worker_7.log": [
+          4
+        ]
+      },
+      "effective_global_batch_sizes": [
+        4
+      ],
+      "status": "valid"
+    },
+    "replicate_quality": null,
+    "frozen_prediction": null
+  },
+  "measured": {
+    "step_time_p50_ns": 283000000,
+    "step_time_p90_ns": 293400000,
+    "step_time_ns": 283000000,
+    "peak_hbm_total_bytes": 17359175680,
+    "peak_hbm_dynamic_bytes": 13776191488,
+    "oom": false,
+    "timing_protocol_valid": true,
+    "measurement_quality": {
+      "timing": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "timing",
+        "status": "valid",
+        "issues": [],
+        "effective_global_batch": 4,
+        "tokens_per_step": 16384,
+        "rank_count": 8,
+        "steady_step_count": 24,
+        "aggregation": "pXX(max_rank_per_global_step)"
+      },
+      "hbm": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          35,
+          35,
+          35,
+          35,
+          35,
+          35,
+          35,
+          35
+        ],
+        "per_rank_baseline_bytes": [
+          3586129920,
+          3582984192,
+          3584032768,
+          3585081344,
+          3582984192,
+          3582984192,
+          3584032768,
+          3582984192
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      }
+    }
+  },
+  "physical_base": {
+    "step_time_p50_ns": 301737950,
+    "step_time_p90_ns": 397599702,
+    "peak_hbm_total_bytes": 10838813010,
+    "peak_hbm_dynamic_bytes": 7254780242,
+    "oom": false
+  },
+  "metadata": {
+    "model_family": "deepseek3",
+    "world_size": 8,
+    "timing_run": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-c8ds3-timing-v2",
+    "hbm_run": ".npu-calibration/p1v2-c8ds3-hbm-v4"
+  }
+}

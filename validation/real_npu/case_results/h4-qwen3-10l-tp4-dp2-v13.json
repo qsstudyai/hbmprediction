@@ -1,0 +1,295 @@
+{
+  "name": "h4-qwen3-10l-tp4dp2-hbm-v2",
+  "collection_attempt_id": "be84b2fb4b65427fb30343bfb76aeecd",
+  "adapter": "mindformers",
+  "world_size": 8,
+  "framework_reserve_bytes": 1631153068,
+  "device_baseline_bytes": 3583770624,
+  "config": {
+    "checkpoint": {
+      "enable_save": false,
+      "save_path": "/home/qs50063523/mycode/parallelsearch/real_tests/results/qwen3_4l_tp4_dp2/checkpoints",
+      "no_load_optim": true
+    },
+    "training": {
+      "steps": 76,
+      "local_batch_size": 1,
+      "global_batch_size": 2,
+      "max_norm": 1.0,
+      "seed": 42,
+      "deterministic": true
+    },
+    "optimizer": {
+      "type": "AdamW",
+      "betas": [
+        0.9,
+        0.95
+      ],
+      "eps": 1e-08,
+      "weight_decay": 0.01
+    },
+    "lr_scheduler": {
+      "type": "ConstantWarmUpLR",
+      "learning_rate": 1e-05,
+      "warmup_ratio": 0
+    },
+    "parallelism": {
+      "data_parallel_shard": -1,
+      "data_parallel_shard_strategy": "optim_grads_params",
+      "disable_gradient_division": true,
+      "expert_parallel": 1,
+      "tensor_parallel": 4,
+      "context_parallel": 1,
+      "context_parallel_method": "colossal",
+      "pipeline_parallel": 1,
+      "pipeline_parallel_schedule": "1f1b",
+      "pipeline_parallel_microbatch_size": 1,
+      "pipeline_parallel_interleave_num": 1,
+      "pipeline_parallel_layers_per_stage": null,
+      "sequence_parallel": true
+    },
+    "recompute": {
+      "mode": "None"
+    },
+    "train_dataset": {
+      "dataloader": {
+        "type": "MindDataset",
+        "dataset_files": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/train_dataset",
+        "column_names": [
+          "input_ids",
+          "labels",
+          "loss_mask",
+          "position_ids"
+        ],
+        "shuffle": false
+      },
+      "drop_remainder": true,
+      "num_parallel_workers": 8,
+      "prefetch_size": 1,
+      "numa_enable": false
+    },
+    "context": {
+      "mode": 1,
+      "device_target": "Ascend",
+      "max_device_memory": "58GB"
+    },
+    "model": {
+      "model_type": "qwen3",
+      "architectures": "Qwen3ForCausalLM",
+      "vocab_size": 129280,
+      "seq_length": 4096,
+      "max_position_embeddings": 4096,
+      "hidden_size": 256,
+      "intermediate_size": 512,
+      "num_hidden_layers": 10,
+      "num_attention_heads": 8,
+      "num_key_value_heads": 4,
+      "head_dim": 32,
+      "hidden_act": "silu",
+      "rms_norm_eps": 1e-06,
+      "use_cache": false,
+      "tie_word_embeddings": false,
+      "rope_theta": 10000,
+      "attention_bias": false,
+      "use_flash_attention": true,
+      "attention_dropout": 0.0,
+      "params_dtype": "float32",
+      "compute_dtype": "bfloat16",
+      "layernorm_compute_dtype": "float32",
+      "softmax_compute_dtype": "float32",
+      "rotary_dtype": "float32",
+      "position_embedding_type": "rope",
+      "qk_layernorm": true,
+      "qkv_concat": true,
+      "gated_linear_unit": true
+    },
+    "profiler": {
+      "enable_profiling": true,
+      "start_step": 7,
+      "end_step": 70,
+      "output_path": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h4-qwen3-10l-tp4dp2-hbm-v2/mindspore-profile",
+      "profiler_rank": [
+        0
+      ],
+      "profiler_level": 1,
+      "profile_memory": true,
+      "profile_cpu": true,
+      "with_stack": true
+    }
+  },
+  "metadata": {
+    "run_mode": "hbm",
+    "device": "Ascend",
+    "mindformers_commit": "d8b14de93b6774782b30f51c0bf5f5827536fb9c",
+    "mindspore_version": "2.10.0",
+    "cann_version": "unknown",
+    "original_config": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h4-qwen3-10l-tp4dp2-timing/profile_config.yaml",
+    "runner": "/home/qs50063523/mycode/mindformers/tests/st/test_multi_cards_cases/test_pynative/test_models/test_deepseek3/run_deepseek3.py",
+    "generated_command": [
+      "msrun",
+      "--worker_num=8",
+      "--local_worker_num=8",
+      "--master_port=62951",
+      "--log_dir=/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h4-qwen3-10l-tp4dp2-hbm-v2/msrun-logs",
+      "--join=True",
+      "/home/qs50063523/mycode/mindformers/tests/st/test_multi_cards_cases/test_pynative/test_models/test_deepseek3/run_deepseek3.py",
+      "--config",
+      "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h4-qwen3-10l-tp4dp2-hbm-v2/profile_config.yaml"
+    ],
+    "mindspore_profiler_path": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h4-qwen3-10l-tp4dp2-hbm-v2/mindspore-profile",
+    "measurement_window": {
+      "start_step": 7,
+      "stop_step": 70
+    },
+    "collector_host": "localhost.localdomain",
+    "sample_interval_ms": 100,
+    "devices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "device_stage_map": {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0
+    },
+    "returncode": 0,
+    "timed_out": false,
+    "query_errors": [],
+    "raw_samples": "memory_samples.jsonl",
+    "training_log": "training.log",
+    "mindspore_profiler": "mindspore-profiler",
+    "profiler_memory": {
+      "mindspore_allocated_bytes": 2136380500,
+      "mindspore_active_bytes": 2136380500,
+      "mindspore_reserved_bytes": 2144256000,
+      "mindspore_ge_allocated_bytes": 2136380500,
+      "mindspore_ge_active_bytes": 2136380500,
+      "mindspore_ge_reserved_bytes": 2144256000,
+      "app_allocated_bytes": 0,
+      "app_active_bytes": 0,
+      "app_reserved_bytes": 3726988000
+    },
+    "measurement_schema": "p1.measurement-contract.v2"
+  },
+  "measured": {
+    "per_stage_peak_bytes": {
+      "0": 3767533568
+    },
+    "per_device": {
+      "0": {
+        "stage": 0,
+        "baseline_bytes": 3585081344,
+        "runtime_floor_bytes": 3766484992,
+        "peak_used_bytes": 7352614912,
+        "peak_delta_bytes": 3767533568,
+        "sample_count": 31
+      },
+      "1": {
+        "stage": 0,
+        "baseline_bytes": 3584032768,
+        "runtime_floor_bytes": 3754950656,
+        "peak_used_bytes": 7340032000,
+        "peak_delta_bytes": 3755999232,
+        "sample_count": 31
+      },
+      "2": {
+        "stage": 0,
+        "baseline_bytes": 3582984192,
+        "runtime_floor_bytes": 3754950656,
+        "peak_used_bytes": 7338983424,
+        "peak_delta_bytes": 3755999232,
+        "sample_count": 31
+      },
+      "3": {
+        "stage": 0,
+        "baseline_bytes": 3583508480,
+        "runtime_floor_bytes": 3754426368,
+        "peak_used_bytes": 7338983424,
+        "peak_delta_bytes": 3755474944,
+        "sample_count": 31
+      },
+      "4": {
+        "stage": 0,
+        "baseline_bytes": 3583508480,
+        "runtime_floor_bytes": 3754426368,
+        "peak_used_bytes": 7338983424,
+        "peak_delta_bytes": 3755474944,
+        "sample_count": 31
+      },
+      "5": {
+        "stage": 0,
+        "baseline_bytes": 3582984192,
+        "runtime_floor_bytes": 3755999232,
+        "peak_used_bytes": 7340032000,
+        "peak_delta_bytes": 3757047808,
+        "sample_count": 31
+      },
+      "6": {
+        "stage": 0,
+        "baseline_bytes": 3584032768,
+        "runtime_floor_bytes": 3754950656,
+        "peak_used_bytes": 7340032000,
+        "peak_delta_bytes": 3755999232,
+        "sample_count": 31
+      },
+      "7": {
+        "stage": 0,
+        "baseline_bytes": 3584032768,
+        "runtime_floor_bytes": 3754950656,
+        "peak_used_bytes": 7340032000,
+        "peak_delta_bytes": 3755999232,
+        "sample_count": 31
+      }
+    },
+    "idle_bytes": 3754950656,
+    "device_baseline_bytes": 3583770624,
+    "framework_reserve_bytes": 1631153068,
+    "hbm_components": {
+      "device_baseline_bytes": 3583770624,
+      "model_dynamic_peak_bytes": 2136380500,
+      "allocator_pool_peak_bytes": 2144256000,
+      "untracked_runtime_bytes": 1623277568,
+      "legacy_ambiguous_reserve_bytes": 1631153068
+    },
+    "oom": false
+  },
+  "measurement_quality": {
+    "schema": "p1.measurement-contract.v2",
+    "kind": "hbm",
+    "status": "valid",
+    "issues": [],
+    "per_rank_sample_counts": [
+      31,
+      31,
+      31,
+      31,
+      31,
+      31,
+      31,
+      31
+    ],
+    "per_rank_baseline_bytes": [
+      3585081344,
+      3584032768,
+      3582984192,
+      3583508480,
+      3583508480,
+      3582984192,
+      3584032768,
+      3584032768
+    ],
+    "peak_observability": "sufficient",
+    "label": "total_peak_used_bytes"
+  }
+}

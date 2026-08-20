@@ -1,0 +1,49 @@
+{
+  "schema": "hbmprediction.component-goldens.v1",
+  "cases": {
+    "c32-qwen3-46l-dp8": {
+      "case_result_sha256": "013c697928b59730a6be0528adbb5f8a89f7fd7ed1f71f4052096a8715ca3e73",
+      "device_baseline_bytes": 3584032768,
+      "model_active_peak_bytes": 9449513500,
+      "allocator_pool_peak_bytes": 9461760000,
+      "untracked_runtime_bytes": 3041460224,
+      "dynamic_peak_bytes": 12503220224,
+      "total_peak_bytes": 16086204416,
+      "rank_count": 8,
+      "min_samples": 53
+    },
+    "c28-qwen3-10l-tp4-dp2": {
+      "case_result_sha256": "e312933782063391219816b307c4af0bf6f11cb5ce6f1750bd16304fc734f768",
+      "device_baseline_bytes": 3583770624,
+      "model_active_peak_bytes": 2136380500,
+      "allocator_pool_peak_bytes": 2144256000,
+      "untracked_runtime_bytes": 1623277568,
+      "dynamic_peak_bytes": 3767533568,
+      "total_peak_bytes": 7352614912,
+      "rank_count": 8,
+      "min_samples": 31
+    },
+    "c30-deepseek3-38l-tp2-cp2-ep2": {
+      "case_result_sha256": "334c2c1360a4b548c8341cea97feae7cfa33db764c86938249fdf488bf036260",
+      "device_baseline_bytes": 3584032768,
+      "model_active_peak_bytes": 18556820000,
+      "allocator_pool_peak_bytes": 19380224000,
+      "untracked_runtime_bytes": 3222880256,
+      "dynamic_peak_bytes": 22603104256,
+      "total_peak_bytes": 26188185600,
+      "rank_count": 8,
+      "min_samples": 99
+    },
+    "c27-deepseek3-24l-tp2-pp2-dp2-interleave2": {
+      "case_result_sha256": "9743792344233d51f17353083813bc6dd0c0cb3ce27faa3f5b6e3d41e64f4a6f",
+      "device_baseline_bytes": 3584032768,
+      "model_active_peak_bytes": 20438718500,
+      "allocator_pool_peak_bytes": 21698560000,
+      "untracked_runtime_bytes": 2537177088,
+      "dynamic_peak_bytes": 24235737088,
+      "total_peak_bytes": 27819769856,
+      "rank_count": 8,
+      "min_samples": 26
+    }
+  }
+}

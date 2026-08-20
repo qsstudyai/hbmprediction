@@ -1,0 +1,40 @@
+{
+  "output_dir": "/home/qs50063523/mycode/hbmprediction/.npu-validation/20260819-qwen3-4l-dp8-hbm/collector",
+  "sample_interval_ms": 100,
+  "baseline_samples": 10,
+  "memory_query": {"use_pty": false, "timeout_seconds": 30, "retries": 2},
+  "devices": [0, 1, 2, 3, 4, 5, 6, 7],
+  "cases": [{
+    "name": "20260819-qwen3-4l-dp8-hbm",
+    "config": "/home/qs50063523/mycode/parallelsearch/real_tests/configs/qwen3_4l_dp8.yaml",
+    "cwd": "/home/qs50063523/mycode/mindformers",
+    "world_size": 8,
+    "pipeline_parallel": 1,
+    "command": [
+      "msrun", "--worker_num=8", "--local_worker_num=8",
+      "--master_port=62221",
+      "--log_dir=/home/qs50063523/mycode/hbmprediction/.npu-validation/20260819-qwen3-4l-dp8-hbm/msrun-logs",
+      "--join=True",
+      "/home/qs50063523/mycode/mindformers/tests/st/test_multi_cards_cases/test_pynative/test_models/test_deepseek3/run_deepseek3.py",
+      "--config", "/home/qs50063523/mycode/parallelsearch/real_tests/configs/qwen3_4l_dp8.yaml"
+    ],
+    "marker_log_glob": "/home/qs50063523/mycode/hbmprediction/.npu-validation/20260819-qwen3-4l-dp8-hbm/msrun-logs/**/*.log",
+    "start_marker_regex": "(?i)step:\\[\\s*2/",
+    "stop_marker_regex": "(?i)step:\\[\\s*6/",
+    "timeout_seconds": 1800,
+    "env": {
+      "PYTHONUNBUFFERED": "1",
+      "PYTHONPATH": "/home/qs50063523/mycode/mindformers:/home/qs50063523/mycode/parallelsearch:/home/qs50063523/mycode/hyper-parallel:/usr/local/Ascend/cann-9.0.1/python/site-packages:/usr/local/Ascend/cann-9.0.1/opp/built-in/op_impl/ai_core/tbe",
+      "ASCEND_RT_VISIBLE_DEVICES": "0,1,2,3,4,5,6,7",
+      "HCCL_NPU_SOCKET_PORT_RANGE": "62222-62262"
+    },
+    "metadata": {
+      "device": "Ascend-910B2",
+      "model_family": "Qwen3",
+      "parallelism": "DP8",
+      "split": "new-holdout",
+      "prediction": "validation/real_npu/frozen_predictions/2026-08-19-qwen3-4l-dp8.json",
+      "protocol": "p1.measurement-contract.v2"
+    }
+  }]
+}

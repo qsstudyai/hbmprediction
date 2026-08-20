@@ -108,6 +108,8 @@ def test_config_selection_semantics_and_validation():
         HardwareSpec(0)
     with pytest.raises(ValueError):
         ParallelConfig(tp=0)
+    with pytest.raises(ValueError, match="unsupported MoE dispatcher"):
+        ParallelConfig(moe_token_dispatcher="mystery")
 
 
 def test_fine_grained_recompute_and_swap_selection():
