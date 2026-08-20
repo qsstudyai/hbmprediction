@@ -3,62 +3,11 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from types import SimpleNamespace
 
-
-@dataclass(frozen=True)
-class Event:
-    kind: str
-    mb: int
-    layer: int = -1
-    chunk: int = 0
-
-
-def build_1f1b(stage: int, pp: int, m: int = None, microbatches: int = None) -> list[Event]:
-    if m is None:
-        m = microbatches
-    if not (0 <= stage < pp) or m <= 0:
-        raise ValueError("stage/pp/m 参数非法")
-    warmup = min(pp - 1 - stage, m)
-    events = [Event("FWD", mb) for mb in range(warmup)]
-    fwd_mb, bwd_mb = warmup, 0
-    while bwd_mb < m:
-        if fwd_mb < m:
-            events.append(Event("FWD", fwd_mb))
-            fwd_mb += 1
-        events.append(Event("BWD", bwd_mb))
-        bwd_mb += 1
-    return events
-
-
-def build_interleaved_1f1b(
-    stage: int,
-    pp: int,
-    m: int,
-    interleave: int,
-) -> list[Event]:
-    """Build a deterministic virtual-stage interleaved 1F1B schedule.
-
-    Each physical stage is split into ``interleave`` virtual chunks.  Every
-    chunk gets the normal 1F1B schedule for the physical pipeline and the
-    chunk schedules are merged round-robin.  The result keeps the real
-    microbatch dependencies explicit while allowing the timed builder and the
-    memory ledger to account for chunk-local activation lifetimes.
-    """
-
-    if interleave <= 0:
-        raise ValueError("interleave 必须为正整数")
-    if interleave == 1:
-        return build_1f1b(stage, pp, m)
-    # Expand each physical 1F1B macro in virtual-chunk order.  Forward work
-    # enters chunk 0 -> chunk 1 -> ..., while backward work drains in the
-    # reverse order.  Merging independent per-chunk schedules (the old
-    # implementation) could issue ``FWD c0, BWD c0, FWD c1, BWD c1`` and
-    # artificially serialize an interleaved pipeline.
-    result: list[Event] = []
-    for event in build_1f1b(stage, pp, m):
-        chunks = range(interleave) if event.kind == "FWD" else range(interleave - 1, -1, -1)
-        result.extend(Event(event.kind, event.mb, event.layer, chunk) for chunk in chunks)
-    return result
+from .event_schedule import Event, build_1f1b, build_interleaved_1f1b
+from .memory_actions import forward_layer_actions
+from .memory_ledger import MemoryLedger
 
 
 @dataclass
@@ -99,6 +48,14 @@ class StagePeak:
     peak_event: str
     oom: bool
     bucket_peaks: "BucketPeaks" = None
+    physical_dynamic_peak_bytes: int = 0
+    allocator_pool_peak_bytes: int = 0
+    device_baseline_bytes: int = 0
+    untracked_runtime_point_bytes: int = 0
+    fragmentation_point_bytes: int = 0
+    total_point_bytes: int = 0
+    safe_upper_bytes: int = 0
+    oom_status: str = "risky"
 
 
 @dataclass(frozen=True)
@@ -120,6 +77,9 @@ class LayerMemoryPlan:
     recomputed_ops: frozenset[str]
     recompute_comm_bytes: int = 0
     recomputed_comm_ops: frozenset[str] = frozenset()
+    resident_keys: frozenset[str] = frozenset()
+    offloaded_keys: frozenset[str] = frozenset()
+    recompute_keys: frozenset[str] = frozenset()
 
     @property
     def resident(self): return self.resident_bytes
@@ -132,7 +92,7 @@ class LayerMemoryPlan:
 def _unique_tensors(tensors):
     unique = {}
     for tensor in tensors:
-        unique.setdefault(tensor.storage_id or tensor.name, tensor)
+        unique.setdefault(tensor.storage_key, tensor)
     return unique.values()
 
 
@@ -145,10 +105,10 @@ def _layer_memory_plan(layer, recompute, swap) -> LayerMemoryPlan:
     tensors = {}
     saves_by_op = {}
     for op in layer.ops:
-        saves_by_op[op.name] = {tensor.name for tensor in op.saves}
+        saves_by_op[op.name] = {tensor.storage_key for tensor in op.saves}
         for tensor in (*op.inputs, op.output, *op.saves):
             if not tensor.is_weight:
-                tensors.setdefault(tensor.name, tensor)
+                tensors.setdefault(tensor.storage_key, tensor)
 
     resident_names = set().union(
         *(
@@ -172,8 +132,8 @@ def _layer_memory_plan(layer, recompute, swap) -> LayerMemoryPlan:
                 (tensor for tensor in op.inputs if not tensor.is_weight), None
             )
             if checkpoint is not None:
-                tensors.setdefault(checkpoint.name, checkpoint)
-                checkpoints.add(checkpoint.name)
+                tensors.setdefault(checkpoint.storage_key, checkpoint)
+                checkpoints.add(checkpoint.storage_key)
         previous_selected = selected
     resident_names |= checkpoints
     scratch_names -= resident_names
@@ -185,8 +145,9 @@ def _layer_memory_plan(layer, recompute, swap) -> LayerMemoryPlan:
     for op in layer.ops:
         if op.name in comm_recomputed:
             comm_tensor_names.update(
-                item.output_tensor for item in op.collectives
-                if item.output_tensor is not None
+                item.output_value_id or item.output_tensor
+                for item in op.collectives
+                if item.output_value_id is not None or item.output_tensor is not None
             )
             comm_bytes += sum(item.volume_bytes for item in op.collectives)
     resident_names -= comm_tensor_names
@@ -215,6 +176,9 @@ def _layer_memory_plan(layer, recompute, swap) -> LayerMemoryPlan:
         recomputed,
         comm_bytes,
         comm_recomputed,
+        frozenset(resident_names),
+        frozenset(offloaded_names),
+        frozenset(scratch_names),
     )
 
 
@@ -228,11 +192,30 @@ def _layer_fsdp_buffer_bytes(layer, pm) -> int:
     for tensor in _unique_tensors(
         tensor for op in layer.ops for tensor in op.params
     ):
-        degree = (
+        degree = 1 if tensor.fsdp_replicated else (
             pm.efsdp_degree() if tensor.is_expert else pm.fsdp_degree()
         )
-        if degree > 1 or pm.pc.cpu_offload:
+        if degree > 1 or pm.pc.parameter_offload:
             total += tensor.local_bytes
+    return total
+
+
+def _layer_grad_buffer_bytes(layer, pm, gradient_bytes: int | None = None) -> int:
+    """Full gradients materialized before FSDP/eFSDP reduce-scatter."""
+    total = 0
+    for tensor in _unique_tensors(
+        tensor for op in layer.ops for tensor in op.params
+    ):
+        if not tensor.trainable:
+            continue
+        degree = 1 if tensor.fsdp_replicated else (
+            pm.efsdp_degree() if tensor.is_expert else pm.fsdp_degree()
+        )
+        if degree > 1 or pm.pc.gradient_offload:
+            dtype_bytes = max(
+                tensor.dtype_bytes, gradient_bytes or tensor.dtype_bytes
+            )
+            total += tensor.local_numel * dtype_bytes
     return total
 
 
@@ -246,9 +229,23 @@ def _layer_workspace(layer) -> int:
 
 
 def _op_fsdp_buffer_bytes(op, pm) -> int:
-    if pm.fsdp_degree() == 1 and not pm.pc.cpu_offload:
+    if pm.fsdp_degree() == 1 and not pm.pc.parameter_offload:
         return 0
-    return sum(tensor.local_bytes for tensor in _unique_tensors(op.params))
+    return sum(
+        tensor.local_bytes for tensor in _unique_tensors(op.params)
+        if not tensor.fsdp_replicated or pm.pc.parameter_offload
+    )
+
+
+def _op_grad_buffer_bytes(op, pm, gradient_bytes: int | None = None) -> int:
+    if pm.fsdp_degree() == 1 and not pm.pc.gradient_offload:
+        return 0
+    return sum(
+        tensor.local_numel
+        * max(tensor.dtype_bytes, gradient_bytes or tensor.dtype_bytes)
+        for tensor in _unique_tensors(op.params)
+        if tensor.trainable and (not tensor.fsdp_replicated or pm.pc.gradient_offload)
+    )
 
 
 def _edge_saved_bytes(ops) -> int:
@@ -270,6 +267,8 @@ class MemTimeline:
         static_persistent,
         framework_reserve: int,
         max_device_memory: int,
+        gradient_bytes: int | None = None,
+        optimizer=None,
     ) -> dict[int, StagePeak]:
         result = {}
         for stage, layers in graph.stages.items():
@@ -282,16 +281,28 @@ class MemTimeline:
                 layer.layer_id: _layer_fsdp_buffer_bytes(layer, pm)
                 for layer in layers
             }
+            layer_grad_buffer = {
+                layer.layer_id: _layer_grad_buffer_bytes(
+                    layer, pm, gradient_bytes
+                )
+                for layer in layers
+            }
             edge_ops = tuple((graph.edge_ops or {}).get(stage, ()))
             prefix_ops = tuple(op for op in edge_ops if op.name == "embedding")
             suffix_ops = tuple(op for op in edge_ops if op.name != "embedding")
             edge_resident = _edge_saved_bytes(edge_ops)
+            suffix_resident = _edge_saved_bytes(suffix_ops)
             memory_plans = {
                 layer.layer_id: _layer_memory_plan(
                     layer, recompute, swap
                 )
                 for layer in layers
             }
+            pp_boundary_bytes = 0
+            if pm.degree("pp") > 1:
+                pp_boundary_bytes = max(
+                    (layer.checkpoint_bytes for layer in layers), default=0
+                )
             peak = -1
             peak_event = "initial"
             peak_breakdown = None
@@ -365,7 +376,7 @@ class MemTimeline:
                                 len(active_layer_ids),
                                 index + pm.pc.prefetch_depth + 1,
                             )
-                            gathered_ids.update(layer_ids[index:upper])
+                            gathered_ids.update(active_layer_ids[index:upper])
                             bucket.gather_buf = sum(
                                 layer_fsdp_buffer[item]
                                 for item in gathered_ids
@@ -374,37 +385,107 @@ class MemTimeline:
                             bucket.gather_buf = gather_window(index, ids=active_layer_ids)
                         record(f"fwd_gather@{layer_id}")
 
-                        bucket.workspace = _layer_workspace(layer)
-                        record(f"fwd_op@{layer_id}")
-                        bucket.workspace = 0
-
                         plan = memory_plans[layer_id]
                         resident = plan.resident_bytes
                         offloaded = plan.offloaded_bytes
+                        # Replay explicit value/workspace/communication
+                        # allocations so saved tensors from early operators
+                        # overlap later operator workspaces at the real peak.
+                        base_act_live = bucket.act_live
+                        ledger = MemoryLedger()
+                        for action in forward_layer_actions(
+                            layer, plan.resident_keys
+                        ):
+                            ledger.apply(action)
+                            local = ledger.buckets
+                            bucket.act_live = base_act_live + local.get("act_live", 0)
+                            bucket.workspace = (
+                                local.get("workspace", 0)
+                                + local.get("communication", 0)
+                            )
+                            record(action.owner or f"fwd_action@{layer_id}")
+                        if ledger.live_keys != plan.resident_keys:
+                            raise ValueError(
+                                f"layer {layer_id} forward ledger resident 不守恒: "
+                                f"{sorted(ledger.live_keys)} != {sorted(plan.resident_keys)}"
+                            )
+                        bucket.workspace = 0
+                        bucket.act_live = base_act_live + resident
                         pinned[(event.mb, layer_id)] = (resident, offloaded)
-                        bucket.act_live += resident
                         record(f"fwd_end@{layer_id}")
                     if not keep_gathered:
                         bucket.gather_buf = 0
-                    for op in suffix_ops if last_chunk else ():
-                        bucket.gather_buf = _op_fsdp_buffer_bytes(op, pm)
-                        record(f"fwd_edge_gather@{op.name}")
-                        bucket.workspace = op.workspace_bytes + max(
-                            (comm.volume_bytes for comm in op.collectives), default=0
+                    if last_chunk and suffix_ops:
+                        suffix_retained = frozenset(
+                            tensor.storage_key
+                            for op in suffix_ops for tensor in op.saves
+                            if not tensor.is_weight
                         )
-                        record("loss_logits" if op.name == "lm_head" else f"fwd_edge_op@{op.name}")
+                        suffix_ledger = MemoryLedger()
+                        base_act_live = bucket.act_live
+                        by_op_name = {op.name: op for op in suffix_ops}
+                        for action in forward_layer_actions(
+                            SimpleNamespace(
+                                layer_id=-(stage + 1), ops=suffix_ops
+                            ),
+                            suffix_retained,
+                        ):
+                            suffix_ledger.apply(action)
+                            local = suffix_ledger.buckets
+                            bucket.act_live = (
+                                base_act_live + local.get("act_live", 0)
+                            )
+                            bucket.workspace = (
+                                local.get("workspace", 0)
+                                + local.get("communication", 0)
+                            )
+                            op = by_op_name.get(action.op_name)
+                            bucket.gather_buf = (
+                                _op_fsdp_buffer_bytes(op, pm) if op else 0
+                            )
+                            record(
+                                "loss_logits"
+                                if action.op_name == "lm_head"
+                                else action.owner
+                            )
+                        if suffix_ledger.live_keys != suffix_retained:
+                            raise ValueError("edge forward ledger resident 不守恒")
                         bucket.workspace = 0
                         if not keep_gathered:
                             bucket.gather_buf = 0
                     if last_chunk:
                         pinned[(event.mb, -1)] = (edge_resident, 0)
-                        bucket.act_live += edge_resident
+                        # The suffix ledger already left its saved tensors
+                        # resident; add only edge values outside that ledger
+                        # (currently embedding/token inputs).
+                        bucket.act_live += edge_resident - suffix_resident
                         record("fwd_end")
+                        if pp_boundary_bytes:
+                            bucket.workspace = pp_boundary_bytes
+                            record(f"pp_send@stage{stage}")
+                            bucket.workspace = 0
                 else:
+                    if last_chunk and pp_boundary_bytes:
+                        bucket.workspace = pp_boundary_bytes
+                        record(f"pp_recv_grad@stage{stage}")
+                        bucket.workspace = 0
                     for op in reversed(suffix_ops if last_chunk else ()):
                         bucket.gather_buf = _op_fsdp_buffer_bytes(op, pm)
                         record(f"bwd_edge_gather@{op.name}")
-                        bucket.grad_buf = bucket.gather_buf
+                        bucket.grad_buf = _op_grad_buffer_bytes(
+                            op, pm, gradient_bytes
+                        )
+                        bucket.workspace = op.backward_workspace_bytes + max(
+                            (comm.volume_bytes for comm in op.collectives),
+                            default=0,
+                        )
+                        if bucket.workspace:
+                            record(
+                                "loss_bwd_dlogits"
+                                if op.name.startswith("loss_")
+                                else f"bwd_edge_op@{op.name}"
+                            )
+                        bucket.workspace = 0
                         record(f"bwd_edge_grad@{op.name}")
                         bucket.grad_buf = 0
                         if not keep_gathered:
@@ -445,7 +526,18 @@ class MemTimeline:
                             record(f"bwd_recompute_comm@{layer_id}")
                             bucket.recomp_scratch = 0
 
-                        bucket.grad_buf = layer_fsdp_buffer[layer_id]
+                        # Backward kernels and their communication staging run
+                        # while the layer's saved activations are still live.
+                        for op in reversed(layer.ops):
+                            bucket.workspace = op.backward_workspace_bytes + max(
+                                (comm.volume_bytes for comm in op.collectives),
+                                default=0,
+                            )
+                            if bucket.workspace:
+                                record(f"bwd_op@{layer_id}:{op.name}")
+                        bucket.workspace = 0
+
+                        bucket.grad_buf = layer_grad_buffer[layer_id]
                         record(f"bwd_grad@{layer_id}")
                         bucket.grad_buf = 0
                         bucket.act_live -= resident
@@ -458,12 +550,31 @@ class MemTimeline:
                     for op in reversed(prefix_ops if first_chunk else ()):
                         bucket.gather_buf = _op_fsdp_buffer_bytes(op, pm)
                         record(f"bwd_edge_gather@{op.name}")
-                        bucket.grad_buf = bucket.gather_buf
+                        bucket.grad_buf = _op_grad_buffer_bytes(
+                            op, pm, gradient_bytes
+                        )
                         record(f"bwd_edge_grad@{op.name}")
                         bucket.grad_buf = 0
                         if not keep_gathered:
                             bucket.gather_buf = 0
                     record("bwd_end")
+
+            if optimizer is not None:
+                from .optimizers import optimizer_step_workspace_bytes
+                largest_gradient = max(
+                    (*layer_grad_buffer.values(), *(
+                        _op_grad_buffer_bytes(op, pm, gradient_bytes)
+                        for op in edge_ops
+                    )),
+                    default=0,
+                )
+                bucket.workspace = optimizer_step_workspace_bytes(
+                    optimizer, largest_gradient,
+                    pm.pc.optimizer_offload,
+                )
+                if bucket.workspace:
+                    record(f"optimizer_step@stage{stage}")
+                bucket.workspace = 0
 
             assert peak_breakdown is not None
             result[stage] = StagePeak(

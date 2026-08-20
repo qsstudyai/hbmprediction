@@ -1,0 +1,2717 @@
+{
+  "schema": "hbmprediction.real-npu-evidence.v1",
+  "source": {
+    "repository": "/home/qs50063523/mycode/parallelsearch",
+    "git_commit": "fa9340cf8a208df50837b1a6269f19e750092ded",
+    "raw_profiler_tree": "/home/qs50063523/mycode/parallelsearch/.npu-calibration",
+    "raw_profiler_bytes_are_not_copied": true
+  },
+  "policy": {
+    "families": [
+      "qwen3",
+      "deepseek_v3"
+    ],
+    "copied": [
+      "comparison summaries",
+      "frozen predictions when present",
+      "collector case_result.json",
+      "profile configs when present",
+      "v17 matrix and audit"
+    ],
+    "excluded": [
+      "raw profiler traces",
+      "checkpoints",
+      "logs",
+      "datasets"
+    ]
+  },
+  "control_files": {
+    "v17_matrix": {
+      "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/v17_calibration_matrix.json",
+      "file": "v17_calibration_matrix.json",
+      "sha256": "020cb2b0383c71d4d871211093f0f658e00c7bf498e5debbbb090ecfdd8c01b9",
+      "bytes": 8549
+    },
+    "v17_audit": {
+      "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/v17_calibration_audit.json",
+      "file": "v17_calibration_audit.json",
+      "sha256": "001a315f47cff9c5aaa8c6df676f26ec2f0965645f75b2d6f7bf6cb761c81b76",
+      "bytes": 99470
+    }
+  },
+  "case_count": 40,
+  "cases": [
+    {
+      "name": "c12-qwen3-4l-tp2-dp4",
+      "family": "qwen3",
+      "source_family": "qwen3",
+      "split": "calibration",
+      "formal_eligible": true,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          21,
+          21,
+          21,
+          21,
+          21,
+          21,
+          21,
+          21
+        ],
+        "per_rank_baseline_bytes": [
+          3585081344,
+          3584032768,
+          3582984192,
+          3584032768,
+          3582984192,
+          3584032768,
+          3582984192,
+          3585081344
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-c12qwen3-4l-tp2dp4-hbm-v3",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-c12qwen3-4l-tp2dp4-timing-v4"
+      },
+      "source_label_hashes": {
+        "hbm": "0cb4f620b3094466b27d6208244aacf62972a605259301ead435e40e40dfc858",
+        "timing": "ef7387a488f1fa0806fff9e217b406097eb5c408b007c1f178ac9afc9eac3112"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/c12-qwen3-4l-tp2-dp4.json",
+          "file": "comparisons/c12-qwen3-4l-tp2-dp4.json",
+          "sha256": "ccb294beef60d2b8b71dd5fc8b0cb2f30fdb3cc4bee0edf7cd38b8290bf7d5ca",
+          "bytes": 3046
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-c12qwen3-4l-tp2dp4-hbm-v3/collector/c12qwen3-4l-tp2-dp4-hbm/case_result.json",
+          "file": "case_results/c12-qwen3-4l-tp2-dp4.json",
+          "sha256": "6d35e1dff69d84e6d43235a42ba97993a8279c3a65151c80bb4d742939af45c3",
+          "bytes": 8188
+        },
+        "frozen_prediction": null,
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-c12qwen3-4l-tp2dp4-timing-v4/profile_config.yaml",
+          "file": "configs/c12-qwen3-4l-tp2-dp4.yaml",
+          "sha256": "3de57d1eece14dc8092d07e196c53ca255d3c6cb646be823eb8b1a6031b685de",
+          "bytes": 2280
+        }
+      }
+    },
+    {
+      "name": "c14-deepseek3-16l-tp2-pp2-dp2-interleave2",
+      "family": "deepseek_v3",
+      "source_family": "deepseek3",
+      "split": "calibration",
+      "formal_eligible": true,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          397,
+          397,
+          397,
+          397,
+          397,
+          397,
+          397,
+          397
+        ],
+        "per_rank_baseline_bytes": [
+          3586129920,
+          3585081344,
+          3584032768,
+          3585081344,
+          3584032768,
+          3582984192,
+          3582984192,
+          3585081344
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v3-c14-deepseek3-16l-pp2i2-hbm-v1",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v3-c14-deepseek3-16l-pp2i2-timing-v3"
+      },
+      "source_label_hashes": {
+        "hbm": "43808efcdd4c016802a0c3f09f2012e79f21c8f898b4ac80a3a9adae1d43242a",
+        "timing": "7c9804957c2983c1e08e43c9b2b260bc3b02dfd5402cac4b218d814efd7e7166"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/c14-deepseek3-16l-tp2-pp2-dp2-interleave2.json",
+          "file": "comparisons/c14-deepseek3-16l-tp2-pp2-dp2-interleave2.json",
+          "sha256": "c4faa4669f0d38f7b20347b7cbc476f098bcc363b3d7a79350fc24417dc7bcfd",
+          "bytes": 3023
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v3-c14-deepseek3-16l-pp2i2-hbm-v1/collector/c14-deepseek3-16l-pp2i2-hbm/case_result.json",
+          "file": "case_results/c14-deepseek3-16l-tp2-pp2-dp2-interleave2.json",
+          "sha256": "0eb283c1c38e17858f16f6211ba2f136f28507fd503c0d5aa79aeb55810a8204",
+          "bytes": 9449
+        },
+        "frozen_prediction": null,
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v3-c14-deepseek3-16l-pp2i2-timing-v3/profile_config.yaml",
+          "file": "configs/c14-deepseek3-16l-tp2-pp2-dp2-interleave2.yaml",
+          "sha256": "c527ad40cde396f80c97ec2228f870ecccc4d9ab9b790f801a53ef8338d753ef",
+          "bytes": 3157
+        }
+      }
+    },
+    {
+      "name": "c15-deepseek3-16l-tp2-cp2-ep2",
+      "family": "deepseek_v3",
+      "source_family": "deepseek3",
+      "split": "calibration",
+      "formal_eligible": true,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          171,
+          171,
+          171,
+          171,
+          171,
+          171,
+          171,
+          171
+        ],
+        "per_rank_baseline_bytes": [
+          3585081344,
+          3582984192,
+          3584032768,
+          3584032768,
+          3584032768,
+          3582984192,
+          3582984192,
+          3584032768
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v3-b4-deepseek3-16l-tp2cp2ep2-hbm",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v3-b4-deepseek3-16l-tp2cp2ep2-timing"
+      },
+      "source_label_hashes": {
+        "hbm": "ff0ac7746de9e57dd823742a4d8990a667985f4c9eac50e77e585793d401f16d",
+        "timing": "f715d072db4caa314a2bb317f9aed6de5ddc97b0f70ae43cd69ebc0aedbe22fb"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/c15-deepseek3-16l-tp2-cp2-ep2.json",
+          "file": "comparisons/c15-deepseek3-16l-tp2-cp2-ep2.json",
+          "sha256": "340221e7f84d2cd73c091b4d670fdf96049375e08eef82c43cfbffad8b0c9638",
+          "bytes": 3098
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v3-b4-deepseek3-16l-tp2cp2ep2-hbm/collector/b4-deepseek3-16l-tp2cp2ep2-hbm/case_result.json",
+          "file": "case_results/c15-deepseek3-16l-tp2-cp2-ep2.json",
+          "sha256": "d32c996fd1eba792e69c75ce85b98585cfdc05d592c577fe0e2db6d65c423f19",
+          "bytes": 9396
+        },
+        "frozen_prediction": null,
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v3-b4-deepseek3-16l-tp2cp2ep2-timing/profile_config.yaml",
+          "file": "configs/c15-deepseek3-16l-tp2-cp2-ep2.yaml",
+          "sha256": "351953bb82656304f4cf82ecdcabf83fcc523981cae9ff591b0c7d1d51a4e857",
+          "bytes": 3152
+        }
+      }
+    },
+    {
+      "name": "c16-deepseek3-20l-tp2-cp2-ep2",
+      "family": "deepseek_v3",
+      "source_family": "deepseek3",
+      "split": "calibration",
+      "formal_eligible": true,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          208,
+          208,
+          208,
+          208,
+          208,
+          208,
+          208,
+          208
+        ],
+        "per_rank_baseline_bytes": [
+          3585081344,
+          3584032768,
+          3583508480,
+          3584032768,
+          3582984192,
+          3582984192,
+          3582984192,
+          3584032768
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v5-h2-deepseek3-20l-tp2cp2ep2-hbm-v2",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v5-h2-deepseek3-20l-tp2cp2ep2-timing"
+      },
+      "source_label_hashes": {
+        "hbm": "ed2edcb3c15ccc4e843d019aec8856f2efe38c75cb82b50c42f5412e659f5608",
+        "timing": "c8e2043e5bda9374b8faa010972d4403cee5ef39338000afe6aa628e92d8be27"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/c16-deepseek3-20l-tp2-cp2-ep2.json",
+          "file": "comparisons/c16-deepseek3-20l-tp2-cp2-ep2.json",
+          "sha256": "d2678d835ed76596a6f21f28d246c92e7df099e8f1d31c19acbe4b21df431ee4",
+          "bytes": 3104
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v5-h2-deepseek3-20l-tp2cp2ep2-hbm-v2/collector/h2-deepseek3-20l-tp2cp2ep2-hbm-v2/case_result.json",
+          "file": "case_results/c16-deepseek3-20l-tp2-cp2-ep2.json",
+          "sha256": "61ddd5e523b7e6f050e08547028a9a46194750da726550ee8720726cf00a00ac",
+          "bytes": 9429
+        },
+        "frozen_prediction": null,
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v5-h2-deepseek3-20l-tp2cp2ep2-timing/profile_config.yaml",
+          "file": "configs/c16-deepseek3-20l-tp2-cp2-ep2.yaml",
+          "sha256": "8711f2e0d2dfd49b169b66c200280c0bb36605e1fe881b800a5f5e4ae59f7d85",
+          "bytes": 3152
+        }
+      }
+    },
+    {
+      "name": "c17-qwen3-6l-dp8",
+      "family": "qwen3",
+      "source_family": "qwen3",
+      "split": "calibration",
+      "formal_eligible": true,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29
+        ],
+        "per_rank_baseline_bytes": [
+          3586129920,
+          3584032768,
+          3584032768,
+          3582459904,
+          3583508480,
+          3582984192,
+          3582984192,
+          3584032768
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v6-h1-qwen3-6l-dp8-hbm",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v6-h1-qwen3-6l-dp8-timing"
+      },
+      "source_label_hashes": {
+        "hbm": "5a4d5db1e9b9adaa23a4481d0b47eca81c33d8af93c3b746e436965d9c21b85c",
+        "timing": "391aaedd8847d2aa2141cf6563840d0d48faaff448d963e45a1b226a8bdbadb7"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/c17-qwen3-6l-dp8.json",
+          "file": "comparisons/c17-qwen3-6l-dp8.json",
+          "sha256": "5246e7cf4c7597d1c153184f3cf6439f048815f250e611ab216d86b2e7980caa",
+          "bytes": 3019
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v6-h1-qwen3-6l-dp8-hbm/collector/h1-qwen3-6l-dp8-hbm/case_result.json",
+          "file": "case_results/c17-qwen3-6l-dp8.json",
+          "sha256": "e4f833b1e7334fef35410127712be1362f0b8a5f5e4931663d51494a14a10abd",
+          "bytes": 8189
+        },
+        "frozen_prediction": null,
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v6-h1-qwen3-6l-dp8-timing/profile_config.yaml",
+          "file": "configs/c17-qwen3-6l-dp8.yaml",
+          "sha256": "2d319f00c5153b543b8cd981fe14943b4900de92b2bd5a82d7e2ae1278e79eec",
+          "bytes": 2270
+        }
+      }
+    },
+    {
+      "name": "c18-qwen3-10l-dp8",
+      "family": "qwen3",
+      "source_family": "qwen3",
+      "split": "calibration",
+      "formal_eligible": true,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          46,
+          46,
+          46,
+          46,
+          46,
+          46,
+          46,
+          46
+        ],
+        "per_rank_baseline_bytes": [
+          3584032768,
+          3584032768,
+          3582984192,
+          3582984192,
+          3583508480,
+          3582984192,
+          3584032768,
+          3584032768
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v7-h1-qwen3-10l-dp8-hbm",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v7-h1-qwen3-10l-dp8-timing"
+      },
+      "source_label_hashes": {
+        "hbm": "2c55a71e060f1b85aa446f7dcb87f2b8a93ef71172abc3cfd98f021e4af487b5",
+        "timing": "704afc010a4abeec4e81067ae297bfa67607b02229b43756caea525563e9fa5d"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/c18-qwen3-10l-dp8.json",
+          "file": "comparisons/c18-qwen3-10l-dp8.json",
+          "sha256": "084d4079b0cc7bcdc3918eb3c23d6344830c8b1cb3a430c201fe062b14aea59b",
+          "bytes": 3025
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v7-h1-qwen3-10l-dp8-hbm/collector/h1-qwen3-10l-dp8-hbm/case_result.json",
+          "file": "case_results/c18-qwen3-10l-dp8.json",
+          "sha256": "062cfe4f568b946f67d13a12c9eaef710fd48ae440e15c5d1f4b045aae84d4f0",
+          "bytes": 8198
+        },
+        "frozen_prediction": null,
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v7-h1-qwen3-10l-dp8-timing/profile_config.yaml",
+          "file": "configs/c18-qwen3-10l-dp8.yaml",
+          "sha256": "e6cde7653c5123e8527b2ba7c03c1a2435dc9ecbf18a7c30a1e2d3c63410cb01",
+          "bytes": 2272
+        }
+      }
+    },
+    {
+      "name": "c19-deepseek3-28l-tp2-cp2-ep2",
+      "family": "deepseek_v3",
+      "source_family": "deepseek3",
+      "split": "calibration",
+      "formal_eligible": true,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          288,
+          288,
+          288,
+          288,
+          288,
+          288,
+          288,
+          288
+        ],
+        "per_rank_baseline_bytes": [
+          3585081344,
+          3584032768,
+          3582984192,
+          3584032768,
+          3582984192,
+          3584032768,
+          3582984192,
+          3582984192
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v9-h2-deepseek3-28l-tp2cp2ep2-hbm",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v9-h2-deepseek3-28l-tp2cp2ep2-timing"
+      },
+      "source_label_hashes": {
+        "hbm": "2e4602df3d864bbc94559a71a74aeda5a6b2d5192e7ad4131ce6389fc2066764",
+        "timing": "ca6997a57ee78cf5dab35f51bac310109b986929b5575ab62f2aa0602b533145"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/c19-deepseek3-28l-tp2-cp2-ep2.json",
+          "file": "comparisons/c19-deepseek3-28l-tp2-cp2-ep2.json",
+          "sha256": "100cbf096dfd3cd152534b7cdf4f470b00ea5ff81d8dc0dc1e16660dd5f3b1c8",
+          "bytes": 3099
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v9-h2-deepseek3-28l-tp2cp2ep2-hbm/collector/h2-deepseek3-28l-tp2cp2ep2-hbm/case_result.json",
+          "file": "case_results/c19-deepseek3-28l-tp2-cp2-ep2.json",
+          "sha256": "150c3d187ebb212b0be0fe2a39dba0e467147a2c007d3afc2adec3c203b9d0e3",
+          "bytes": 9414
+        },
+        "frozen_prediction": null,
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v9-h2-deepseek3-28l-tp2cp2ep2-timing/profile_config.yaml",
+          "file": "configs/c19-deepseek3-28l-tp2-cp2-ep2.yaml",
+          "sha256": "66ee685845f4ea9eb68756f3cd69db1fc11c2c9cc4183c00c53d08f20e7afe8b",
+          "bytes": 3151
+        }
+      }
+    },
+    {
+      "name": "c20-deepseek3-32l-tp2-cp2-ep2",
+      "family": "deepseek_v3",
+      "source_family": "deepseek3",
+      "split": "calibration",
+      "formal_eligible": false,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "diagnostic_only",
+        "issues": [
+          "contaminated_device_baseline: cross-rank spread=12272533504 exceeds 2975072256"
+        ],
+        "per_rank_sample_counts": [
+          409,
+          409,
+          409,
+          409,
+          409,
+          409,
+          409,
+          409
+        ],
+        "per_rank_baseline_bytes": [
+          14875623424,
+          14875099136,
+          17769168896,
+          17770217472,
+          8520728576,
+          5497683968,
+          10223616000,
+          16925589504
+        ],
+        "peak_observability": "low_or_incomplete",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v10-h2-deepseek3-32l-tp2cp2ep2-hbm",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v10-h2-deepseek3-32l-tp2cp2ep2-timing"
+      },
+      "source_label_hashes": {
+        "hbm": "94cb5588cfe46b1afd262facc6e8019e63ea922dec8aafda5bde4995e5ed2442",
+        "timing": "19a14590e9350d578be5f872d17fb700165cd6ebafc2f0e24b35330ff097e67a"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/c20-deepseek3-32l-tp2-cp2-ep2.json",
+          "file": "comparisons/c20-deepseek3-32l-tp2-cp2-ep2.json",
+          "sha256": "eabe6b70e7ea4727babaf5caff6782b8ec219f9fc9f17994a65958e56c616ec7",
+          "bytes": 3212
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v10-h2-deepseek3-32l-tp2cp2ep2-hbm/collector/h2-deepseek3-32l-tp2cp2ep2-hbm/case_result.json",
+          "file": "case_results/c20-deepseek3-32l-tp2-cp2-ep2.json",
+          "sha256": "a03d47ca86974caaf5d3f3ec807b8a8696f57b0de415d69f85348c2022d6e8ef",
+          "bytes": 9426
+        },
+        "frozen_prediction": null,
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v10-h2-deepseek3-32l-tp2cp2ep2-timing/profile_config.yaml",
+          "file": "configs/c20-deepseek3-32l-tp2-cp2-ep2.yaml",
+          "sha256": "ae7587aca3ab997f0cc9f863e2dfd8de78676edfcdc696e2afee2683a7ffafd9",
+          "bytes": 3152
+        }
+      }
+    },
+    {
+      "name": "c21-qwen3-26l-dp8",
+      "family": "qwen3",
+      "source_family": "qwen3",
+      "split": "calibration",
+      "formal_eligible": true,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          111,
+          111,
+          111,
+          111,
+          111,
+          111,
+          111,
+          111
+        ],
+        "per_rank_baseline_bytes": [
+          3585081344,
+          3584032768,
+          3584032768,
+          3584032768,
+          3582984192,
+          3584032768,
+          3583508480,
+          3584032768
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v11-h1-qwen3-26l-dp8-hbm",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v11-h1-qwen3-26l-dp8-timing"
+      },
+      "source_label_hashes": {
+        "hbm": "d574e700c1861c8b45d0fc146fd3682a35992502583da46f5a420fa6e7881999",
+        "timing": "073252ad4b90dfb54f8cb84b73e5ce66f7a79646fbfbddee51d0dc0b70a40e81"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/c21-qwen3-26l-dp8.json",
+          "file": "comparisons/c21-qwen3-26l-dp8.json",
+          "sha256": "28668e729ac003f272588c47335c9d80ede083b028ffd5a05545133dc0dc5566",
+          "bytes": 3037
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v11-h1-qwen3-26l-dp8-hbm/collector/h1-qwen3-26l-dp8-hbm/case_result.json",
+          "file": "case_results/c21-qwen3-26l-dp8.json",
+          "sha256": "3423943353780903d2cf9e30459b9a080e949dcb085adad07222710120aebfec",
+          "bytes": 8221
+        },
+        "frozen_prediction": null,
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v11-h1-qwen3-26l-dp8-timing/profile_config.yaml",
+          "file": "configs/c21-qwen3-26l-dp8.yaml",
+          "sha256": "a69f028212737fa2f17d4241698181f49e142cca4f211ae29e9b0fa8a5e9ad4c",
+          "bytes": 2273
+        }
+      }
+    },
+    {
+      "name": "c22-deepseek3-30l-tp2-cp2-ep2",
+      "family": "deepseek_v3",
+      "source_family": "deepseek3",
+      "split": "calibration",
+      "formal_eligible": true,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          282,
+          282,
+          282,
+          282,
+          282,
+          282,
+          282,
+          282
+        ],
+        "per_rank_baseline_bytes": [
+          3585081344,
+          3584557056,
+          3582984192,
+          3584032768,
+          3582984192,
+          3584032768,
+          3583508480,
+          3584032768
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v11-h2-deepseek3-30l-tp2cp2ep2-hbm",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v11-h2-deepseek3-30l-tp2cp2ep2-timing"
+      },
+      "source_label_hashes": {
+        "hbm": "441287265f0e6b585b443f45d84699382c0846617cb342b0250c231a92a8cedf",
+        "timing": "61ed1abd99e3024912832cb649dce2d4d2bba44b0b48c08667871781919ec70e"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/c22-deepseek3-30l-tp2-cp2-ep2.json",
+          "file": "comparisons/c22-deepseek3-30l-tp2-cp2-ep2.json",
+          "sha256": "588585d839192682de60754cb787a2ac74127794365c2fff619ffd7fd07a0c72",
+          "bytes": 3103
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v11-h2-deepseek3-30l-tp2cp2ep2-hbm/collector/h2-deepseek3-30l-tp2cp2ep2-hbm/case_result.json",
+          "file": "case_results/c22-deepseek3-30l-tp2-cp2-ep2.json",
+          "sha256": "c140be879f672a9946aeefa90964fb90928523136c19df165c11fbb047761abf",
+          "bytes": 9419
+        },
+        "frozen_prediction": null,
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v11-h2-deepseek3-30l-tp2cp2ep2-timing/profile_config.yaml",
+          "file": "configs/c22-deepseek3-30l-tp2-cp2-ep2.yaml",
+          "sha256": "c890c0e8f116df5f660d980c3b173e62ef2de1ec8330522b201a96cff91b1c9c",
+          "bytes": 3152
+        }
+      }
+    },
+    {
+      "name": "c23-qwen3-30l-dp8",
+      "family": "qwen3",
+      "source_family": "qwen3",
+      "split": "calibration",
+      "formal_eligible": true,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          31,
+          31,
+          31,
+          31,
+          31,
+          31,
+          31,
+          31
+        ],
+        "per_rank_baseline_bytes": [
+          3584032768,
+          3584557056,
+          3584032768,
+          3585081344,
+          3584032768,
+          3584032768,
+          3582984192,
+          3582984192
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h1-qwen3-30l-dp8-hbm",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h1-qwen3-30l-dp8-timing-v2"
+      },
+      "source_label_hashes": {
+        "hbm": "2aabb33c3147399be307cf8615170c88237771aa90e1300068d61eeb1d8d64f5",
+        "timing": "0bf9781c6cde8cb9ab482c3afefc6777041a5d71229eb558fd8f05f655ee1dfe"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/c23-qwen3-30l-dp8.json",
+          "file": "comparisons/c23-qwen3-30l-dp8.json",
+          "sha256": "50754a88c1ed996a2933f52ec6b603e018544c66545a3d5c5fa889b4aaaf1a27",
+          "bytes": 3035
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h1-qwen3-30l-dp8-hbm/collector/h1-qwen3-30l-dp8-hbm/case_result.json",
+          "file": "case_results/c23-qwen3-30l-dp8.json",
+          "sha256": "ee6b8d363cd0cec0e07f45e9db2ee319e80d0b4b4210e57c29ceff5d7ddb1bdb",
+          "bytes": 8390
+        },
+        "frozen_prediction": null,
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h1-qwen3-30l-dp8-timing-v2/profile_config.yaml",
+          "file": "configs/c23-qwen3-30l-dp8.yaml",
+          "sha256": "2bb45636b2d9aa096d0d69ce98fb448f87caea19c412040ea80aefb200167cf5",
+          "bytes": 2276
+        }
+      }
+    },
+    {
+      "name": "c24-deepseek3-34l-tp2-cp2-ep2",
+      "family": "deepseek_v3",
+      "source_family": "deepseek3",
+      "split": "calibration",
+      "formal_eligible": true,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          86,
+          86,
+          86,
+          86,
+          86,
+          86,
+          86,
+          86
+        ],
+        "per_rank_baseline_bytes": [
+          5207228416,
+          5205131264,
+          5206179840,
+          5206179840,
+          5205131264,
+          5205131264,
+          5205131264,
+          5205655552
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h2-deepseek3-34l-tp2cp2ep2-hbm",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h2-deepseek3-34l-tp2cp2ep2-timing"
+      },
+      "source_label_hashes": {
+        "hbm": "9834262c126d91f21ab54fc5a94664464022b9194f967fdb59dba64c0750c146",
+        "timing": "7920c26183ee89551445994f19f030baeff008611accb53232cda857144ef5b9"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/c24-deepseek3-34l-tp2-cp2-ep2.json",
+          "file": "comparisons/c24-deepseek3-34l-tp2-cp2-ep2.json",
+          "sha256": "c0c814e2b5c952aa940ce2aff05215eea6535c41fb9dba85f50a475bb029f19a",
+          "bytes": 3096
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h2-deepseek3-34l-tp2cp2ep2-hbm/collector/h2-deepseek3-34l-tp2cp2ep2-hbm/case_result.json",
+          "file": "case_results/c24-deepseek3-34l-tp2-cp2-ep2.json",
+          "sha256": "a5b43d83b57b3b142ec11cc4024ecedaa031288f3f160d505ec7595f902691c2",
+          "bytes": 9587
+        },
+        "frozen_prediction": null,
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h2-deepseek3-34l-tp2cp2ep2-timing/profile_config.yaml",
+          "file": "configs/c24-deepseek3-34l-tp2-cp2-ep2.yaml",
+          "sha256": "f6d02da1e7a03dcb05e92d7c8e010573ee048688e932fa772bee69e8c4edc5c8",
+          "bytes": 3152
+        }
+      }
+    },
+    {
+      "name": "c25-qwen3-34l-dp8",
+      "family": "qwen3",
+      "source_family": "qwen3",
+      "split": "calibration",
+      "formal_eligible": true,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          36,
+          36,
+          36,
+          36,
+          36,
+          36,
+          36,
+          36
+        ],
+        "per_rank_baseline_bytes": [
+          3586129920,
+          3584032768,
+          3584032768,
+          3582984192,
+          3584032768,
+          3582984192,
+          3583508480,
+          3583508480
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v13-h1-qwen3-34l-dp8-hbm",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v13-h1-qwen3-34l-dp8-timing"
+      },
+      "source_label_hashes": {
+        "hbm": "510be6374b45da3c717274fad7254cb11c4506f8518eeff37e79a85a8b284646",
+        "timing": "99d6176a2fdadd0ee48563074d19e6483854f5a5575d254d760c64fb8265862c"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/c25-qwen3-34l-dp8.json",
+          "file": "comparisons/c25-qwen3-34l-dp8.json",
+          "sha256": "9af160b0f594558644ba774ca931d69eadde70c367ad09a023cb2f875caa3d25",
+          "bytes": 3029
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v13-h1-qwen3-34l-dp8-hbm/collector/h1-qwen3-34l-dp8-hbm/case_result.json",
+          "file": "case_results/c25-qwen3-34l-dp8.json",
+          "sha256": "f4326755870378a2e90082ded482ca1cae1a057db0e57b54a7de2508aba4e5e0",
+          "bytes": 8387
+        },
+        "frozen_prediction": null,
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v13-h1-qwen3-34l-dp8-timing/profile_config.yaml",
+          "file": "configs/c25-qwen3-34l-dp8.yaml",
+          "sha256": "ad40dc9a324fd8285fb609e2d7bc533afb9195990fd6f2f16d991a6d135795ba",
+          "bytes": 2273
+        }
+      }
+    },
+    {
+      "name": "c26-deepseek3-36l-tp2-cp2-ep2",
+      "family": "deepseek_v3",
+      "source_family": "deepseek3",
+      "split": "calibration",
+      "formal_eligible": true,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          95,
+          95,
+          95,
+          95,
+          95,
+          95,
+          95,
+          95
+        ],
+        "per_rank_baseline_bytes": [
+          3586129920,
+          3584032768,
+          3584032768,
+          3584032768,
+          3584032768,
+          3582984192,
+          3584032768,
+          3583508480
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v13-h2-deepseek3-36l-tp2cp2ep2-hbm",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v13-h2-deepseek3-36l-tp2cp2ep2-timing"
+      },
+      "source_label_hashes": {
+        "hbm": "34b2fa62d20d1a6536ddf644ce586eb2833232d32b5493d1b972d2b3673096d1",
+        "timing": "1599bcba556c260dcd671a7ff7b5a0a369a298395b033615e5d075428ec2ece9"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/c26-deepseek3-36l-tp2-cp2-ep2.json",
+          "file": "comparisons/c26-deepseek3-36l-tp2-cp2-ep2.json",
+          "sha256": "9bb1c4a67c044e676d3d7cfb220e455daa918149e62438aab7c2ad4e1e5e13bc",
+          "bytes": 3096
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v13-h2-deepseek3-36l-tp2cp2ep2-hbm/collector/h2-deepseek3-36l-tp2cp2ep2-hbm/case_result.json",
+          "file": "case_results/c26-deepseek3-36l-tp2-cp2-ep2.json",
+          "sha256": "810169c71f701777ccaeb52a97d2bfea1c4fc80e4a371512558b319ae411592c",
+          "bytes": 9587
+        },
+        "frozen_prediction": null,
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v13-h2-deepseek3-36l-tp2cp2ep2-timing/profile_config.yaml",
+          "file": "configs/c26-deepseek3-36l-tp2-cp2-ep2.yaml",
+          "sha256": "b0f4b8248f215fdaf1d7c9386704dd963f804c5938e52e8cbef1a277857194d6",
+          "bytes": 3152
+        }
+      }
+    },
+    {
+      "name": "c27-deepseek3-24l-tp2-pp2-dp2-interleave2",
+      "family": "deepseek_v3",
+      "source_family": "deepseek3",
+      "split": "calibration",
+      "formal_eligible": true,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          26,
+          26,
+          26,
+          26,
+          26,
+          26,
+          26,
+          26
+        ],
+        "per_rank_baseline_bytes": [
+          3586129920,
+          3584032768,
+          3584032768,
+          3584032768,
+          3584032768,
+          3584032768,
+          3584032768,
+          3582984192
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h3-deepseek3-24l-pp2i2-hbm",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h3-deepseek3-24l-pp2i2-timing"
+      },
+      "source_label_hashes": {
+        "hbm": "0debbd776475cef71d8e8cca3998cc95e222ce5cdc11e3c0200c7eb66f833c53",
+        "timing": "d3b06aa927b48d0d320cd73796230196f0e0c6caab69f0b5f370e640ffeae6c4"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/c27-deepseek3-24l-tp2-pp2-dp2-interleave2.json",
+          "file": "comparisons/c27-deepseek3-24l-tp2-pp2-dp2-interleave2.json",
+          "sha256": "fb30608b2534529cd4c504782ab4c2cf7678e8f92304fefcd2b604c22e9ff2e1",
+          "bytes": 3004
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h3-deepseek3-24l-pp2i2-hbm/collector/h3-deepseek3-24l-pp2i2-hbm/case_result.json",
+          "file": "case_results/c27-deepseek3-24l-tp2-pp2-dp2-interleave2.json",
+          "sha256": "9743792344233d51f17353083813bc6dd0c0cb3ce27faa3f5b6e3d41e64f4a6f",
+          "bytes": 9600
+        },
+        "frozen_prediction": null,
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h3-deepseek3-24l-pp2i2-timing/profile_config.yaml",
+          "file": "configs/c27-deepseek3-24l-tp2-pp2-dp2-interleave2.yaml",
+          "sha256": "765dd9431397c083011e0cc954f11f20bc4f55096280d33f9da96ea08a66a647",
+          "bytes": 3154
+        }
+      }
+    },
+    {
+      "name": "c28-qwen3-10l-tp4-dp2",
+      "family": "qwen3",
+      "source_family": "qwen3",
+      "split": "calibration",
+      "formal_eligible": true,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          31,
+          31,
+          31,
+          31,
+          31,
+          31,
+          31,
+          31
+        ],
+        "per_rank_baseline_bytes": [
+          3585081344,
+          3584032768,
+          3582984192,
+          3583508480,
+          3583508480,
+          3582984192,
+          3584032768,
+          3584032768
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h4-qwen3-10l-tp4dp2-hbm-v2",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h4-qwen3-10l-tp4dp2-timing"
+      },
+      "source_label_hashes": {
+        "hbm": "b879c46abe9cc4a7212bbf92a5fb8fe909ad1333013ce0ab936e16e59e6e6f10",
+        "timing": "0f5940954ccc7ea32d0a47627b9ecca6d90860d70ef373946dfb5570550d480a"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/c28-qwen3-10l-tp4-dp2.json",
+          "file": "comparisons/c28-qwen3-10l-tp4-dp2.json",
+          "sha256": "039326a443ec62a8616157cf3b77a5419320f7bf2d6540a6b90a0f22319b6d7e",
+          "bytes": 3048
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h4-qwen3-10l-tp4dp2-hbm-v2/collector/h4-qwen3-10l-tp4dp2-hbm-v2/case_result.json",
+          "file": "case_results/c28-qwen3-10l-tp4-dp2.json",
+          "sha256": "e312933782063391219816b307c4af0bf6f11cb5ce6f1750bd16304fc734f768",
+          "bytes": 8413
+        },
+        "frozen_prediction": null,
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h4-qwen3-10l-tp4dp2-timing/profile_config.yaml",
+          "file": "configs/c28-qwen3-10l-tp4-dp2.yaml",
+          "sha256": "1f46fcb43a105b4f25a2e8ac351c6ba95c30eb8538fd6a445a57507eb42201d0",
+          "bytes": 2279
+        }
+      }
+    },
+    {
+      "name": "c29-qwen3-38l-dp8",
+      "family": "qwen3",
+      "source_family": "qwen3",
+      "split": "calibration",
+      "formal_eligible": true,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40
+        ],
+        "per_rank_baseline_bytes": [
+          3585081344,
+          3584032768,
+          3582984192,
+          3584032768,
+          3584032768,
+          3584032768,
+          3584032768,
+          3584032768
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v14-h1-qwen3-38l-dp8-hbm",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v14-h1-qwen3-38l-dp8-timing"
+      },
+      "source_label_hashes": {
+        "hbm": "1dc83b24cfb99ad1d69f73b3d210b41bcbb1831beb5f4d1b411de6d3d21534c1",
+        "timing": "1c043d8777c40e6f1bbd30e36655b12edee92af0a51f92b7aedac456481ab600"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/c29-qwen3-38l-dp8.json",
+          "file": "comparisons/c29-qwen3-38l-dp8.json",
+          "sha256": "a8edb103af687a9c2e559ce0b13209be36b4d7eb29008780258927af2b1adfbf",
+          "bytes": 3033
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v14-h1-qwen3-38l-dp8-hbm/collector/h1-qwen3-38l-dp8-hbm/case_result.json",
+          "file": "case_results/c29-qwen3-38l-dp8.json",
+          "sha256": "cfccd0ccb7c4ce5dd5efdffadda29628d8b9be5357f5ac96b962eba940771b02",
+          "bytes": 8403
+        },
+        "frozen_prediction": null,
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v14-h1-qwen3-38l-dp8-timing/profile_config.yaml",
+          "file": "configs/c29-qwen3-38l-dp8.yaml",
+          "sha256": "4b5550af82ee89902bcea4177e2b28cf98154abe0b68b1a262c9bc577dc34c15",
+          "bytes": 2273
+        }
+      }
+    },
+    {
+      "name": "c30-deepseek3-38l-tp2-cp2-ep2",
+      "family": "deepseek_v3",
+      "source_family": "deepseek3",
+      "split": "calibration",
+      "formal_eligible": true,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          99,
+          99,
+          99,
+          99,
+          99,
+          99,
+          99,
+          99
+        ],
+        "per_rank_baseline_bytes": [
+          3584557056,
+          3582984192,
+          3582984192,
+          3584032768,
+          3584032768,
+          3582984192,
+          3584032768,
+          3585081344
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v14-h2-deepseek3-38l-tp2cp2ep2-hbm",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v14-h2-deepseek3-38l-tp2cp2ep2-timing"
+      },
+      "source_label_hashes": {
+        "hbm": "13c3a82504ec4cbda1d4e4ca7bc14963916a1dd18b4f45782f9ee5e60e1a70ec",
+        "timing": "849a25f731b8a9ba970955df7595864d5315e99f507df3170fb3fa350df62792"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/c30-deepseek3-38l-tp2-cp2-ep2.json",
+          "file": "comparisons/c30-deepseek3-38l-tp2-cp2-ep2.json",
+          "sha256": "36519115e47b1bf8d41f992160e9b2b3c959480723cc1f7a4e11a5183c75db73",
+          "bytes": 3096
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v14-h2-deepseek3-38l-tp2cp2ep2-hbm/collector/h2-deepseek3-38l-tp2cp2ep2-hbm/case_result.json",
+          "file": "case_results/c30-deepseek3-38l-tp2-cp2-ep2.json",
+          "sha256": "334c2c1360a4b548c8341cea97feae7cfa33db764c86938249fdf488bf036260",
+          "bytes": 9587
+        },
+        "frozen_prediction": null,
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v14-h2-deepseek3-38l-tp2cp2ep2-timing/profile_config.yaml",
+          "file": "configs/c30-deepseek3-38l-tp2-cp2-ep2.yaml",
+          "sha256": "f23ed33c55da1d7c94d4afc63841dc83b95c9585b9c0c4b39259d17574f1dff2",
+          "bytes": 3152
+        }
+      }
+    },
+    {
+      "name": "c31-qwen3-42l-dp8",
+      "family": "qwen3",
+      "source_family": "qwen3",
+      "split": "calibration",
+      "formal_eligible": true,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          48,
+          48,
+          48,
+          48,
+          48,
+          48,
+          48,
+          48
+        ],
+        "per_rank_baseline_bytes": [
+          3585081344,
+          3584032768,
+          3584032768,
+          3584032768,
+          3584032768,
+          3584032768,
+          3584032768,
+          3585081344
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v15-h1-qwen3-42l-dp8-hbm",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v15-h1-qwen3-42l-dp8-timing"
+      },
+      "source_label_hashes": {
+        "hbm": "a05c30e4966941100dd59fc3cb0e1460bed0b0e0d83b52427073a657abc02ca1",
+        "timing": "56f8486aa41300bddd74db56c7cb719cf2f1ce8b24a5d7b808c189c24bee5911"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/c31-qwen3-42l-dp8.json",
+          "file": "comparisons/c31-qwen3-42l-dp8.json",
+          "sha256": "4bb141bc35b495a12aec458ffaae182fe1b45ad8882bb686d3ab591850e2ba4f",
+          "bytes": 3033
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v15-h1-qwen3-42l-dp8-hbm/collector/h1-qwen3-42l-dp8-hbm/case_result.json",
+          "file": "case_results/c31-qwen3-42l-dp8.json",
+          "sha256": "d280fd999cac8ede198f2e20022148d42301f6b04ff9cdda45693f8b9eda2293",
+          "bytes": 8400
+        },
+        "frozen_prediction": null,
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v15-h1-qwen3-42l-dp8-timing/profile_config.yaml",
+          "file": "configs/c31-qwen3-42l-dp8.yaml",
+          "sha256": "243c11f195a4471e5de381a54a54b463a5f12b16a8d016d5d56c5183610011aa",
+          "bytes": 2273
+        }
+      }
+    },
+    {
+      "name": "c32-qwen3-46l-dp8",
+      "family": "qwen3",
+      "source_family": "qwen3",
+      "split": "calibration",
+      "formal_eligible": true,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          53,
+          53,
+          53,
+          53,
+          53,
+          53,
+          53,
+          53
+        ],
+        "per_rank_baseline_bytes": [
+          3585081344,
+          3584032768,
+          3584032768,
+          3584032768,
+          3582984192,
+          3582984192,
+          3584032768,
+          3582984192
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v16-h1-qwen3-46l-dp8-hbm",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v16-h1-qwen3-46l-dp8-timing"
+      },
+      "source_label_hashes": {
+        "hbm": "7a5e1f034b21f3fb2fbb003ccf7d43e7ffe29a6d8672b4952bb1b886b87ddc6c",
+        "timing": "8d7b104cdb3da7607f1a5270f11e0e2b8c98e55e8b6c3dc7db339a63a275993c"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/c32-qwen3-46l-dp8.json",
+          "file": "comparisons/c32-qwen3-46l-dp8.json",
+          "sha256": "677d6fd4e339249fccfe7fc11654eae7d8e65e3220b5d6432403fdc7dbc2e81c",
+          "bytes": 3034
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v16-h1-qwen3-46l-dp8-hbm/collector/h1-qwen3-46l-dp8-hbm/case_result.json",
+          "file": "case_results/c32-qwen3-46l-dp8.json",
+          "sha256": "013c697928b59730a6be0528adbb5f8a89f7fd7ed1f71f4052096a8715ca3e73",
+          "bytes": 8404
+        },
+        "frozen_prediction": null,
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v16-h1-qwen3-46l-dp8-timing/profile_config.yaml",
+          "file": "configs/c32-qwen3-46l-dp8.yaml",
+          "sha256": "816e8769350132f179e467179047ade8a71ecadd981b25081b7a19fc1beea346",
+          "bytes": 2273
+        }
+      }
+    },
+    {
+      "name": "c33-deepseek3-42l-tp2-cp2-ep2",
+      "family": "deepseek_v3",
+      "source_family": "deepseek3",
+      "split": "calibration",
+      "formal_eligible": true,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          117,
+          117,
+          117,
+          117,
+          117,
+          117,
+          117,
+          117
+        ],
+        "per_rank_baseline_bytes": [
+          3584032768,
+          3584032768,
+          3584032768,
+          3584032768,
+          3582984192,
+          3582984192,
+          3584032768,
+          3584032768
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v16-h2-deepseek3-42l-tp2cp2ep2-hbm-v2",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v16-h2-deepseek3-42l-tp2cp2ep2-timing"
+      },
+      "source_label_hashes": {
+        "hbm": "141ac153b67850cdb75f89e179c74e2edc46d3054d27577cd5f804ecb0a5210b",
+        "timing": "d95c6780931871f0818083a57e5f4a9116a1a64e7fdd20fe85b2cc040b7c2ead"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/c33-deepseek3-42l-tp2-cp2-ep2.json",
+          "file": "comparisons/c33-deepseek3-42l-tp2-cp2-ep2.json",
+          "sha256": "40e485ba3ac5c6d48848a9ccc9e9696646fd959adcbe7f23c5367cc5666b0b61",
+          "bytes": 3110
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v16-h2-deepseek3-42l-tp2cp2ep2-hbm-v2/collector/h2-deepseek3-42l-tp2cp2ep2-hbm-v2/case_result.json",
+          "file": "case_results/c33-deepseek3-42l-tp2-cp2-ep2.json",
+          "sha256": "63c1de9edf12b260a003130529fb74eaf9a1d85c292a0cd446dca8cca95ab821",
+          "bytes": 9752
+        },
+        "frozen_prediction": null,
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v16-h2-deepseek3-42l-tp2cp2ep2-timing/profile_config.yaml",
+          "file": "configs/c33-deepseek3-42l-tp2-cp2-ep2.yaml",
+          "sha256": "41fdb45d7eb615d0defff474d407c8f13238ca70ae88a1edc267a79f044e6f95",
+          "bytes": 3152
+        }
+      }
+    },
+    {
+      "name": "c6-deepseek3-12l-tp2-cp4",
+      "family": "deepseek_v3",
+      "source_family": "deepseek3",
+      "split": "calibration",
+      "formal_eligible": true,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          113,
+          113,
+          113,
+          113,
+          113,
+          113,
+          113,
+          113
+        ],
+        "per_rank_baseline_bytes": [
+          3585081344,
+          3584032768,
+          3582984192,
+          3582984192,
+          3582984192,
+          3584032768,
+          3582984192,
+          3584032768
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-c6ds3-12l-tp2cp4-hbm-v4",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-c6ds3-12l-tp2cp4-timing-v1"
+      },
+      "source_label_hashes": {
+        "hbm": "d865f17773b83c745322721e66d9a3e8708393746eae1eb5f5df6a3b89c351a4",
+        "timing": "e021022a8541a6edc837c8ff19715291de8ccb2774ddb5b47ecb471891f4425c"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/c6-deepseek3-12l-tp2-cp4.json",
+          "file": "comparisons/c6-deepseek3-12l-tp2-cp4.json",
+          "sha256": "573fa85a7f58d7ff22854a235a6f7d121dc2a61d3ecf46852a04f135db2e4bf4",
+          "bytes": 3066
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-c6ds3-12l-tp2cp4-hbm-v4/collector/c6deepseek3-12l-tp2-cp4-hbm/case_result.json",
+          "file": "case_results/c6-deepseek3-12l-tp2-cp4.json",
+          "sha256": "d9d00fb94df4238dd7b0f24094fe48a04a4275919e9e320f05ada157a02bab0f",
+          "bytes": 9287
+        },
+        "frozen_prediction": null,
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-c6ds3-12l-tp2cp4-timing-v1/profile_config.yaml",
+          "file": "configs/c6-deepseek3-12l-tp2-cp4.yaml",
+          "sha256": "697f468ab3e276e43063c3d5c59573d322368c8c0fa9e14851f33d09d8f840c8",
+          "bytes": 3145
+        }
+      }
+    },
+    {
+      "name": "c8-deepseek3-4l-tp2-pp2-dp2-interleave2",
+      "family": "deepseek_v3",
+      "source_family": "deepseek3",
+      "split": "calibration",
+      "formal_eligible": true,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          35,
+          35,
+          35,
+          35,
+          35,
+          35,
+          35,
+          35
+        ],
+        "per_rank_baseline_bytes": [
+          3586129920,
+          3582984192,
+          3584032768,
+          3585081344,
+          3582984192,
+          3582984192,
+          3584032768,
+          3582984192
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-c8ds3-hbm-v4",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-c8ds3-timing-v2"
+      },
+      "source_label_hashes": {
+        "hbm": "a038b9e41a69fa9fee971c6485b17a7c81228b593b469b961fd077e0a641c02f",
+        "timing": "a2fb76de674ab1865ee40c43fe6234980e3b8119d2064b78730608c7bc6f6596"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/c8-deepseek3-4l-tp2-pp2-dp2-interleave2.json",
+          "file": "comparisons/c8-deepseek3-4l-tp2-pp2-dp2-interleave2.json",
+          "sha256": "e40b6f59adadc1f2ca4a6bc94985ee3e0217992e7050c8fef046f314a25c638a",
+          "bytes": 2940
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-c8ds3-hbm-v4/collector/c8deepseek3-4l-tp2-pp2-dp2-interleave2-hbm/case_result.json",
+          "file": "case_results/c8-deepseek3-4l-tp2-pp2-dp2-interleave2.json",
+          "sha256": "68ca1b75ffc2cbfabf1b007f803a4a3a01b708ccf59a03fe3ccb720eafcfcebd",
+          "bytes": 9264
+        },
+        "frozen_prediction": null,
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-c8ds3-timing-v2/profile_config.yaml",
+          "file": "configs/c8-deepseek3-4l-tp2-pp2-dp2-interleave2.yaml",
+          "sha256": "e208a0733b288a7b223f46539b394b89a3326971c446e1401836e74910fca475",
+          "bytes": 3139
+        }
+      }
+    },
+    {
+      "name": "c9-deepseek3-6l-tp2-pp2-dp2-interleave1",
+      "family": "deepseek_v3",
+      "source_family": "deepseek3",
+      "split": "calibration",
+      "formal_eligible": true,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29
+        ],
+        "per_rank_baseline_bytes": [
+          3585081344,
+          3584032768,
+          3584032768,
+          3584032768,
+          3582984192,
+          3584032768,
+          3584032768,
+          3584032768
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-c9ds3-hbm-v1",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-c9ds3-timing-v1"
+      },
+      "source_label_hashes": {
+        "hbm": "c981e7f40e65a11f02447eff4cf9f73781dd9006a828ee4bde98601ed54b9369",
+        "timing": "f4420cfb236098336fbfc532ad4fb9a684cc034c8e20d8326d64aeebeef80e16"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/c9-deepseek3-6l-tp2-pp2-dp2-interleave1.json",
+          "file": "comparisons/c9-deepseek3-6l-tp2-pp2-dp2-interleave1.json",
+          "sha256": "5ab6ce0c7a487d3d9e46cfc6d1a4eba799d39f486a758356e0c2fc8ac1621baa",
+          "bytes": 2940
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-c9ds3-hbm-v1/collector/c9deepseek3-6l-tp2-pp2-dp2-interleave1-hbm/case_result.json",
+          "file": "case_results/c9-deepseek3-6l-tp2-pp2-dp2-interleave1.json",
+          "sha256": "6f263c42eaa408118f6972e7434b3369a90bdfd5efdd8997fb00815bcae1bc6c",
+          "bytes": 9270
+        },
+        "frozen_prediction": null,
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-c9ds3-timing-v1/profile_config.yaml",
+          "file": "configs/c9-deepseek3-6l-tp2-pp2-dp2-interleave1.yaml",
+          "sha256": "adc707d82a3d5a3781dba97797cf2e4ce1dd75313a728757168b83d81ff4330d",
+          "bytes": 3139
+        }
+      }
+    },
+    {
+      "name": "d1-deepseek3-8l-tp2-pp2-dp2-interleave2",
+      "family": "deepseek_v3",
+      "source_family": "deepseek3",
+      "split": "validation",
+      "formal_eligible": true,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          25,
+          25,
+          25,
+          25,
+          25,
+          25,
+          25,
+          25
+        ],
+        "per_rank_baseline_bytes": [
+          3584032768,
+          3584032768,
+          3584032768,
+          3582984192,
+          3582984192,
+          3582984192,
+          3584032768,
+          3584032768
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-b3ds3-8l-tp2pp2dp2-interleave2-hbm-v2",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-b3ds3-8l-tp2pp2dp2-interleave2-timing-v2"
+      },
+      "source_label_hashes": {
+        "hbm": "9ed923bee630589ba8b11eb648150cb1f9d93299a6d3d5e128ef4d1d6b68c5cb",
+        "timing": "9791abfd805d16145604a27f8a865573312bfb1ebff46359ffa210043684cc15"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/d1-deepseek3-8l-tp2-pp2-dp2-interleave2.json",
+          "file": "comparisons/d1-deepseek3-8l-tp2-pp2-dp2-interleave2.json",
+          "sha256": "8ca939fde1a13c96dfa640c80a142b27c8f9b6786758ceba597d79ef1c99ae12",
+          "bytes": 3040
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-b3ds3-8l-tp2pp2dp2-interleave2-hbm-v2/collector/b3deepseek3-8l-tp2-pp2-dp2-interleave2-hbm/case_result.json",
+          "file": "case_results/d1-deepseek3-8l-tp2-pp2-dp2-interleave2.json",
+          "sha256": "70cd9039da86a877b5abc3406907751fd76093aac16d20f773a30e6ec57bd528",
+          "bytes": 9394
+        },
+        "frozen_prediction": null,
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-b3ds3-8l-tp2pp2dp2-interleave2-timing-v2/profile_config.yaml",
+          "file": "configs/d1-deepseek3-8l-tp2-pp2-dp2-interleave2.yaml",
+          "sha256": "0031a9289502ffc7d579759eeb83185d03cceed68f5aeba951e4cbf0030840e8",
+          "bytes": 3164
+        }
+      }
+    },
+    {
+      "name": "d2-qwen3-6l-tp2-dp4",
+      "family": "qwen3",
+      "source_family": "qwen3",
+      "split": "validation",
+      "formal_eligible": true,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          25,
+          25,
+          25,
+          25,
+          25,
+          25,
+          25,
+          25
+        ],
+        "per_rank_baseline_bytes": [
+          3585081344,
+          3584032768,
+          3583508480,
+          3584032768,
+          3582984192,
+          3584032768,
+          3582984192,
+          3584032768
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-c13qwen3-6l-tp2dp4-hbm-v3",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-c13qwen3-6l-tp2dp4-timing-v1"
+      },
+      "source_label_hashes": {
+        "hbm": "1f4180847d05e35e12595993a2699f2c1ebb11c18792fb275ba98bd128a084d5",
+        "timing": "f79da6a313ca8e22904aefebcbb9b103b3da81a902737c6fcc9298a655eb4c6f"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/d2-qwen3-6l-tp2-dp4.json",
+          "file": "comparisons/d2-qwen3-6l-tp2-dp4.json",
+          "sha256": "08803d187026d428635e1b069cadc5ff9891584629f8a81f50147493e33c4105",
+          "bytes": 3046
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-c13qwen3-6l-tp2dp4-hbm-v3/collector/c13qwen3-6l-tp2-dp4-hbm/case_result.json",
+          "file": "case_results/d2-qwen3-6l-tp2-dp4.json",
+          "sha256": "158fecef9899fb861bde2410042b8d99de6913d1110df5d834757cd300579554",
+          "bytes": 8191
+        },
+        "frozen_prediction": null,
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-c13qwen3-6l-tp2dp4-timing-v1/profile_config.yaml",
+          "file": "configs/d2-qwen3-6l-tp2-dp4.yaml",
+          "sha256": "d6307561a3901f3db6cc61749e1d5b2a21452b6fbca609cf61f1d37c90281484",
+          "bytes": 2279
+        }
+      }
+    },
+    {
+      "name": "h1-qwen3-26l-dp8-v11",
+      "family": "qwen3",
+      "source_family": "qwen3",
+      "split": "historical_frozen_holdout",
+      "formal_eligible": true,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          111,
+          111,
+          111,
+          111,
+          111,
+          111,
+          111,
+          111
+        ],
+        "per_rank_baseline_bytes": [
+          3585081344,
+          3584032768,
+          3584032768,
+          3584032768,
+          3582984192,
+          3584032768,
+          3583508480,
+          3584032768
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v11-h1-qwen3-26l-dp8-hbm",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v11-h1-qwen3-26l-dp8-timing"
+      },
+      "source_label_hashes": {
+        "hbm": "d574e700c1861c8b45d0fc146fd3682a35992502583da46f5a420fa6e7881999",
+        "timing": "073252ad4b90dfb54f8cb84b73e5ce66f7a79646fbfbddee51d0dc0b70a40e81"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/h1-qwen3-26l-dp8-v11.json",
+          "file": "comparisons/h1-qwen3-26l-dp8-v11.json",
+          "sha256": "7de7e6a1034e053d023ee26a13bb974121bc561c5e08ca55dc39c0d0daa158d5",
+          "bytes": 3450
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v11-h1-qwen3-26l-dp8-hbm/collector/h1-qwen3-26l-dp8-hbm/case_result.json",
+          "file": "case_results/h1-qwen3-26l-dp8-v11.json",
+          "sha256": "3423943353780903d2cf9e30459b9a080e949dcb085adad07222710120aebfec",
+          "bytes": 8221
+        },
+        "frozen_prediction": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/frozen_predictions/h1-qwen3-26l-dp8-v11.json",
+          "file": "frozen_predictions/h1-qwen3-26l-dp8-v11.json",
+          "sha256": "d1d54117f1ce872cd19b83861780ca47c2875e64189be7a21cf6ccdd40cd8ee1",
+          "bytes": 899
+        },
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v11-h1-qwen3-26l-dp8-timing/profile_config.yaml",
+          "file": "configs/h1-qwen3-26l-dp8-v11.yaml",
+          "sha256": "a69f028212737fa2f17d4241698181f49e142cca4f211ae29e9b0fa8a5e9ad4c",
+          "bytes": 2273
+        }
+      }
+    },
+    {
+      "name": "h1-qwen3-30l-dp8-v12-v2",
+      "family": "qwen3",
+      "source_family": "qwen3",
+      "split": "historical_frozen_holdout",
+      "formal_eligible": true,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          31,
+          31,
+          31,
+          31,
+          31,
+          31,
+          31,
+          31
+        ],
+        "per_rank_baseline_bytes": [
+          3584032768,
+          3584557056,
+          3584032768,
+          3585081344,
+          3584032768,
+          3584032768,
+          3582984192,
+          3582984192
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h1-qwen3-30l-dp8-hbm",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h1-qwen3-30l-dp8-timing-v2"
+      },
+      "source_label_hashes": {
+        "hbm": "2aabb33c3147399be307cf8615170c88237771aa90e1300068d61eeb1d8d64f5",
+        "timing": "0bf9781c6cde8cb9ab482c3afefc6777041a5d71229eb558fd8f05f655ee1dfe"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/h1-qwen3-30l-dp8-v12-v2.json",
+          "file": "comparisons/h1-qwen3-30l-dp8-v12-v2.json",
+          "sha256": "21363b7256fce798ea87a6c44f713f724802b37f9be3b58647f12fcb698950f2",
+          "bytes": 3454
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h1-qwen3-30l-dp8-hbm/collector/h1-qwen3-30l-dp8-hbm/case_result.json",
+          "file": "case_results/h1-qwen3-30l-dp8-v12-v2.json",
+          "sha256": "ee6b8d363cd0cec0e07f45e9db2ee319e80d0b4b4210e57c29ceff5d7ddb1bdb",
+          "bytes": 8390
+        },
+        "frozen_prediction": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/frozen_predictions/h1-qwen3-30l-dp8-v12-v2.json",
+          "file": "frozen_predictions/h1-qwen3-30l-dp8-v12-v2.json",
+          "sha256": "6e577aa98131ce1e3c93a0938cce99e2169399f29c3c7719635876b7394e98f0",
+          "bytes": 905
+        },
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h1-qwen3-30l-dp8-timing-v2/profile_config.yaml",
+          "file": "configs/h1-qwen3-30l-dp8-v12-v2.yaml",
+          "sha256": "2bb45636b2d9aa096d0d69ce98fb448f87caea19c412040ea80aefb200167cf5",
+          "bytes": 2276
+        }
+      }
+    },
+    {
+      "name": "h1-qwen3-34l-dp8-v13",
+      "family": "qwen3",
+      "source_family": "qwen3",
+      "split": "historical_frozen_holdout",
+      "formal_eligible": true,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          36,
+          36,
+          36,
+          36,
+          36,
+          36,
+          36,
+          36
+        ],
+        "per_rank_baseline_bytes": [
+          3586129920,
+          3584032768,
+          3584032768,
+          3582984192,
+          3584032768,
+          3582984192,
+          3583508480,
+          3583508480
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v13-h1-qwen3-34l-dp8-hbm",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v13-h1-qwen3-34l-dp8-timing"
+      },
+      "source_label_hashes": {
+        "hbm": "510be6374b45da3c717274fad7254cb11c4506f8518eeff37e79a85a8b284646",
+        "timing": "99d6176a2fdadd0ee48563074d19e6483854f5a5575d254d760c64fb8265862c"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/h1-qwen3-34l-dp8-v13.json",
+          "file": "comparisons/h1-qwen3-34l-dp8-v13.json",
+          "sha256": "54b7f4caf6e89d7f321cf152a17cf7fe120593bf9075346f793b3a68d1e08486",
+          "bytes": 3442
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v13-h1-qwen3-34l-dp8-hbm/collector/h1-qwen3-34l-dp8-hbm/case_result.json",
+          "file": "case_results/h1-qwen3-34l-dp8-v13.json",
+          "sha256": "f4326755870378a2e90082ded482ca1cae1a057db0e57b54a7de2508aba4e5e0",
+          "bytes": 8387
+        },
+        "frozen_prediction": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/frozen_predictions/h1-qwen3-34l-dp8-v13.json",
+          "file": "frozen_predictions/h1-qwen3-34l-dp8-v13.json",
+          "sha256": "8b0a57ecbf9cdf731103e106e32efa40ec03c95edd3ec82ef77a15a6851a26e1",
+          "bytes": 899
+        },
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v13-h1-qwen3-34l-dp8-timing/profile_config.yaml",
+          "file": "configs/h1-qwen3-34l-dp8-v13.yaml",
+          "sha256": "ad40dc9a324fd8285fb609e2d7bc533afb9195990fd6f2f16d991a6d135795ba",
+          "bytes": 2273
+        }
+      }
+    },
+    {
+      "name": "h1-qwen3-38l-dp8-v14",
+      "family": "qwen3",
+      "source_family": "qwen3",
+      "split": "historical_frozen_holdout",
+      "formal_eligible": true,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40
+        ],
+        "per_rank_baseline_bytes": [
+          3585081344,
+          3584032768,
+          3582984192,
+          3584032768,
+          3584032768,
+          3584032768,
+          3584032768,
+          3584032768
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v14-h1-qwen3-38l-dp8-hbm",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v14-h1-qwen3-38l-dp8-timing"
+      },
+      "source_label_hashes": {
+        "hbm": "1dc83b24cfb99ad1d69f73b3d210b41bcbb1831beb5f4d1b411de6d3d21534c1",
+        "timing": "1c043d8777c40e6f1bbd30e36655b12edee92af0a51f92b7aedac456481ab600"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/h1-qwen3-38l-dp8-v14.json",
+          "file": "comparisons/h1-qwen3-38l-dp8-v14.json",
+          "sha256": "72da41f19333233f863375b5d6d6f355bc0e06f1fab34c7d403528d9f3ad7eac",
+          "bytes": 3446
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v14-h1-qwen3-38l-dp8-hbm/collector/h1-qwen3-38l-dp8-hbm/case_result.json",
+          "file": "case_results/h1-qwen3-38l-dp8-v14.json",
+          "sha256": "cfccd0ccb7c4ce5dd5efdffadda29628d8b9be5357f5ac96b962eba940771b02",
+          "bytes": 8403
+        },
+        "frozen_prediction": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/frozen_predictions/h1-qwen3-38l-dp8-v14.json",
+          "file": "frozen_predictions/h1-qwen3-38l-dp8-v14.json",
+          "sha256": "6f6fa88c85a8c4cfcff9199e788c7fe0fc19f03f960d3ac448f79a799dd55332",
+          "bytes": 901
+        },
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v14-h1-qwen3-38l-dp8-timing/profile_config.yaml",
+          "file": "configs/h1-qwen3-38l-dp8-v14.yaml",
+          "sha256": "4b5550af82ee89902bcea4177e2b28cf98154abe0b68b1a262c9bc577dc34c15",
+          "bytes": 2273
+        }
+      }
+    },
+    {
+      "name": "h1-qwen3-42l-dp8-v15",
+      "family": "qwen3",
+      "source_family": "qwen3",
+      "split": "historical_frozen_holdout",
+      "formal_eligible": true,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          48,
+          48,
+          48,
+          48,
+          48,
+          48,
+          48,
+          48
+        ],
+        "per_rank_baseline_bytes": [
+          3585081344,
+          3584032768,
+          3584032768,
+          3584032768,
+          3584032768,
+          3584032768,
+          3584032768,
+          3585081344
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v15-h1-qwen3-42l-dp8-hbm",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v15-h1-qwen3-42l-dp8-timing"
+      },
+      "source_label_hashes": {
+        "hbm": "a05c30e4966941100dd59fc3cb0e1460bed0b0e0d83b52427073a657abc02ca1",
+        "timing": "56f8486aa41300bddd74db56c7cb719cf2f1ce8b24a5d7b808c189c24bee5911"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/h1-qwen3-42l-dp8-v15.json",
+          "file": "comparisons/h1-qwen3-42l-dp8-v15.json",
+          "sha256": "5bafe8db71038d51c136d79e8efd6ac4532067b34dbfceb350da9eb02627a9d4",
+          "bytes": 3446
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v15-h1-qwen3-42l-dp8-hbm/collector/h1-qwen3-42l-dp8-hbm/case_result.json",
+          "file": "case_results/h1-qwen3-42l-dp8-v15.json",
+          "sha256": "d280fd999cac8ede198f2e20022148d42301f6b04ff9cdda45693f8b9eda2293",
+          "bytes": 8400
+        },
+        "frozen_prediction": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/frozen_predictions/h1-qwen3-42l-dp8-v15.json",
+          "file": "frozen_predictions/h1-qwen3-42l-dp8-v15.json",
+          "sha256": "33738c36620afa10713a687de14d2008b4c0ddd100683ef7cd82a9e26611c6e5",
+          "bytes": 901
+        },
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v15-h1-qwen3-42l-dp8-timing/profile_config.yaml",
+          "file": "configs/h1-qwen3-42l-dp8-v15.yaml",
+          "sha256": "243c11f195a4471e5de381a54a54b463a5f12b16a8d016d5d56c5183610011aa",
+          "bytes": 2273
+        }
+      }
+    },
+    {
+      "name": "h1-qwen3-46l-dp8-v16",
+      "family": "qwen3",
+      "source_family": "qwen3",
+      "split": "historical_frozen_holdout",
+      "formal_eligible": true,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          53,
+          53,
+          53,
+          53,
+          53,
+          53,
+          53,
+          53
+        ],
+        "per_rank_baseline_bytes": [
+          3585081344,
+          3584032768,
+          3584032768,
+          3584032768,
+          3582984192,
+          3582984192,
+          3584032768,
+          3582984192
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v16-h1-qwen3-46l-dp8-hbm",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v16-h1-qwen3-46l-dp8-timing"
+      },
+      "source_label_hashes": {
+        "hbm": "7a5e1f034b21f3fb2fbb003ccf7d43e7ffe29a6d8672b4952bb1b886b87ddc6c",
+        "timing": "8d7b104cdb3da7607f1a5270f11e0e2b8c98e55e8b6c3dc7db339a63a275993c"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/h1-qwen3-46l-dp8-v16.json",
+          "file": "comparisons/h1-qwen3-46l-dp8-v16.json",
+          "sha256": "324888b6765cb8a2edf7fd2b68ce7807d59ab002101a36be1374f71fccee1209",
+          "bytes": 3447
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v16-h1-qwen3-46l-dp8-hbm/collector/h1-qwen3-46l-dp8-hbm/case_result.json",
+          "file": "case_results/h1-qwen3-46l-dp8-v16.json",
+          "sha256": "013c697928b59730a6be0528adbb5f8a89f7fd7ed1f71f4052096a8715ca3e73",
+          "bytes": 8404
+        },
+        "frozen_prediction": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/frozen_predictions/h1-qwen3-46l-dp8-v16.json",
+          "file": "frozen_predictions/h1-qwen3-46l-dp8-v16.json",
+          "sha256": "c24f4dc51e6c209d9c6e8c7cf95d928992578cf179944f4f14b2384761b74390",
+          "bytes": 901
+        },
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v16-h1-qwen3-46l-dp8-timing/profile_config.yaml",
+          "file": "configs/h1-qwen3-46l-dp8-v16.yaml",
+          "sha256": "816e8769350132f179e467179047ade8a71ecadd981b25081b7a19fc1beea346",
+          "bytes": 2273
+        }
+      }
+    },
+    {
+      "name": "h1-qwen3-50l-dp8-v17",
+      "family": "qwen3",
+      "source_family": "qwen3",
+      "split": "diagnostic",
+      "formal_eligible": false,
+      "diagnostic_reason": "ValueError: profiler archive 中没有 case_result.json: /home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v17-h1-qwen3-50l-dp8-timing",
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          54,
+          54,
+          54,
+          54,
+          54,
+          54,
+          54,
+          54
+        ],
+        "per_rank_baseline_bytes": [
+          3585081344,
+          3584032768,
+          3584032768,
+          3584032768,
+          3582984192,
+          3584032768,
+          3583508480,
+          3584032768
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v17-h1-qwen3-50l-dp8-hbm",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v17-h1-qwen3-50l-dp8-timing"
+      },
+      "source_label_hashes": {
+        "hbm": "ac1531f8468fe1f7ad39d6d3702dee4546374fe589662cb4efb5a971e11555ae",
+        "timing": "19132b61d9f5d881fae928a7be559e9cb841081486fdcf1e8b5faed06299c837"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/h1-qwen3-50l-dp8-v17.json",
+          "file": "comparisons/h1-qwen3-50l-dp8-v17.json",
+          "sha256": "091c18904ffa04f289c002c4411a4203a41bbb21fe67bcf0f5c0a96b7099027f",
+          "bytes": 3447
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v17-h1-qwen3-50l-dp8-hbm/collector/h1-qwen3-50l-dp8-hbm/case_result.json",
+          "file": "case_results/h1-qwen3-50l-dp8-v17.json",
+          "sha256": "00513eae9d3e1ba4ad9c5c59c87d5dea47d7776a207a7d5b6e145f7ac9260b0a",
+          "bytes": 8400
+        },
+        "frozen_prediction": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/frozen_predictions/h1-qwen3-50l-dp8-v17.json",
+          "file": "frozen_predictions/h1-qwen3-50l-dp8-v17.json",
+          "sha256": "be15e686c69da59c0b6c483505dccea68c13823da0ac2cf4cc416aa45dd51748",
+          "bytes": 901
+        },
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v17-h1-qwen3-50l-dp8-timing/profile_config.yaml",
+          "file": "configs/h1-qwen3-50l-dp8-v17.yaml",
+          "sha256": "b586aa8568a65e99bb11c504450dc635cd1d0f3b556991078eaa48ff30574deb",
+          "bytes": 2273
+        }
+      }
+    },
+    {
+      "name": "h2-deepseek3-30l-tp2-cp2-ep2-v11",
+      "family": "deepseek_v3",
+      "source_family": "deepseek3",
+      "split": "historical_frozen_holdout",
+      "formal_eligible": true,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          282,
+          282,
+          282,
+          282,
+          282,
+          282,
+          282,
+          282
+        ],
+        "per_rank_baseline_bytes": [
+          3585081344,
+          3584557056,
+          3582984192,
+          3584032768,
+          3582984192,
+          3584032768,
+          3583508480,
+          3584032768
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v11-h2-deepseek3-30l-tp2cp2ep2-hbm",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v11-h2-deepseek3-30l-tp2cp2ep2-timing"
+      },
+      "source_label_hashes": {
+        "hbm": "441287265f0e6b585b443f45d84699382c0846617cb342b0250c231a92a8cedf",
+        "timing": "61ed1abd99e3024912832cb649dce2d4d2bba44b0b48c08667871781919ec70e"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/h2-deepseek3-30l-tp2-cp2-ep2-v11.json",
+          "file": "comparisons/h2-deepseek3-30l-tp2-cp2-ep2-v11.json",
+          "sha256": "6e2f6e237d702777093f25acbce65ee40bb970c75183bc05d7a79cab586b3eb2",
+          "bytes": 3526
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v11-h2-deepseek3-30l-tp2cp2ep2-hbm/collector/h2-deepseek3-30l-tp2cp2ep2-hbm/case_result.json",
+          "file": "case_results/h2-deepseek3-30l-tp2-cp2-ep2-v11.json",
+          "sha256": "c140be879f672a9946aeefa90964fb90928523136c19df165c11fbb047761abf",
+          "bytes": 9419
+        },
+        "frozen_prediction": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/frozen_predictions/h2-deepseek3-30l-tp2cp2ep2-v11.json",
+          "file": "frozen_predictions/h2-deepseek3-30l-tp2-cp2-ep2-v11.json",
+          "sha256": "882722a1f797751bf290e59f634a0eb4f5fc5818a8b34479915b6fc10f394a26",
+          "bytes": 921
+        },
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v11-h2-deepseek3-30l-tp2cp2ep2-timing/profile_config.yaml",
+          "file": "configs/h2-deepseek3-30l-tp2-cp2-ep2-v11.yaml",
+          "sha256": "c890c0e8f116df5f660d980c3b173e62ef2de1ec8330522b201a96cff91b1c9c",
+          "bytes": 3152
+        }
+      }
+    },
+    {
+      "name": "h2-deepseek3-34l-tp2-cp2-ep2-v12",
+      "family": "deepseek_v3",
+      "source_family": "deepseek3",
+      "split": "historical_frozen_holdout",
+      "formal_eligible": true,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          86,
+          86,
+          86,
+          86,
+          86,
+          86,
+          86,
+          86
+        ],
+        "per_rank_baseline_bytes": [
+          5207228416,
+          5205131264,
+          5206179840,
+          5206179840,
+          5205131264,
+          5205131264,
+          5205131264,
+          5205655552
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h2-deepseek3-34l-tp2cp2ep2-hbm",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h2-deepseek3-34l-tp2cp2ep2-timing"
+      },
+      "source_label_hashes": {
+        "hbm": "9834262c126d91f21ab54fc5a94664464022b9194f967fdb59dba64c0750c146",
+        "timing": "7920c26183ee89551445994f19f030baeff008611accb53232cda857144ef5b9"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/h2-deepseek3-34l-tp2-cp2-ep2-v12.json",
+          "file": "comparisons/h2-deepseek3-34l-tp2-cp2-ep2-v12.json",
+          "sha256": "f05d55f95046e20944e0c92541ea4f1507b6f6c87a2ac1f20a7db10d0156f760",
+          "bytes": 3519
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h2-deepseek3-34l-tp2cp2ep2-hbm/collector/h2-deepseek3-34l-tp2cp2ep2-hbm/case_result.json",
+          "file": "case_results/h2-deepseek3-34l-tp2-cp2-ep2-v12.json",
+          "sha256": "a5b43d83b57b3b142ec11cc4024ecedaa031288f3f160d505ec7595f902691c2",
+          "bytes": 9587
+        },
+        "frozen_prediction": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/frozen_predictions/h2-deepseek3-34l-tp2cp2ep2-v12.json",
+          "file": "frozen_predictions/h2-deepseek3-34l-tp2-cp2-ep2-v12.json",
+          "sha256": "25583b51b8f7bc996a4c29b9a87dc4e9e43d3d343b77cb425896e5829a1a040d",
+          "bytes": 921
+        },
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h2-deepseek3-34l-tp2cp2ep2-timing/profile_config.yaml",
+          "file": "configs/h2-deepseek3-34l-tp2-cp2-ep2-v12.yaml",
+          "sha256": "f6d02da1e7a03dcb05e92d7c8e010573ee048688e932fa772bee69e8c4edc5c8",
+          "bytes": 3152
+        }
+      }
+    },
+    {
+      "name": "h2-deepseek3-36l-tp2-cp2-ep2-v13",
+      "family": "deepseek_v3",
+      "source_family": "deepseek3",
+      "split": "historical_frozen_holdout",
+      "formal_eligible": true,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          95,
+          95,
+          95,
+          95,
+          95,
+          95,
+          95,
+          95
+        ],
+        "per_rank_baseline_bytes": [
+          3586129920,
+          3584032768,
+          3584032768,
+          3584032768,
+          3584032768,
+          3582984192,
+          3584032768,
+          3583508480
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v13-h2-deepseek3-36l-tp2cp2ep2-hbm",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v13-h2-deepseek3-36l-tp2cp2ep2-timing"
+      },
+      "source_label_hashes": {
+        "hbm": "34b2fa62d20d1a6536ddf644ce586eb2833232d32b5493d1b972d2b3673096d1",
+        "timing": "1599bcba556c260dcd671a7ff7b5a0a369a298395b033615e5d075428ec2ece9"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/h2-deepseek3-36l-tp2-cp2-ep2-v13.json",
+          "file": "comparisons/h2-deepseek3-36l-tp2-cp2-ep2-v13.json",
+          "sha256": "a862784e698bdefcb8e3c03224ddd415ecf217054a445ea5f044fd0b4b53b875",
+          "bytes": 3519
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v13-h2-deepseek3-36l-tp2cp2ep2-hbm/collector/h2-deepseek3-36l-tp2cp2ep2-hbm/case_result.json",
+          "file": "case_results/h2-deepseek3-36l-tp2-cp2-ep2-v13.json",
+          "sha256": "810169c71f701777ccaeb52a97d2bfea1c4fc80e4a371512558b319ae411592c",
+          "bytes": 9587
+        },
+        "frozen_prediction": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/frozen_predictions/h2-deepseek3-36l-tp2cp2ep2-v13.json",
+          "file": "frozen_predictions/h2-deepseek3-36l-tp2-cp2-ep2-v13.json",
+          "sha256": "4a6e91113f555ce47e6b2935c5e3691b88f82dd2fad82220601bf213b97cc83e",
+          "bytes": 921
+        },
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v13-h2-deepseek3-36l-tp2cp2ep2-timing/profile_config.yaml",
+          "file": "configs/h2-deepseek3-36l-tp2-cp2-ep2-v13.yaml",
+          "sha256": "b0f4b8248f215fdaf1d7c9386704dd963f804c5938e52e8cbef1a277857194d6",
+          "bytes": 3152
+        }
+      }
+    },
+    {
+      "name": "h2-deepseek3-38l-tp2-cp2-ep2-v14",
+      "family": "deepseek_v3",
+      "source_family": "deepseek3",
+      "split": "historical_frozen_holdout",
+      "formal_eligible": true,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          99,
+          99,
+          99,
+          99,
+          99,
+          99,
+          99,
+          99
+        ],
+        "per_rank_baseline_bytes": [
+          3584557056,
+          3582984192,
+          3582984192,
+          3584032768,
+          3584032768,
+          3582984192,
+          3584032768,
+          3585081344
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v14-h2-deepseek3-38l-tp2cp2ep2-hbm",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v14-h2-deepseek3-38l-tp2cp2ep2-timing"
+      },
+      "source_label_hashes": {
+        "hbm": "13c3a82504ec4cbda1d4e4ca7bc14963916a1dd18b4f45782f9ee5e60e1a70ec",
+        "timing": "849a25f731b8a9ba970955df7595864d5315e99f507df3170fb3fa350df62792"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/h2-deepseek3-38l-tp2-cp2-ep2-v14.json",
+          "file": "comparisons/h2-deepseek3-38l-tp2-cp2-ep2-v14.json",
+          "sha256": "431f341d892a22f0754ff6abdfa576018b7b2df45488ae7f9ab6df032328974d",
+          "bytes": 3519
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v14-h2-deepseek3-38l-tp2cp2ep2-hbm/collector/h2-deepseek3-38l-tp2cp2ep2-hbm/case_result.json",
+          "file": "case_results/h2-deepseek3-38l-tp2-cp2-ep2-v14.json",
+          "sha256": "334c2c1360a4b548c8341cea97feae7cfa33db764c86938249fdf488bf036260",
+          "bytes": 9587
+        },
+        "frozen_prediction": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/frozen_predictions/h2-deepseek3-38l-tp2cp2ep2-v14.json",
+          "file": "frozen_predictions/h2-deepseek3-38l-tp2-cp2-ep2-v14.json",
+          "sha256": "ccbdb27660a269fe5a004d330d858b8a964cd76140abac5ab36b93d940e72865",
+          "bytes": 921
+        },
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v14-h2-deepseek3-38l-tp2cp2ep2-timing/profile_config.yaml",
+          "file": "configs/h2-deepseek3-38l-tp2-cp2-ep2-v14.yaml",
+          "sha256": "f23ed33c55da1d7c94d4afc63841dc83b95c9585b9c0c4b39259d17574f1dff2",
+          "bytes": 3152
+        }
+      }
+    },
+    {
+      "name": "h2-deepseek3-42l-tp2-cp2-ep2-v16",
+      "family": "deepseek_v3",
+      "source_family": "deepseek3",
+      "split": "historical_frozen_holdout",
+      "formal_eligible": true,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          117,
+          117,
+          117,
+          117,
+          117,
+          117,
+          117,
+          117
+        ],
+        "per_rank_baseline_bytes": [
+          3584032768,
+          3584032768,
+          3584032768,
+          3584032768,
+          3582984192,
+          3582984192,
+          3584032768,
+          3584032768
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v16-h2-deepseek3-42l-tp2cp2ep2-hbm-v2",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v16-h2-deepseek3-42l-tp2cp2ep2-timing"
+      },
+      "source_label_hashes": {
+        "hbm": "141ac153b67850cdb75f89e179c74e2edc46d3054d27577cd5f804ecb0a5210b",
+        "timing": "d95c6780931871f0818083a57e5f4a9116a1a64e7fdd20fe85b2cc040b7c2ead"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/h2-deepseek3-42l-tp2-cp2-ep2-v16.json",
+          "file": "comparisons/h2-deepseek3-42l-tp2-cp2-ep2-v16.json",
+          "sha256": "848d002e9e3823ce5046c0a1b4389c1d74efef3a1f89bc2d46c426402036969b",
+          "bytes": 3533
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v16-h2-deepseek3-42l-tp2cp2ep2-hbm-v2/collector/h2-deepseek3-42l-tp2cp2ep2-hbm-v2/case_result.json",
+          "file": "case_results/h2-deepseek3-42l-tp2-cp2-ep2-v16.json",
+          "sha256": "63c1de9edf12b260a003130529fb74eaf9a1d85c292a0cd446dca8cca95ab821",
+          "bytes": 9752
+        },
+        "frozen_prediction": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/frozen_predictions/h2-deepseek3-42l-tp2cp2ep2-v16.json",
+          "file": "frozen_predictions/h2-deepseek3-42l-tp2-cp2-ep2-v16.json",
+          "sha256": "36ad61a93c8eeea31e4f42c5fcb520616ae4fae68cae10f796767fa3acf098b8",
+          "bytes": 921
+        },
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v16-h2-deepseek3-42l-tp2cp2ep2-timing/profile_config.yaml",
+          "file": "configs/h2-deepseek3-42l-tp2-cp2-ep2-v16.yaml",
+          "sha256": "41fdb45d7eb615d0defff474d407c8f13238ca70ae88a1edc267a79f044e6f95",
+          "bytes": 3152
+        }
+      }
+    },
+    {
+      "name": "h3-deepseek3-24l-tp2-pp2-dp2-interleave2-v13",
+      "family": "deepseek_v3",
+      "source_family": "deepseek3",
+      "split": "historical_frozen_holdout",
+      "formal_eligible": true,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          26,
+          26,
+          26,
+          26,
+          26,
+          26,
+          26,
+          26
+        ],
+        "per_rank_baseline_bytes": [
+          3586129920,
+          3584032768,
+          3584032768,
+          3584032768,
+          3584032768,
+          3584032768,
+          3584032768,
+          3582984192
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h3-deepseek3-24l-pp2i2-hbm",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h3-deepseek3-24l-pp2i2-timing"
+      },
+      "source_label_hashes": {
+        "hbm": "0debbd776475cef71d8e8cca3998cc95e222ce5cdc11e3c0200c7eb66f833c53",
+        "timing": "d3b06aa927b48d0d320cd73796230196f0e0c6caab69f0b5f370e640ffeae6c4"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/h3-deepseek3-24l-tp2-pp2-dp2-interleave2-v13.json",
+          "file": "comparisons/h3-deepseek3-24l-tp2-pp2-dp2-interleave2-v13.json",
+          "sha256": "045e91a59bcd2fa172950c17dcc4232edb4f5b0f1da075bc9c471d26f2d7c8f1",
+          "bytes": 3423
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h3-deepseek3-24l-pp2i2-hbm/collector/h3-deepseek3-24l-pp2i2-hbm/case_result.json",
+          "file": "case_results/h3-deepseek3-24l-tp2-pp2-dp2-interleave2-v13.json",
+          "sha256": "9743792344233d51f17353083813bc6dd0c0cb3ce27faa3f5b6e3d41e64f4a6f",
+          "bytes": 9600
+        },
+        "frozen_prediction": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/frozen_predictions/h3-deepseek3-24l-pp2i2-v13.json",
+          "file": "frozen_predictions/h3-deepseek3-24l-tp2-pp2-dp2-interleave2-v13.json",
+          "sha256": "e5bae6cca718655fb497751f28b129679b1ecf2304972ab663197fd1ea79dded",
+          "bytes": 912
+        },
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h3-deepseek3-24l-pp2i2-timing/profile_config.yaml",
+          "file": "configs/h3-deepseek3-24l-tp2-pp2-dp2-interleave2-v13.yaml",
+          "sha256": "765dd9431397c083011e0cc954f11f20bc4f55096280d33f9da96ea08a66a647",
+          "bytes": 3154
+        }
+      }
+    },
+    {
+      "name": "h4-qwen3-10l-tp4-dp2-v13",
+      "family": "qwen3",
+      "source_family": "qwen3",
+      "split": "historical_frozen_holdout",
+      "formal_eligible": true,
+      "diagnostic_reason": null,
+      "measurement_quality": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          31,
+          31,
+          31,
+          31,
+          31,
+          31,
+          31,
+          31
+        ],
+        "per_rank_baseline_bytes": [
+          3585081344,
+          3584032768,
+          3582984192,
+          3583508480,
+          3583508480,
+          3582984192,
+          3584032768,
+          3584032768
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      },
+      "original_archives": {
+        "hbm": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h4-qwen3-10l-tp4dp2-hbm-v2",
+        "timing": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h4-qwen3-10l-tp4dp2-timing"
+      },
+      "source_label_hashes": {
+        "hbm": "b879c46abe9cc4a7212bbf92a5fb8fe909ad1333013ce0ab936e16e59e6e6f10",
+        "timing": "0f5940954ccc7ea32d0a47627b9ecca6d90860d70ef373946dfb5570550d480a"
+      },
+      "files": {
+        "comparison": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/comparisons/h4-qwen3-10l-tp4-dp2-v13.json",
+          "file": "comparisons/h4-qwen3-10l-tp4-dp2-v13.json",
+          "sha256": "cb6156d81114e18513f4c2606325a53718b0fa230bc0d9e452947d8bf2b0e2a6",
+          "bytes": 3464
+        },
+        "case_result": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h4-qwen3-10l-tp4dp2-hbm-v2/collector/h4-qwen3-10l-tp4dp2-hbm-v2/case_result.json",
+          "file": "case_results/h4-qwen3-10l-tp4-dp2-v13.json",
+          "sha256": "e312933782063391219816b307c4af0bf6f11cb5ce6f1750bd16304fc734f768",
+          "bytes": 8413
+        },
+        "frozen_prediction": {
+          "source": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/frozen_predictions/h4-qwen3-10l-tp4dp2-v13.json",
+          "file": "frozen_predictions/h4-qwen3-10l-tp4-dp2-v13.json",
+          "sha256": "9325aad542b6a7a4033a1f9438fba28170c6251cf84aa10d74067f716ccccb7c",
+          "bytes": 903
+        },
+        "config": {
+          "source": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h4-qwen3-10l-tp4dp2-timing/profile_config.yaml",
+          "file": "configs/h4-qwen3-10l-tp4-dp2-v13.yaml",
+          "sha256": "1f46fcb43a105b4f25a2e8ac351c6ba95c30eb8538fd6a445a57507eb42201d0",
+          "bytes": 2279
+        }
+      }
+    }
+  ]
+}

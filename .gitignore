@@ -7,3 +7,4 @@ dist/
 *.egg-info/
 .venv/
 .git-local/
+.npu-validation/

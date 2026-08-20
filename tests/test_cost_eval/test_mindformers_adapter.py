@@ -37,6 +37,8 @@ class MindFormersAdapterTests(unittest.TestCase):
         self.assertEqual(parallel.fsdp_degree, 2)
         self.assertEqual(inputs.model_spec.dims.n_kv, 4)
         self.assertEqual(parallel.num_microbatches, 1)
+        self.assertEqual(inputs.optimizer.gradient_bytes, 4)
+        self.assertEqual(inputs.optimizer.state_bytes_per_param, 18)
 
     def test_recompute_and_swap_fields_follow_pynative_schema(self):
         data = {

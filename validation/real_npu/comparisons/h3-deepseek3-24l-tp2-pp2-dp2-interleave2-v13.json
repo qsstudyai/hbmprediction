@@ -1,0 +1,117 @@
+{
+  "case": "h3-deepseek3-24l-tp2-pp2-dp2-interleave2-v13",
+  "family": "deepseek3",
+  "source": {
+    "timing_archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h3-deepseek3-24l-pp2i2-timing",
+    "hbm_archive": ".npu-calibration/p1v12-h3-deepseek3-24l-pp2i2-hbm",
+    "timing_label_sha256": "d3b06aa927b48d0d320cd73796230196f0e0c6caab69f0b5f370e640ffeae6c4",
+    "hbm_label_sha256": "0debbd776475cef71d8e8cca3998cc95e222ce5cdc11e3c0200c7eb66f833c53",
+    "protocol": {
+      "aggregation": "max_rank",
+      "rank_count": 8,
+      "rank_step_counts": {
+        "worker_0.log": 36,
+        "worker_1.log": 36,
+        "worker_2.log": 36,
+        "worker_3.log": 36,
+        "worker_4.log": 36,
+        "worker_5.log": 36,
+        "worker_6.log": 36,
+        "worker_7.log": 36
+      },
+      "rank_global_batch_sizes": {
+        "worker_0.log": [],
+        "worker_1.log": [],
+        "worker_2.log": [],
+        "worker_3.log": [],
+        "worker_4.log": [
+          4
+        ],
+        "worker_5.log": [
+          4
+        ],
+        "worker_6.log": [
+          4
+        ],
+        "worker_7.log": [
+          4
+        ]
+      },
+      "effective_global_batch_sizes": [
+        4
+      ],
+      "status": "valid"
+    },
+    "replicate_quality": null,
+    "frozen_prediction": {
+      "path": "/home/qs50063523/mycode/parallelsearch/real_tests/p1v3/frozen_predictions/h3-deepseek3-24l-pp2i2-v13.json",
+      "sha256": "e5bae6cca718655fb497751f28b129679b1ecf2304972ab663197fd1ea79dded",
+      "config_sha256": "765dd9431397c083011e0cc954f11f20bc4f55096280d33f9da96ea08a66a647",
+      "profile_sha256": "b6bc47585d3fe502c948b3ebf0529b119bcc4102db179be986d6dcb009e30cb2",
+      "verified": true
+    }
+  },
+  "measured": {
+    "step_time_p50_ns": 968500000,
+    "step_time_p90_ns": 977000000,
+    "step_time_ns": 968500000,
+    "peak_hbm_total_bytes": 27819769856,
+    "peak_hbm_dynamic_bytes": 24235737088,
+    "oom": false,
+    "timing_protocol_valid": true,
+    "measurement_quality": {
+      "timing": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "timing",
+        "status": "valid",
+        "issues": [],
+        "effective_global_batch": 4,
+        "tokens_per_step": 16384,
+        "rank_count": 8,
+        "steady_step_count": 24,
+        "aggregation": "pXX(max_rank_per_global_step)"
+      },
+      "hbm": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          26,
+          26,
+          26,
+          26,
+          26,
+          26,
+          26,
+          26
+        ],
+        "per_rank_baseline_bytes": [
+          3586129920,
+          3584032768,
+          3584032768,
+          3584032768,
+          3584032768,
+          3584032768,
+          3584032768,
+          3582984192
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      }
+    }
+  },
+  "physical_base": {
+    "step_time_p50_ns": 913444781,
+    "step_time_p90_ns": 1318741072,
+    "peak_hbm_total_bytes": 23423026453,
+    "peak_hbm_dynamic_bytes": 19838993685,
+    "oom": false
+  },
+  "metadata": {
+    "model_family": "deepseek3",
+    "world_size": 8,
+    "timing_run": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h3-deepseek3-24l-pp2i2-timing",
+    "hbm_run": ".npu-calibration/p1v12-h3-deepseek3-24l-pp2i2-hbm"
+  }
+}

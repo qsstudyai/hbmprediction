@@ -11,9 +11,22 @@ from typing import Any, Mapping
 from ..layers import (
     build_dense_decoder, build_moe_decoder,
     build_mla_dense_decoder, build_mla_moe_decoder, build_mtp_layer,
+    build_v4_hybrid_moe_decoder, build_v4_hybrid_mtp_layer,
+    build_v4_legacy_mla_moe_decoder, build_v4_legacy_mtp_layer,
+    build_qwen3_decoder,
 )
 from ..model_spec import DimTable, ModelSpec
 from ..report import Evaluator
+from ..source_contracts.deepseek_v4 import (
+    DEEPSEEK_V4_CONTRACT_VERSION,
+    DEEPSEEK_V4_SOURCE_COMMIT,
+    deepseek_v4_attention_variant,
+    deepseek_v4_compress_ratios,
+    validate_deepseek_v4_contract,
+)
+from ..source_contracts.qwen3 import (
+    QWEN3_CONTRACT_VERSION, QWEN3_SOURCE_COMMIT,
+)
 from ..specs import HardwareSpec, OptimizerSpec, ParallelConfig, RecomputeSpec, SwapSpec
 
 
@@ -72,6 +85,7 @@ class MindFormersAdapter:
         recompute_data = _section(data, "recompute")
         recompute_comm_data = _section(data, "recompute_comm")
         swap_data = _section(data, "swap")
+        loss_data = _section(data, "loss")
         warnings: list[str] = []
         shard_strategy = str(parallelism.get("data_parallel_shard_strategy", "optim_grads_params"))
         if shard_strategy != "optim_grads_params":
@@ -129,8 +143,56 @@ class MindFormersAdapter:
 
         dims, pattern, model_warnings = _build_model_shape(model, training)
         warnings.extend(model_warnings)
-        mla = bool(model.get("multi_latent_attention", False))
-        if mla:
+        is_deepseek_v4 = _is_deepseek_v4(model)
+        is_qwen3 = _is_qwen3(model)
+        mla = bool(model.get("multi_latent_attention", is_deepseek_v4))
+        v4_variant = None
+        v4_ratios: tuple[int, ...] = ()
+        if is_deepseek_v4:
+            if any(item != "moe" for item in pattern):
+                raise ValueError("DeepSeek-V4 contract supports MoE decoder layers only")
+            v4_variant = deepseek_v4_attention_variant(model)
+            v4_ratios = deepseek_v4_compress_ratios(
+                model, dims.n_layers, dims.n_mtp_layers
+            )
+            validate_deepseek_v4_contract(model, dims, v4_ratios)
+            dense_mode = bool(model.get("csa_dense_mode", False))
+            resolved_pattern: list[str] = []
+            layer_specs = {}
+            for layer_id in range(dims.n_layers):
+                hash_router = layer_id < dims.num_hash_layers
+                if v4_variant == "mla":
+                    layer_type = "deepseek_v4_mla_moe" + ("_hash" if hash_router else "")
+                    layer_specs.setdefault(
+                        layer_type,
+                        build_v4_legacy_mla_moe_decoder(dims, hash_router),
+                    )
+                else:
+                    ratio = v4_ratios[layer_id]
+                    layer_type = f"deepseek_v4_hybrid_r{ratio}_moe"
+                    if hash_router:
+                        layer_type += "_hash"
+                    layer_specs.setdefault(
+                        layer_type,
+                        build_v4_hybrid_moe_decoder(
+                            dims, ratio, hash_router, dense_mode
+                        ),
+                    )
+                resolved_pattern.append(layer_type)
+            for mtp_id in range(dims.n_mtp_layers):
+                if v4_variant == "mla":
+                    layer_type = "deepseek_v4_mtp_mla"
+                    layer_specs.setdefault(layer_type, build_v4_legacy_mtp_layer(dims))
+                else:
+                    ratio = v4_ratios[dims.n_layers + mtp_id]
+                    layer_type = f"deepseek_v4_mtp_hybrid_r{ratio}"
+                    layer_specs.setdefault(
+                        layer_type,
+                        build_v4_hybrid_mtp_layer(dims, ratio, dense_mode),
+                    )
+                resolved_pattern.append(layer_type)
+            pattern = tuple(resolved_pattern)
+        elif mla:
             pattern = tuple(
                 "mla_moe" if item == "moe" else "mla_dense"
                 for item in pattern
@@ -139,10 +201,15 @@ class MindFormersAdapter:
             if "mla_moe" in pattern:
                 layer_specs["mla_moe"] = build_mla_moe_decoder(dims)
         else:
-            layer_specs = {"dense": build_dense_decoder(dims)}
+            layer_specs = {
+                "dense": (
+                    build_qwen3_decoder(dims)
+                    if is_qwen3 else build_dense_decoder(dims)
+                )
+            }
             if "moe" in pattern:
                 layer_specs["moe"] = build_moe_decoder(dims)
-        if dims.n_mtp_layers:
+        if dims.n_mtp_layers and not is_deepseek_v4:
             pattern = pattern + ("mtp",) * dims.n_mtp_layers
             layer_specs["mtp"] = build_mtp_layer(dims)
         runtime_mode = str(
@@ -158,9 +225,76 @@ class MindFormersAdapter:
             "hyper_connections": dims.enable_hyper_connections,
             "hc_mult": dims.hc_mult,
             "grouped_gemm": bool(model.get("moe_grouped_gemm", model.get("grouped_gemm", False))),
-            "token_dispatcher": str(parallelism.get("moe_token_dispatcher_type", "alltoall")),
+            "token_dispatcher": str(
+                parallelism.get(
+                    "moe_token_dispatcher_type",
+                    model.get("moe_token_dispatcher_type", "alltoall"),
+                )
+            ),
             "optimizer_type": str(optimizer_data.get("type", "AdamW")).lower(),
+            "loss_variant": str(
+                loss_data.get("variant")
+                or training.get("loss_variant")
+                or (
+                    "fused_cross_entropy"
+                    if loss_data.get(
+                        "fused", training.get("fused_cross_entropy", False)
+                    )
+                    else "fallback_cross_entropy"
+                )
+            ).lower(),
         }
+        from ..layers.loss import SUPPORTED_LOSS_VARIANTS
+        if capabilities["loss_variant"] not in SUPPORTED_LOSS_VARIANTS:
+            raise ValueError(
+                "unsupported loss implementation: "
+                f"{capabilities['loss_variant']}"
+            )
+        if is_deepseek_v4:
+            supported = [
+                "moe", "shared_expert", "hash_router", "mtp",
+                "fp32_gradient_accumulation", "fsdp_replicated_parameters",
+            ]
+            if dims.enable_hyper_connections:
+                supported.append("multi_residual_hyper_connections")
+            if v4_variant == "mla":
+                supported.append("legacy_mla")
+            else:
+                supported.extend((
+                    "hybrid_csa", "compressor", "ratio4_indexer",
+                    "attention_sink", "grouped_low_rank_output",
+                ))
+            capabilities.update({
+                "model_family": "deepseek_v4",
+                "source_contract_version": DEEPSEEK_V4_CONTRACT_VERSION,
+                "source_commit": DEEPSEEK_V4_SOURCE_COMMIT,
+                "attention_variant": v4_variant,
+                "compress_ratios": v4_ratios,
+                "hash_router_layers": dims.num_hash_layers,
+                "supported_capabilities": tuple(supported),
+                "unsupported_capabilities": (
+                    "learnable_hc_head", "unfused_hybrid_attention",
+                ),
+                "probe_status": "pending",
+                "hbm_validation_status": "diagnostic_only",
+                "contract_status": "source_derived_probe_pending_hbm_unvalidated",
+            })
+        elif is_qwen3:
+            capabilities.update({
+                "model_family": "qwen3",
+                "source_contract_version": QWEN3_CONTRACT_VERSION,
+                "source_commit": QWEN3_SOURCE_COMMIT,
+                "probe_status": "pending",
+                "hbm_validation_status": "historical_holdout_only",
+                "contract_status": "source_derived_probe_pending",
+            })
+        elif mla:
+            capabilities.update({
+                "model_family": "deepseek_v3",
+                "probe_status": "pending",
+                "hbm_validation_status": "historical_holdout_only",
+                "contract_status": "source_derived_probe_pending",
+            })
         model_spec = ModelSpec(
             str(model.get("model_type") or model.get("architectures") or "mindformers-model"),
             dims,
@@ -169,24 +303,21 @@ class MindFormersAdapter:
             capabilities,
         )
         cp_method = str(parallelism.get("context_parallel_method", "colossal"))
-        dispatcher = str(parallelism.get("moe_token_dispatcher_type", "alltoall"))
+        dispatcher = str(
+            parallelism.get(
+                "moe_token_dispatcher_type",
+                model.get("moe_token_dispatcher_type", "alltoall"),
+            )
+        )
         supported_dispatchers = {"alltoall", "alltoall_deredundency", "alltoall_zero_redundancy"}
         if dispatcher not in supported_dispatchers:
-            warnings.append(f"moe_token_dispatcher_type={dispatcher!r} uses baseline all-to-all memory volume in P0")
+            raise ValueError(
+                f"unsupported MoE dispatcher contract: {dispatcher}"
+            )
 
         layers_per_stage = _parse_stage_layers(
             parallelism.get("pipeline_parallel_layers_per_stage"), dims.n_layers
         )
-        # PpLayerSetting receives decoder-layer count only.  DeepSeek models
-        # append MTP auxiliary layers after that mapping, on the final
-        # physical stage; mirror that runtime placement so the offline
-        # ParallelModel still covers ``dims.total_layers``.
-        if layers_per_stage is not None and dims.n_mtp_layers:
-            layers_per_stage = tuple(
-                (*stage_layers, *range(dims.n_layers, dims.total_layers))
-                if stage == pp - 1 else stage_layers
-                for stage, stage_layers in enumerate(layers_per_stage)
-            )
         parallel = ParallelConfig(
             dp_replicate=dp_replicate,
             dp_shard=dp_shard,
@@ -196,6 +327,13 @@ class MindFormersAdapter:
             ep=ep,
             sequence_parallel=bool(parallelism.get("sequence_parallel", False)),
             cpu_offload=bool(parallelism.get("cpu_offload", False)),
+            parameter_offload=bool(parallelism.get("parameter_offload", False)),
+            gradient_offload=bool(parallelism.get("gradient_offload", False)),
+            optimizer_offload=bool(parallelism.get("optimizer_offload", False)),
+            fsdp_flatten_alignment_bytes=_positive_int(
+                parallelism.get("fsdp_flatten_alignment_bytes", 512),
+                "fsdp_flatten_alignment_bytes",
+            ),
             num_microbatches=num_microbatches,
             reshard_after_forward_policy=str(
                 parallelism.get("reshard_after_forward_policy", "default")
@@ -215,9 +353,43 @@ class MindFormersAdapter:
 
         optimizer = _build_optimizer(optimizer_data, model, warnings)
         hardware = HardwareSpec(
-            parse_memory_bytes(context.get("max_device_memory", "59GB")),
-            framework_reserve,
+            max_device_memory=parse_memory_bytes(
+                context.get("max_device_memory", "59GB")
+            ),
+            framework_reserve=framework_reserve,
+            usable_device_memory=(
+                parse_memory_bytes(context["usable_device_memory"])
+                if context.get("usable_device_memory") is not None else None
+            ),
+            device_baseline_bytes=parse_memory_bytes(
+                context.get("device_baseline", 0)
+            ),
+            allocator_pool_point_bytes=parse_memory_bytes(
+                context.get("allocator_pool_point", 0)
+            ),
+            allocator_pool_slack_point_bytes=parse_memory_bytes(
+                context.get("allocator_pool_slack_point", 0)
+            ),
+            untracked_runtime_point_bytes=parse_memory_bytes(
+                context.get("untracked_runtime_point", 0)
+            ),
+            calibrated_upper_margin_bytes=parse_memory_bytes(
+                context.get("calibrated_upper_margin", 0)
+            ),
+            ood_margin_bytes=parse_memory_bytes(context.get("ood_margin", 0)),
+            hardware_profile=str(context.get("hardware_profile", "unknown")),
+            runtime_profile=str(context.get("runtime_profile", "unknown")),
+            source_profile=str(context.get("source_profile", "unknown")),
         )
+        if context.get("runtime_profile_file"):
+            from ..runtime_profiles import RuntimeProfileRegistry
+            profile_path = Path(str(context["runtime_profile_file"]))
+            if not profile_path.is_absolute() and source != "<mapping>":
+                profile_path = Path(source).parent / profile_path
+            family = str(capabilities.get("model_family", model_spec.name))
+            hardware = RuntimeProfileRegistry.load(profile_path).apply(
+                hardware, family, parallel
+            )
         recompute = _build_recompute(
             recompute_data,
             recompute_comm_data,
@@ -266,6 +438,7 @@ def _build_model_shape(
     hidden = _required_alias(model, "hidden_size")
     heads = _required_alias(model, "num_attention_heads")
     layers = _required_alias(model, "num_layers", "num_hidden_layers")
+    is_deepseek_v4 = _is_deepseek_v4(model)
     # DeepSeek-V4's PyNative config names the routed expert width
     # ``moe_intermediate_size`` and does not repeat it as a generic FFN
     # field.  It is the only FFN width available for the MoE layer shape, so
@@ -275,20 +448,52 @@ def _build_model_shape(
     )
     seq = _required_alias(model, "seq_length", "max_sequence_length")
     vocab = _required_alias(model, "vocab_size", "padded_vocab_size")
-    kv_heads = int(model.get("num_query_groups") or model.get("num_key_value_heads") or heads)
-    head_dim = int(model.get("kv_channels") or hidden // heads)
-    experts = int(model.get("num_moe_experts") or model.get("n_routed_experts") or 0)
-    topk = int(model.get("moe_router_topk") or model.get("num_experts_per_tok") or 1)
+    kv_heads = _int_alias_default(
+        model,
+        ("num_query_groups", "num_key_value_heads"),
+        1 if is_deepseek_v4 else heads,
+    )
+    head_dim = _int_alias_default(
+        model,
+        ("kv_channels", "head_dim"),
+        512 if is_deepseek_v4 else hidden // heads,
+    )
+    experts = _int_alias_default(
+        model,
+        ("num_moe_experts", "n_routed_experts"),
+        384 if is_deepseek_v4 else 0,
+    )
+    topk = _int_alias_default(
+        model,
+        ("moe_router_topk", "num_experts_per_tok"),
+        6 if is_deepseek_v4 else 1,
+    )
     moe_ffn = int(model.get("moe_ffn_hidden_size") or model.get("moe_intermediate_size") or ffn)
     batch = int(training.get("local_batch_size", 1))
     hc_enabled = bool(
-        model.get("enable_hyper_connections", model.get("hyper_connections", False))
+        model.get(
+            "enable_hyper_connections",
+            model.get("hyper_connections", is_deepseek_v4),
+        )
         or model.get("enable_hc_head", False)
     )
-    hc_mult = int(
-        model.get("hc_mult")
-        or model.get("hyper_connections_multiplier")
-        or (2 if hc_enabled else 0)
+    hc_mult = _int_alias_default(
+        model,
+        ("hc_mult", "hyper_connections_multiplier"),
+        4 if hc_enabled and is_deepseek_v4 else 2 if hc_enabled else 0,
+    )
+    shared_experts = _int_alias_default(
+        model,
+        ("num_shared_experts", "n_shared_experts"),
+        1 if is_deepseek_v4 else 0,
+    )
+    qk_rope_head_dim = _int_alias_default(
+        model, ("qk_rope_head_dim",), 64 if is_deepseek_v4 else 0
+    )
+    qk_nope_head_dim = _int_alias_default(
+        model,
+        ("qk_nope_head_dim",),
+        head_dim - qk_rope_head_dim if is_deepseek_v4 else 0,
     )
     dims = DimTable(
         H=hidden,
@@ -303,25 +508,78 @@ def _build_model_shape(
         n_experts=experts,
         topk=topk,
         moe_F=moe_ffn if experts else 0,
-        n_shared=int(model.get("num_shared_experts") or model.get("n_shared_experts") or 0),
-        shared_F=int(model.get("moe_shared_expert_intermediate_size") or 0),
+        n_shared=shared_experts,
+        shared_F=int(
+            model.get("moe_shared_expert_intermediate_size")
+            or (moe_ffn * shared_experts if is_deepseek_v4 else 0)
+        ),
         dtype_bytes=_dtype_bytes(model.get("compute_dtype", "bfloat16")),
         param_dtype_bytes=_dtype_bytes(model.get("params_dtype", "bfloat16")),
-        q_lora_rank=int(model.get("q_lora_rank") or 0),
+        q_lora_rank=_int_alias_default(
+            model, ("q_lora_rank",), 1536 if is_deepseek_v4 else 0
+        ),
         kv_lora_rank=int(model.get("kv_lora_rank") or 0),
-        qk_nope_head_dim=int(model.get("qk_nope_head_dim") or 0),
-        qk_rope_head_dim=int(model.get("qk_rope_head_dim") or 0),
-        v_head_dim=int(model.get("v_head_dim") or head_dim),
+        qk_nope_head_dim=qk_nope_head_dim,
+        qk_rope_head_dim=qk_rope_head_dim,
+        v_head_dim=_int_alias_default(model, ("v_head_dim",), head_dim),
         n_mtp_layers=int(model.get("mtp_num_layers") or model.get("num_nextn_predict_layers") or 0),
         use_shared_expert_gating=bool(model.get("use_shared_expert_gating", False)),
         tie_word_embeddings=bool(model.get("tie_word_embeddings", False)),
         hc_mult=hc_mult,
         enable_hyper_connections=hc_enabled,
+        o_lora_rank=_int_alias_default(
+            model, ("o_lora_rank",), 1024 if is_deepseek_v4 else 0
+        ),
+        o_groups=_int_alias_default(
+            model, ("o_groups",), 16 if is_deepseek_v4 else 0
+        ),
+        index_n_heads=_int_alias_default(
+            model, ("index_n_heads",), 64 if is_deepseek_v4 else 0
+        ),
+        index_head_dim=_int_alias_default(
+            model, ("index_head_dim",), 128 if is_deepseek_v4 else 0
+        ),
+        index_topk=_int_alias_default(
+            model, ("index_topk",), 1024 if is_deepseek_v4 else 0
+        ),
+        num_hash_layers=int(
+            model.get("num_hash_layers")
+            if model.get("num_hash_layers") is not None
+            else min(3, layers) if is_deepseek_v4 else 0
+        ),
+        sliding_window=_int_alias_default(
+            model, ("sliding_window",), 128 if is_deepseek_v4 else 0
+        ),
     )
     pattern = _moe_pattern(model, layers, experts)
     if dims.n_shared and not dims.shared_F:
         warnings.append("shared experts configured without moe_shared_expert_intermediate_size; shared branch omitted")
     return dims, pattern, warnings
+
+
+def _is_deepseek_v4(model: Mapping[str, Any]) -> bool:
+    names = (
+        str(model.get("model_type") or ""),
+        str(model.get("architectures") or ""),
+    )
+    return any("deepseek" in name.lower() and "v4" in name.lower() for name in names)
+
+
+def _is_qwen3(model: Mapping[str, Any]) -> bool:
+    names = (
+        str(model.get("model_type") or ""),
+        str(model.get("architectures") or ""),
+    )
+    return any("qwen3" in name.lower() for name in names)
+
+
+def _int_alias_default(
+    data: Mapping[str, Any], names: tuple[str, ...], default: int
+) -> int:
+    for name in names:
+        if data.get(name) is not None:
+            return int(data[name])
+    return int(default)
 
 
 def _moe_pattern(model: Mapping[str, Any], layers: int, experts: int) -> tuple[str, ...]:
@@ -344,6 +602,10 @@ def _build_optimizer(
 ) -> OptimizerSpec:
     name = str(config.get("type", "AdamW"))
     parameter_bytes = _dtype_bytes(model.get("params_dtype", "bfloat16"))
+    # MindFormers PyNative always accumulates gradients in FP32. Single-card
+    # training installs backward hooks; FSDP/HSDP reduces and accumulates into
+    # the FP32 ``param.main_grad`` buffer. This is independent of param dtype.
+    gradient_bytes = 4
     master_bytes = 0 if parameter_bytes == 4 else 4
     if name.lower() in {"muon", "muonadam", "muon_adam"}:
         ns_steps = int(
@@ -352,12 +614,12 @@ def _build_optimizer(
         fraction = float(config.get("muon_parameter_fraction", config.get("muon_fraction", 1.0)))
         momentum_bytes = int(config.get("muon_momentum_bytes", config.get("momentum_bytes", 4)))
         main_bytes = int(config.get("muon_main_parameter_bytes", config.get("main_parameter_bytes", 4)))
-        total = parameter_bytes + parameter_bytes + main_bytes + momentum_bytes
+        total = parameter_bytes + gradient_bytes + main_bytes + momentum_bytes
         return OptimizerSpec(
             name,
             total,
             parameter_bytes=parameter_bytes,
-            gradient_bytes=parameter_bytes,
+            gradient_bytes=gradient_bytes,
             master_weight_bytes=main_bytes,
             optimizer_state_bytes=momentum_bytes,
             muon_ns_steps=ns_steps,
@@ -366,12 +628,12 @@ def _build_optimizer(
             muon_main_parameter_bytes=main_bytes,
         )
     if name.lower() != "adamw":
-        warnings.append(f"optimizer {name!r} uses the AdamW byte model in P0")
-    total = parameter_bytes + parameter_bytes + master_bytes + 8
+        raise ValueError(f"unsupported optimizer contract: {name}")
+    total = parameter_bytes + gradient_bytes + master_bytes + 8
     return OptimizerSpec(
         name, total,
         parameter_bytes=parameter_bytes,
-        gradient_bytes=parameter_bytes,
+        gradient_bytes=gradient_bytes,
         master_weight_bytes=master_bytes,
         optimizer_state_bytes=8,
     )

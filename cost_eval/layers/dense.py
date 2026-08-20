@@ -45,26 +45,28 @@ def hyper_connection_ops(dims: DimTable, source_name: str) -> tuple[OpSpec, ...]
 def build_dense_decoder(dims: DimTable) -> LayerSpec:
     x = TensorRef("x", ("S", "B", "H"), shard={0: "sp"})
     ln1 = TensorRef("ln1", ("S", "B", "H"), shard={0: "sp"})
+    ln1_gathered = TensorRef("ln1", ("S", "B", "H"), shard={0: "cp"})
     qkv_w = TensorRef(
         "qkv_w", ("H", QKV), shard={1: "tp"}, is_weight=True
     )
-    qkv = TensorRef("qkv", ("S", "B", QKV), shard={2: "tp"})
-    attn = TensorRef("attn", ("S", "B", NHD), shard={2: "tp"})
-    lse = TensorRef("lse", ("S", "B", "n_heads"), shard={2: "tp"})
+    qkv = TensorRef("qkv", ("S", "B", QKV), shard={0: "cp", 2: "tp"})
+    attn = TensorRef("attn", ("S", "B", NHD), shard={0: "cp", 2: "tp"})
+    lse = TensorRef("lse", ("S", "B", "n_heads"), shard={0: "cp", 2: "tp"})
     o_w = TensorRef("o_w", (NHD, "H"), shard={0: "tp"}, is_weight=True)
-    o_partial = TensorRef("o", ("S", "B", "H"), partial="tp")
+    o_partial = TensorRef("o", ("S", "B", "H"), shard={0: "cp"}, partial="tp")
     o_sharded = TensorRef("o", ("S", "B", "H"), shard={0: "sp"})
     h1 = TensorRef("h1", ("S", "B", "H"), shard={0: "sp"})
     ln2 = TensorRef("ln2", ("S", "B", "H"), shard={0: "sp"})
+    ln2_gathered = TensorRef("ln2", ("S", "B", "H"), shard={0: "cp"})
     fc1_w = TensorRef(
         "fc1_w", ("H", "2*F"), shard={1: "tp"}, is_weight=True
     )
-    gate = TensorRef("gate", ("S", "B", "2*F"), shard={2: "tp"})
-    act = TensorRef("act", ("S", "B", "F"), shard={2: "tp"})
+    gate = TensorRef("gate", ("S", "B", "2*F"), shard={0: "cp", 2: "tp"})
+    act = TensorRef("act", ("S", "B", "F"), shard={0: "cp", 2: "tp"})
     fc2_w = TensorRef(
         "fc2_w", ("F", "H"), shard={0: "tp"}, is_weight=True
     )
-    o2_partial = TensorRef("o2", ("S", "B", "H"), partial="tp")
+    o2_partial = TensorRef("o2", ("S", "B", "H"), shard={0: "cp"}, partial="tp")
     o2_sharded = TensorRef("o2", ("S", "B", "H"), shard={0: "sp"})
     h2 = TensorRef("h2", ("S", "B", "H"), shard={0: "sp"})
 
@@ -74,10 +76,10 @@ def build_dense_decoder(dims: DimTable) -> LayerSpec:
             OpSpec(
                 "qkv",
                 OpType.MATMUL,
-                (ln1, qkv_w),
+                (ln1_gathered, qkv_w),
                 qkv,
                 params=(qkv_w,),
-                saves=(ln1,),
+                saves=(ln1_gathered,),
             ),
             OpSpec("rope", OpType.ROPE, (qkv,), qkv),
             OpSpec(
@@ -102,10 +104,10 @@ def build_dense_decoder(dims: DimTable) -> LayerSpec:
             OpSpec(
                 "fc1",
                 OpType.MATMUL,
-                (ln2, fc1_w),
+                (ln2_gathered, fc1_w),
                 gate,
                 params=(fc1_w,),
-                saves=(ln2,),
+                saves=(ln2_gathered,),
             ),
             OpSpec(
                 "swiglu",

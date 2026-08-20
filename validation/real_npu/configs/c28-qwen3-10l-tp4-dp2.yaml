@@ -1,0 +1,96 @@
+checkpoint:
+  enable_save: false
+  save_path: /home/qs50063523/mycode/parallelsearch/real_tests/results/qwen3_4l_tp4_dp2/checkpoints
+  no_load_optim: true
+training:
+  steps: 36
+  local_batch_size: 1
+  global_batch_size: 2
+  max_norm: 1.0
+  seed: 42
+  deterministic: true
+optimizer:
+  type: AdamW
+  betas:
+  - 0.9
+  - 0.95
+  eps: 1.0e-08
+  weight_decay: 0.01
+lr_scheduler:
+  type: ConstantWarmUpLR
+  learning_rate: 1.0e-05
+  warmup_ratio: 0
+parallelism:
+  data_parallel_shard: -1
+  data_parallel_shard_strategy: optim_grads_params
+  disable_gradient_division: true
+  expert_parallel: 1
+  tensor_parallel: 4
+  context_parallel: 1
+  context_parallel_method: colossal
+  pipeline_parallel: 1
+  pipeline_parallel_schedule: 1f1b
+  pipeline_parallel_microbatch_size: 1
+  pipeline_parallel_interleave_num: 1
+  pipeline_parallel_layers_per_stage: null
+  sequence_parallel: true
+recompute:
+  mode: None
+train_dataset:
+  dataloader:
+    type: MindDataset
+    dataset_files: /home/qs50063523/mycode/parallelsearch/.npu-calibration/train_dataset
+    column_names:
+    - input_ids
+    - labels
+    - loss_mask
+    - position_ids
+    shuffle: false
+  drop_remainder: true
+  num_parallel_workers: 8
+  prefetch_size: 1
+  numa_enable: false
+context:
+  mode: 1
+  device_target: Ascend
+  max_device_memory: 58GB
+model:
+  model_type: qwen3
+  architectures: Qwen3ForCausalLM
+  vocab_size: 129280
+  seq_length: 4096
+  max_position_embeddings: 4096
+  hidden_size: 256
+  intermediate_size: 512
+  num_hidden_layers: 10
+  num_attention_heads: 8
+  num_key_value_heads: 4
+  head_dim: 32
+  hidden_act: silu
+  rms_norm_eps: 1.0e-06
+  use_cache: false
+  tie_word_embeddings: false
+  rope_theta: 10000
+  attention_bias: false
+  use_flash_attention: true
+  attention_dropout: 0.0
+  params_dtype: float32
+  compute_dtype: bfloat16
+  layernorm_compute_dtype: float32
+  softmax_compute_dtype: float32
+  rotary_dtype: float32
+  position_embedding_type: rope
+  qk_layernorm: true
+  qkv_concat: true
+  gated_linear_unit: true
+profiler:
+  enable_profiling: false
+  start_step: 2
+  end_step: 4
+  output_path: /home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v12-h4-qwen3-10l-tp4dp2-timing/mindspore-profile
+  profiler_rank:
+  - 0
+  profiler_level: 1
+  profile_memory: false
+  profile_cpu: true
+  with_stack: true

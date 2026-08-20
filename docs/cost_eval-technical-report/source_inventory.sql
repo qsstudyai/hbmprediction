@@ -1,0 +1,42 @@
+WITH source_files(path, category, lines, responsibility) AS (
+  VALUES
+    ('cost_eval/__init__.py', '包入口', 32, '公开 API 重导出'),
+    ('cost_eval/__main__.py', '包入口', 24, '命令行评估入口'),
+    ('cost_eval/adapters/__init__.py', 'MindFormers 适配', 5, '适配器公开 API'),
+    ('cost_eval/adapters/mindformers.py', 'MindFormers 适配', 854, 'MindFormers YAML、模型与策略适配'),
+    ('cost_eval/allocator_model.py', '形状、静态态与时间线', 67, 'allocator、运行时和总 HBM 组合'),
+    ('cost_eval/calibration.py', '报告、测量与校准', 471, '预测和真实 profiling 对账'),
+    ('cost_eval/config_adapter.py', '核心数据模型与配置', 347, '通用 JSON/YAML 配置适配'),
+    ('cost_eval/event_schedule.py', '形状、静态态与时间线', 53, '1F1B 与交错流水事件'),
+    ('cost_eval/layers/__init__.py', '模型与算子图', 22, '内置层图公开 API'),
+    ('cost_eval/layers/deepseek.py', '模型与算子图', 194, 'DeepSeek-V3 MLA、MoE、MTP 图'),
+    ('cost_eval/layers/deepseek_v4.py', '模型与算子图', 501, 'DeepSeek-V4 MLA、混合注意力、mHC、MTP 图'),
+    ('cost_eval/layers/dense.py', '模型与算子图', 130, 'Dense GQA/FlashAttention/SwiGLU 图'),
+    ('cost_eval/layers/loss.py', '模型与算子图', 79, '融合与回退交叉熵图'),
+    ('cost_eval/layers/moe.py', '模型与算子图', 81, '通用 MoE decoder 图'),
+    ('cost_eval/layers/moe_dispatch.py', '模型与算子图', 29, 'MoE dispatch 辅助张量'),
+    ('cost_eval/layers/qwen3.py', '模型与算子图', 88, 'Qwen3 专用 decoder 图'),
+    ('cost_eval/measurement_contract.py', '报告、测量与校准', 228, '真实 NPU HBM 测量合同'),
+    ('cost_eval/mem_timeline.py', '形状、静态态与时间线', 588, '逐事件峰值显存仿真'),
+    ('cost_eval/memory_actions.py', '形状、静态态与时间线', 106, '算子到分配/释放动作转换'),
+    ('cost_eval/memory_ledger.py', '形状、静态态与时间线', 75, '内存存活账本'),
+    ('cost_eval/model_spec.py', '核心数据模型与配置', 188, '声明式张量和算子图合同'),
+    ('cost_eval/offload_model.py', '形状、静态态与时间线', 37, '参数、梯度和优化器卸载策略'),
+    ('cost_eval/optimizers.py', '形状、静态态与时间线', 63, 'AdamW/Muon 状态和 step 工作区'),
+    ('cost_eval/parallel_model.py', '核心数据模型与配置', 145, '并行 mesh 与流水线层分配'),
+    ('cost_eval/report.py', '报告、测量与校准', 195, '统一评估门面和结果报告'),
+    ('cost_eval/runtime_profiles.py', '运行时校准与溯源', 91, '布局相关运行时校准档案'),
+    ('cost_eval/shape_eval.py', '形状、静态态与时间线', 562, '符号 shape、placement、通信和 resolved graph'),
+    ('cost_eval/source_contracts/__init__.py', '运行时源码合同', 19, '源码合同公开 API'),
+    ('cost_eval/source_contracts/deepseek_v3.py', '运行时源码合同', 46, 'DeepSeek-V3 来源与公式合同'),
+    ('cost_eval/source_contracts/deepseek_v4.py', '运行时源码合同', 229, 'DeepSeek-V4 来源、哈希和覆盖校验'),
+    ('cost_eval/source_contracts/qwen3.py', '运行时源码合同', 17, 'Qwen3 来源合同'),
+    ('cost_eval/source_fingerprint.py', '运行时校准与溯源', 17, 'Python 源码树指纹'),
+    ('cost_eval/specs.py', '核心数据模型与配置', 408, '并行、优化器、硬件、重计算和 swap 配置'),
+    ('cost_eval/static_mem.py', '形状、静态态与时间线', 155, '每 stage 持久态显存'),
+    ('cost_eval/validation_gate.py', '报告、测量与校准', 158, 'P0/P1 验收门'),
+    ('cost_eval/workspace_registry.py', '运行时校准与溯源', 45, '版本化 kernel workspace 档案')
+)
+SELECT path, category, lines, responsibility
+FROM source_files
+ORDER BY path;

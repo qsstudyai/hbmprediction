@@ -1,0 +1,22 @@
+{
+  "schema": "p1.frozen-prediction.v1",
+  "name": "h1-qwen3-38l-dp8-v14",
+  "world_size": 8,
+  "inputs": {
+    "config": ".npu-calibration/p1v14-h1-qwen3-38l-dp8-timing/profile_config.yaml",
+    "config_sha256": "4b5550af82ee89902bcea4177e2b28cf98154abe0b68b1a262c9bc577dc34c15",
+    "profile": "output/ascend_910b2_8_p1_v14_candidate.json",
+    "profile_sha256": "53506b79736c15bc59ec1876e7be27c73dd7a224999f6ebc7cfa81ad696302d1"
+  },
+  "prediction": {
+    "step_time_p50_ns": 1012946426,
+    "step_time_p90_ns": 1066994829,
+    "peak_hbm_total_bytes": 15980488376,
+    "peak_hbm_dynamic_bytes": 12396455608,
+    "oom": false,
+    "warnings": [
+      "p90_method=conservative_per_event_quantile; resource-correlated samples unavailable",
+      "使用覆盖感知特征残差模型 p1.feature-residual.v3；confidence=0.988，distance=0.046；低覆盖场景自动回退到物理基线"
+    ]
+  }
+}

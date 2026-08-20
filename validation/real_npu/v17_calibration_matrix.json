@@ -1,0 +1,214 @@
+{
+  "protocol": "Only eligible, fixed-batch timing cases enter calibration/holdout; HBM labels are masked when absent.",
+  "acceptance_policy": {
+    "minimum_actual_oom_cases": 1,
+    "minimum_holdout_cases": 4,
+    "minimum_families": 2,
+    "required_capabilities": [
+      "dense",
+      "moe"
+    ],
+    "required_varied_layout_axes": [
+      "tp",
+      "cp",
+      "pp",
+      "dp",
+      "ep",
+      "interleave"
+    ],
+    "require_frozen_hashes": true,
+    "require_confidence_monotonic": true
+  },
+  "calibration": [
+    {
+      "name": "c6-deepseek3-12l-tp2-cp4",
+      "family": "deepseek3",
+      "config": ".npu-calibration/p1v2-c6ds3-12l-tp2cp4-timing-v1/profile_config.yaml",
+      "comparison": "real_tests/p1v3/comparisons/c6-deepseek3-12l-tp2-cp4.json"
+    },
+    {
+      "name": "c8-deepseek3-4l-tp2-pp2-dp2-interleave2",
+      "family": "deepseek3",
+      "config": ".npu-calibration/p1v2-c8ds3-timing-v2/profile_config.yaml",
+      "comparison": "real_tests/p1v3/comparisons/c8-deepseek3-4l-tp2-pp2-dp2-interleave2.json"
+    },
+    {
+      "name": "c9-deepseek3-6l-tp2-pp2-dp2-interleave1",
+      "family": "deepseek3",
+      "config": ".npu-calibration/p1v2-c9ds3-timing-v1/profile_config.yaml",
+      "comparison": "real_tests/p1v3/comparisons/c9-deepseek3-6l-tp2-pp2-dp2-interleave1.json"
+    },
+    {
+      "name": "c12-qwen3-4l-tp2-dp4",
+      "family": "qwen3",
+      "config": ".npu-calibration/p1v2-c12qwen3-4l-tp2dp4-timing-v4/profile_config.yaml",
+      "comparison": "real_tests/p1v3/comparisons/c12-qwen3-4l-tp2-dp4.json"
+    },
+    {
+      "name": "c14-deepseek3-16l-tp2-pp2-dp2-interleave2",
+      "family": "deepseek3",
+      "config": ".npu-calibration/p1v3-c14-deepseek3-16l-pp2i2-timing-v3/profile_config.yaml",
+      "comparison": "real_tests/p1v3/comparisons/c14-deepseek3-16l-tp2-pp2-dp2-interleave2.json"
+    },
+    {
+      "name": "c15-deepseek3-16l-tp2-cp2-ep2",
+      "family": "deepseek3",
+      "config": ".npu-calibration/p1v3-b4-deepseek3-16l-tp2cp2ep2-timing/profile_config.yaml",
+      "comparison": "real_tests/p1v3/comparisons/c15-deepseek3-16l-tp2-cp2-ep2.json"
+    },
+    {
+      "name": "c16-deepseek3-20l-tp2-cp2-ep2",
+      "family": "deepseek3",
+      "config": ".npu-calibration/p1v5-h2-deepseek3-20l-tp2cp2ep2-timing/profile_config.yaml",
+      "comparison": "real_tests/p1v3/comparisons/c16-deepseek3-20l-tp2-cp2-ep2.json"
+    },
+    {
+      "name": "c17-qwen3-6l-dp8",
+      "family": "qwen3",
+      "config": ".npu-calibration/p1v6-h1-qwen3-6l-dp8-timing/profile_config.yaml",
+      "comparison": "real_tests/p1v3/comparisons/c17-qwen3-6l-dp8.json"
+    },
+    {
+      "name": "c18-qwen3-10l-dp8",
+      "family": "qwen3",
+      "config": ".npu-calibration/p1v7-h1-qwen3-10l-dp8-timing/profile_config.yaml",
+      "comparison": "real_tests/p1v3/comparisons/c18-qwen3-10l-dp8.json"
+    },
+    {
+      "name": "c19-deepseek3-28l-tp2-cp2-ep2",
+      "family": "deepseek3",
+      "config": ".npu-calibration/p1v9-h2-deepseek3-28l-tp2cp2ep2-timing/profile_config.yaml",
+      "comparison": "real_tests/p1v3/comparisons/c19-deepseek3-28l-tp2-cp2-ep2.json"
+    },
+    {
+      "name": "c20-deepseek3-32l-tp2-cp2-ep2",
+      "family": "deepseek3",
+      "config": ".npu-calibration/p1v10-h2-deepseek3-32l-tp2cp2ep2-timing/profile_config.yaml",
+      "comparison": "real_tests/p1v3/comparisons/c20-deepseek3-32l-tp2-cp2-ep2.json"
+    },
+    {
+      "name": "c21-qwen3-26l-dp8",
+      "family": "qwen3",
+      "config": ".npu-calibration/p1v11-h1-qwen3-26l-dp8-timing/profile_config.yaml",
+      "comparison": "real_tests/p1v3/comparisons/c21-qwen3-26l-dp8.json"
+    },
+    {
+      "name": "c22-deepseek3-30l-tp2-cp2-ep2",
+      "family": "deepseek3",
+      "config": ".npu-calibration/p1v11-h2-deepseek3-30l-tp2cp2ep2-timing/profile_config.yaml",
+      "comparison": "real_tests/p1v3/comparisons/c22-deepseek3-30l-tp2-cp2-ep2.json"
+    },
+    {
+      "name": "c23-qwen3-30l-dp8",
+      "family": "qwen3",
+      "config": ".npu-calibration/p1v12-h1-qwen3-30l-dp8-timing-v2/profile_config.yaml",
+      "comparison": "real_tests/p1v3/comparisons/c23-qwen3-30l-dp8.json"
+    },
+    {
+      "name": "c24-deepseek3-34l-tp2-cp2-ep2",
+      "family": "deepseek3",
+      "config": ".npu-calibration/p1v12-h2-deepseek3-34l-tp2cp2ep2-timing/profile_config.yaml",
+      "comparison": "real_tests/p1v3/comparisons/c24-deepseek3-34l-tp2-cp2-ep2.json"
+    },
+    {
+      "name": "c25-qwen3-34l-dp8",
+      "family": "qwen3",
+      "config": ".npu-calibration/p1v13-h1-qwen3-34l-dp8-timing/profile_config.yaml",
+      "comparison": "real_tests/p1v3/comparisons/c25-qwen3-34l-dp8.json"
+    },
+    {
+      "name": "c26-deepseek3-36l-tp2-cp2-ep2",
+      "family": "deepseek3",
+      "config": ".npu-calibration/p1v13-h2-deepseek3-36l-tp2cp2ep2-timing/profile_config.yaml",
+      "comparison": "real_tests/p1v3/comparisons/c26-deepseek3-36l-tp2-cp2-ep2.json"
+    },
+    {
+      "name": "c27-deepseek3-24l-tp2-pp2-dp2-interleave2",
+      "family": "deepseek3",
+      "config": ".npu-calibration/p1v12-h3-deepseek3-24l-pp2i2-timing/profile_config.yaml",
+      "comparison": "real_tests/p1v3/comparisons/c27-deepseek3-24l-tp2-pp2-dp2-interleave2.json"
+    },
+    {
+      "name": "c28-qwen3-10l-tp4-dp2",
+      "family": "qwen3",
+      "config": ".npu-calibration/p1v12-h4-qwen3-10l-tp4dp2-timing/profile_config.yaml",
+      "comparison": "real_tests/p1v3/comparisons/c28-qwen3-10l-tp4-dp2.json"
+    },
+    {
+      "name": "c29-qwen3-38l-dp8",
+      "family": "qwen3",
+      "config": ".npu-calibration/p1v14-h1-qwen3-38l-dp8-timing/profile_config.yaml",
+      "comparison": "real_tests/p1v3/comparisons/c29-qwen3-38l-dp8.json"
+    },
+    {
+      "name": "c30-deepseek3-38l-tp2-cp2-ep2",
+      "family": "deepseek3",
+      "config": ".npu-calibration/p1v14-h2-deepseek3-38l-tp2cp2ep2-timing/profile_config.yaml",
+      "comparison": "real_tests/p1v3/comparisons/c30-deepseek3-38l-tp2-cp2-ep2.json"
+    },
+    {
+      "name": "c31-qwen3-42l-dp8",
+      "family": "qwen3",
+      "config": ".npu-calibration/p1v15-h1-qwen3-42l-dp8-timing/profile_config.yaml",
+      "comparison": "real_tests/p1v3/comparisons/c31-qwen3-42l-dp8.json"
+    },
+    {
+      "name": "c32-qwen3-46l-dp8",
+      "family": "qwen3",
+      "config": ".npu-calibration/p1v16-h1-qwen3-46l-dp8-timing/profile_config.yaml",
+      "comparison": "real_tests/p1v3/comparisons/c32-qwen3-46l-dp8.json"
+    },
+    {
+      "name": "c33-deepseek3-42l-tp2-cp2-ep2",
+      "family": "deepseek3",
+      "config": ".npu-calibration/p1v16-h2-deepseek3-42l-tp2cp2ep2-timing/profile_config.yaml",
+      "comparison": "real_tests/p1v3/comparisons/c33-deepseek3-42l-tp2-cp2-ep2.json"
+    }
+  ],
+  "validation": [
+    {
+      "name": "d1-deepseek3-8l-tp2-pp2-dp2-interleave2",
+      "family": "deepseek3",
+      "config": ".npu-calibration/p1v2-b3ds3-8l-tp2pp2dp2-interleave2-timing-v2/profile_config.yaml",
+      "comparison": "real_tests/p1v3/comparisons/d1-deepseek3-8l-tp2-pp2-dp2-interleave2.json"
+    },
+    {
+      "name": "d2-qwen3-6l-tp2-dp4",
+      "family": "qwen3",
+      "config": ".npu-calibration/p1v2-c13qwen3-6l-tp2dp4-timing-v1/profile_config.yaml",
+      "comparison": "real_tests/p1v3/comparisons/d2-qwen3-6l-tp2-dp4.json"
+    }
+  ],
+  "holdout": [],
+  "diagnostic": [
+    {
+      "split": "holdout",
+      "name": "h1-qwen3-50l-dp8-v17",
+      "family": "qwen3",
+      "eligible": false,
+      "reason": "ValueError: profiler archive 中没有 case_result.json: /home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v17-h1-qwen3-50l-dp8-timing"
+    },
+    {
+      "split": "holdout",
+      "name": "h2-deepseek3-44l-tp2-cp2-ep2-v17",
+      "family": "deepseek3",
+      "eligible": false,
+      "reason": "ValueError: profiler archive 中没有 case_result.json: /home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v17-h2-deepseek3-44l-tp2cp2ep2-timing"
+    },
+    {
+      "split": "holdout",
+      "name": "h3-deepseek3-40l-tp2-pp2-dp2-interleave2-v17",
+      "family": "deepseek3",
+      "eligible": false,
+      "reason": "ValueError: profiler archive 中没有 case_result.json: /home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v17-h3-deepseek3-40l-pp2i2-timing"
+    },
+    {
+      "split": "holdout",
+      "name": "h4-qwen3-18l-tp4-dp2-v17",
+      "family": "qwen3",
+      "eligible": false,
+      "reason": "ValueError: profiler archive 中没有 case_result.json: /home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v17-h4-qwen3-18l-tp4dp2-timing"
+    }
+  ],
+  "audit": "real_tests/p1v3/v17_calibration_audit.json"
+}

@@ -1,0 +1,79 @@
+{
+  "schema": "hbmprediction.validation-gates.v1",
+  "evidence_scope": "historical_calibration_replay",
+  "label_count": 25,
+  "p0_numeric_status": "pass",
+  "p1_numeric_status": "fail",
+  "production_status": "validation_unavailable",
+  "gates": [
+    {
+      "name": "p0_physical_active",
+      "status": "pass",
+      "observed": {
+        "mean_ape_pct": 9.33425629473973,
+        "worst_ape_pct": 29.720578768774892
+      },
+      "requirement": "mean <= 25%, worst <= 35%",
+      "scope": "historical_calibration_replay"
+    },
+    {
+      "name": "p1_dynamic_point",
+      "status": "pass",
+      "observed": {
+        "mean_ape_pct": 8.960801895508778,
+        "worst_ape_pct": 24.212115004173558
+      },
+      "requirement": "mean <= 20%, worst <= 30%",
+      "scope": "historical_calibration_replay"
+    },
+    {
+      "name": "p1_total_point",
+      "status": "fail",
+      "observed": {
+        "mean_ape_pct": 7.117972713813292,
+        "worst_ape_pct": 20.478216835707048
+      },
+      "requirement": "mean <= 15%, worst <= 20%",
+      "scope": "historical_calibration_replay"
+    },
+    {
+      "name": "p1_safe_upper_coverage",
+      "status": "pass",
+      "observed": {
+        "covered": 23,
+        "total": 25,
+        "coverage": 0.92
+      },
+      "requirement": "coverage >= 80%",
+      "scope": "historical_calibration_replay"
+    },
+    {
+      "name": "blind_holdout",
+      "status": "unavailable",
+      "observed": null,
+      "requirement": "new frozen holdouts for every supported family/layout",
+      "scope": "production_validation"
+    },
+    {
+      "name": "actual_oom_false_safe",
+      "status": "unavailable",
+      "observed": null,
+      "requirement": "at least one actual OOM and zero false-safe predictions",
+      "scope": "production_validation"
+    },
+    {
+      "name": "stage_rank_peak_order",
+      "status": "unavailable",
+      "observed": null,
+      "requirement": "peak ordering accuracy >= 80% on new labels",
+      "scope": "production_validation"
+    },
+    {
+      "name": "strategy_paired_delta",
+      "status": "unavailable",
+      "observed": null,
+      "requirement": "paired strategy delta error <= 20%",
+      "scope": "production_validation"
+    }
+  ]
+}

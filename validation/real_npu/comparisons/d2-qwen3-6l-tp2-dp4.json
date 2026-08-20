@@ -1,0 +1,119 @@
+{
+  "case": "d2-qwen3-6l-tp2-dp4",
+  "family": "qwen3",
+  "source": {
+    "timing_archive": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-c13qwen3-6l-tp2dp4-timing-v1",
+    "hbm_archive": ".npu-calibration/p1v2-c13qwen3-6l-tp2dp4-hbm-v3",
+    "timing_label_sha256": "f79da6a313ca8e22904aefebcbb9b103b3da81a902737c6fcc9298a655eb4c6f",
+    "hbm_label_sha256": "1f4180847d05e35e12595993a2699f2c1ebb11c18792fb275ba98bd128a084d5",
+    "protocol": {
+      "aggregation": "max_rank",
+      "rank_count": 8,
+      "rank_step_counts": {
+        "worker_0.log": 32,
+        "worker_1.log": 32,
+        "worker_2.log": 32,
+        "worker_3.log": 32,
+        "worker_4.log": 32,
+        "worker_5.log": 32,
+        "worker_6.log": 32,
+        "worker_7.log": 32
+      },
+      "rank_global_batch_sizes": {
+        "worker_0.log": [
+          4
+        ],
+        "worker_1.log": [
+          4
+        ],
+        "worker_2.log": [
+          4
+        ],
+        "worker_3.log": [
+          4
+        ],
+        "worker_4.log": [
+          4
+        ],
+        "worker_5.log": [
+          4
+        ],
+        "worker_6.log": [
+          4
+        ],
+        "worker_7.log": [
+          4
+        ]
+      },
+      "effective_global_batch_sizes": [
+        4
+      ],
+      "status": "valid"
+    },
+    "replicate_quality": null,
+    "frozen_prediction": null
+  },
+  "measured": {
+    "step_time_p50_ns": 185500000,
+    "step_time_p90_ns": 189700000,
+    "step_time_ns": 185500000,
+    "peak_hbm_total_bytes": 10277093376,
+    "peak_hbm_dynamic_bytes": 6693060608,
+    "oom": false,
+    "timing_protocol_valid": true,
+    "measurement_quality": {
+      "timing": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "timing",
+        "status": "valid",
+        "issues": [],
+        "effective_global_batch": 4,
+        "tokens_per_step": 16384,
+        "rank_count": 8,
+        "steady_step_count": 24,
+        "aggregation": "pXX(max_rank_per_global_step)"
+      },
+      "hbm": {
+        "schema": "p1.measurement-contract.v2",
+        "kind": "hbm",
+        "status": "valid",
+        "issues": [],
+        "per_rank_sample_counts": [
+          25,
+          25,
+          25,
+          25,
+          25,
+          25,
+          25,
+          25
+        ],
+        "per_rank_baseline_bytes": [
+          3585081344,
+          3584032768,
+          3583508480,
+          3584032768,
+          3582984192,
+          3584032768,
+          3582984192,
+          3584032768
+        ],
+        "peak_observability": "sufficient",
+        "label": "total_peak_used_bytes"
+      }
+    }
+  },
+  "physical_base": {
+    "step_time_p50_ns": 163380043,
+    "step_time_p90_ns": 195885791,
+    "peak_hbm_total_bytes": 6148701947,
+    "peak_hbm_dynamic_bytes": 2564669179,
+    "oom": false
+  },
+  "metadata": {
+    "model_family": "qwen3",
+    "world_size": 8,
+    "timing_run": "/home/qs50063523/mycode/parallelsearch/.npu-calibration/p1v2-c13qwen3-6l-tp2dp4-timing-v1",
+    "hbm_run": ".npu-calibration/p1v2-c13qwen3-6l-tp2dp4-hbm-v3"
+  }
+}

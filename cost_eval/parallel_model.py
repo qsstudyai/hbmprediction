@@ -96,6 +96,13 @@ class ParallelModel:
     def stage_of(self, layer_id: int) -> int:
         return self._mapping[layer_id]
 
+    def stage_of_rank(self, rank: int) -> int:
+        if rank < 0 or rank >= self.world_size:
+            raise ValueError(f"无效 rank: {rank}")
+        # MindFormers lays the pipeline axis out as the innermost rank axis in
+        # the evaluator-facing world mesh.
+        return rank % self.pc.pp
+
     def _stage_layers(self, stage: int) -> list[int]:
         if stage < 0 or stage >= self.pc.pp:
             raise ValueError(f"无效 stage: {stage}")
