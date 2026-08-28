@@ -1,0 +1,83 @@
+name: mixed-dense-moe-8l-trace
+
+model:
+  type: dense
+  H: 4096
+  F: 11008
+  n_heads: 32
+  n_kv: 32
+  head_dim: 128
+  S: 4096
+  B: 1
+  vocab: 32000
+  n_layers: 8
+  n_experts: 8
+  topk: 2
+  moe_F: 4096
+  capacity_factor: 1.0
+  dtype_bytes: 2
+  param_dtype_bytes: 2
+  layer_pattern:
+    - dense
+    - dense
+    - dense
+    - dense
+    - moe
+    - moe
+    - moe
+    - moe
+
+parallel:
+  data_parallel_replicate: 2
+  data_parallel_shard: 2
+  tensor_parallel: 4
+  pipeline_parallel: 2
+  context_parallel: 2
+  expert_parallel: 4
+  sequence_parallel: true
+  layers_per_stage: [4, 4]
+  pipeline_interleave: 2
+  num_microbatches: 4
+  prefetch_depth: 1
+  reshard_after_forward_policy: always
+  context_parallel_method: ulysses
+  ulysses_degree_in_cp: 2
+  moe_token_dispatcher: alltoall
+  enable_loss_parallel: true
+
+optimizer:
+  type: AdamW
+  fp32_grad: true
+
+recompute:
+  mode: select
+  select_ops:
+    0: [flash, fc1, swiglu]
+    1: [flash, fc1, swiglu]
+    2: [flash, fc1, swiglu]
+    3: [flash, fc1, swiglu]
+    4: [flash, expert_fc1, expert_swiglu]
+    5: [flash, expert_fc1, expert_swiglu]
+    6: [flash, expert_fc1, expert_swiglu]
+    7: [flash, expert_fc1, expert_swiglu]
+
+swap:
+  enable: true
+  default_prefetch: 2
+  swap_ops:
+    0: [ln1, ln2]
+    1: [ln1, ln2]
+    2: [ln1, ln2]
+    3: [ln1, ln2]
+    4: [ln1, router]
+    5: [ln1, router]
+    6: [ln1, router]
+    7: [ln1, router]
+
+hardware:
+  max_device_memory: 80 GiB
+  framework_reserve: 0 GiB
+  device_baseline: 0 GiB
+  allocator_pool_point: 0 GiB
+  allocator_pool_slack_point: 0 GiB
+  untracked_runtime_point: 0 GiB

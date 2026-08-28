@@ -29,6 +29,21 @@ python -m pip install -e '.[test]'
 python -m cost_eval examples/configs/dense.yaml
 ```
 
+逐事件审计 trace 可以导出为 JSON 或 CSV：
+
+```bash
+python -m cost_eval examples/configs/dense.yaml \
+  --trace artifacts/memory-traces/dense-trace.csv
+
+# 额外保存每一步完整的 layer-local live tensor 快照；大模型文件会很大。
+python -m cost_eval examples/configs/dense.yaml \
+  --trace artifacts/memory-traces/dense-trace.json --trace-tensors
+```
+
+每条记录包含 stage/microbatch/chunk、FWD/BWD、layer/op、tensor
+`ALLOC/FREE/MARK`、七个显存桶及其增量、active 总量、峰值标记和 pinned
+activation。JSON 末尾的 `stage_compositions` 保存 allocator/runtime 合成结果。
+
 CLI 输出 schema v2 JSON。`per_stage[].peak_bytes` 是 `total_point_bytes` 的兼容
 别名；同时提供 `physical_dynamic_peak_bytes`、`allocator_pool_peak_bytes`、
 `safe_upper_bytes` 和 `oom_status`。未知 runtime/hardware 或未完成 probe 的能力

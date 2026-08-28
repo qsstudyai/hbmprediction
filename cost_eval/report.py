@@ -9,6 +9,7 @@ from .mem_timeline import MemTimeline, StagePeak
 from .parallel_model import ParallelModel
 from .shape_eval import ShapeEval
 from .static_mem import StaticMem
+from .trace import MemoryTrace
 
 
 @dataclass(frozen=True)
@@ -74,7 +75,7 @@ class Evaluator:
         ) if hardware.framework_reserve else ()
         self.warnings = tuple(warnings) + legacy_warning
 
-    def evaluate(self) -> PeakMemoryReport:
+    def evaluate(self, trace: MemoryTrace | None = None) -> PeakMemoryReport:
         pm = ParallelModel(self.pc, self.spec.dims.n_layers)
         graph = ShapeEval().resolve(self.spec, pm)
         persistent = StaticMem().compute(
@@ -90,6 +91,7 @@ class Evaluator:
             self.hardware.max_device_memory,
             self.optimizer.gradient_bytes,
             self.optimizer,
+            trace,
         )
         allocator = AllocatorModel()
         capability_status = self._capability_status()
@@ -98,6 +100,26 @@ class Evaluator:
             estimate = allocator.estimate(
                 physical.peak_bytes, physical.breakdown, self.hardware
             )
+            if trace is not None:
+                trace.add_stage_composition(
+                    stage,
+                    peak_event=physical.peak_event,
+                    physical_active_peak_bytes=(
+                        estimate.physical_active_peak_bytes
+                    ),
+                    allocator_pool_peak_bytes=(
+                        estimate.allocator_pool_peak_bytes
+                    ),
+                    device_baseline_bytes=estimate.device_baseline_bytes,
+                    untracked_runtime_point_bytes=(
+                        estimate.untracked_runtime_point_bytes
+                    ),
+                    fragmentation_point_bytes=(
+                        estimate.fragmentation_point_bytes
+                    ),
+                    total_point_bytes=estimate.total_point_bytes,
+                    safe_upper_bytes=estimate.safe_upper_bytes,
+                )
             usable = int(self.hardware.usable_device_memory)
             if estimate.total_point_bytes > usable:
                 status = "predicted_oom"
@@ -170,6 +192,14 @@ class Evaluator:
             },
             per_rank=per_rank,
         )
+
+    def evaluate_with_trace(
+        self, capture_live_tensors: bool = True
+    ) -> tuple[PeakMemoryReport, MemoryTrace]:
+        """Evaluate and retain every modeled memory transition."""
+
+        trace = MemoryTrace(capture_live_tensors=capture_live_tensors)
+        return self.evaluate(trace=trace), trace
 
     def _capability_status(self) -> str:
         caps = self.spec.capabilities

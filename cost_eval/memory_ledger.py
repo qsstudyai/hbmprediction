@@ -33,6 +33,12 @@ class MemoryLedger:
     def live_keys(self) -> frozenset[str]:
         return frozenset(self._live)
 
+    @property
+    def allocations(self) -> dict[str, tuple[int, str]]:
+        """Current owned allocations for trace/debug snapshots."""
+
+        return dict(self._live)
+
     def _record(self, owner: str) -> None:
         current = self.live_bytes
         if current > self.peak.bytes:
@@ -63,6 +69,8 @@ class MemoryLedger:
                     raise ValueError(f"bucket 出现负数: {bucket}")
             else:
                 raise ValueError(f"释放未分配值: {action.key}")
+        elif action.kind == "MARK":
+            pass
         self._record(action.owner or f"{action.kind}@{action.key}")
 
     def replay(self, actions, allowed_live=frozenset()) -> LedgerPeak:

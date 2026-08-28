@@ -17,7 +17,9 @@ class MemoryAction:
     op_name: str = ""
 
     def __post_init__(self) -> None:
-        if self.kind not in {"ALLOC", "FREE", "ALIAS", "MOVE_IN", "MOVE_OUT"}:
+        if self.kind not in {
+            "ALLOC", "FREE", "ALIAS", "MOVE_IN", "MOVE_OUT", "MARK"
+        }:
             raise ValueError(f"未知 memory action: {self.kind}")
         if self.size_bytes < 0:
             raise ValueError("memory action size 不能为负数")
@@ -80,6 +82,16 @@ def forward_layer_actions(layer, retained_keys: Iterable[str]) -> tuple[MemoryAc
                 f"fwd_comm@{layer.layer_id}:{op.name}",
                 op_name=op.name,
             ))
+        # A zero-byte marker makes operators with no allocation or workspace
+        # visible in optional traces and captures the execution-time snapshot
+        # after all inputs/outputs/workspaces have been materialized.
+        actions.append(MemoryAction(
+            "MARK", f"op:{layer.layer_id}:{index}:{op.name}", bucket="",
+            owner=f"fwd_op_execute@{layer.layer_id}:{op.name}",
+            op_name=op.name,
+        ))
+        if comm_bytes:
+            key = f"comm:{layer.layer_id}:{index}:{op.name}"
             actions.append(MemoryAction(
                 "FREE", key, owner=f"fwd_comm_end@{layer.layer_id}:{op.name}",
                 op_name=op.name,

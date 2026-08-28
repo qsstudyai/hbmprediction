@@ -10,6 +10,7 @@ from .specs import (
     RecomputeSpec,
     SwapSpec,
 )
+from .trace import MemoryTrace, MemoryTraceEvent, TraceActivation, TraceTensor
 
 __all__ = [
     "ConfigAdapter",
@@ -20,6 +21,8 @@ __all__ = [
     "LayerSpec",
     "ModelSpec",
     "ModelSummary",
+    "MemoryTrace",
+    "MemoryTraceEvent",
     "OpSpec",
     "OpType",
     "OptimizerSpec",
@@ -29,4 +32,6 @@ __all__ = [
     "RecomputeSpec",
     "SwapSpec",
     "TensorRef",
+    "TraceActivation",
+    "TraceTensor",
 ]

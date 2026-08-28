@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from types import SimpleNamespace
 
 from .event_schedule import Event, build_1f1b, build_interleaved_1f1b
 from .memory_actions import forward_layer_actions
 from .memory_ledger import MemoryLedger
+from .trace import TraceActivation, TraceTensor
 
 
 @dataclass
@@ -269,6 +270,7 @@ class MemTimeline:
         max_device_memory: int,
         gradient_bytes: int | None = None,
         optimizer=None,
+        trace=None,
     ) -> dict[int, StagePeak]:
         result = {}
         for stage, layers in graph.stages.items():
@@ -306,13 +308,23 @@ class MemTimeline:
             peak = -1
             peak_event = "initial"
             peak_breakdown = None
+            schedule_event = None
+            pinned: dict[tuple[int, int], tuple[int, int]] = {}
 
-            def record(tag: str) -> None:
+            def record(
+                tag: str,
+                *,
+                layer_id: int | None = None,
+                op_name: str = "",
+                action=None,
+                live_allocations=None,
+            ) -> None:
                 nonlocal peak, peak_event, peak_breakdown
                 current = bucket.total() + framework_reserve
                 for name, value in bucket.__dict__.items():
                     setattr(high, name, max(getattr(high, name), value))
-                if current > peak:
+                new_peak = current > peak
+                if new_peak:
                     peak = current
                     peak_event = tag
                     peak_breakdown = MemBreakdown(
@@ -324,6 +336,54 @@ class MemTimeline:
                         bucket.swap_buf,
                         bucket.workspace,
                         framework_reserve,
+                    )
+                if trace is not None:
+                    live = tuple(
+                        TraceTensor(key, size, allocation_bucket)
+                        for key, (size, allocation_bucket) in sorted(
+                            (live_allocations or {}).items()
+                        )
+                    )
+                    activation_state = tuple(
+                        TraceActivation(mb, lid, resident, offloaded)
+                        for (mb, lid), (resident, offloaded) in sorted(
+                            pinned.items()
+                        )
+                    )
+                    phase = (
+                        schedule_event.kind.lower()
+                        if schedule_event is not None
+                        else "optimizer" if tag.startswith("optimizer")
+                        else "initial"
+                    )
+                    trace.record(
+                        stage=stage,
+                        schedule_kind=(
+                            schedule_event.kind
+                            if schedule_event is not None else ""
+                        ),
+                        microbatch=(
+                            schedule_event.mb
+                            if schedule_event is not None else None
+                        ),
+                        chunk=(
+                            schedule_event.chunk
+                            if schedule_event is not None else None
+                        ),
+                        phase=phase,
+                        layer_id=layer_id,
+                        op_name=op_name or (
+                            "" if action is None else action.op_name
+                        ),
+                        tag=tag,
+                        action=action,
+                        buckets={
+                            **bucket.__dict__, "framework": framework_reserve
+                        },
+                        total_active_bytes=current,
+                        new_peak=new_peak,
+                        live_tensors=live,
+                        pinned_activations=activation_state,
                     )
 
             def gather_window(index: int, backward: bool = False, ids=None) -> int:
@@ -339,7 +399,6 @@ class MemTimeline:
 
             keep_gathered = not pm.pc.reshard_after_forward
             gathered_ids: set[int] = set()
-            pinned: dict[tuple[int, int], tuple[int, int]] = {}
             record("initial")
 
             for event in build_interleaved_1f1b(
@@ -348,6 +407,7 @@ class MemTimeline:
                 pm.pc.num_microbatches,
                 pm.pc.interleave,
             ):
+                schedule_event = event
                 active_layer_ids = [
                     layer_id for index, layer_id in enumerate(layer_ids)
                     if index % pm.pc.interleave == event.chunk
@@ -383,7 +443,7 @@ class MemTimeline:
                             )
                         else:
                             bucket.gather_buf = gather_window(index, ids=active_layer_ids)
-                        record(f"fwd_gather@{layer_id}")
+                        record(f"fwd_gather@{layer_id}", layer_id=layer_id)
 
                         plan = memory_plans[layer_id]
                         resident = plan.resident_bytes
@@ -396,6 +456,19 @@ class MemTimeline:
                         for action in forward_layer_actions(
                             layer, plan.resident_keys
                         ):
+                            trace_action = action
+                            if (
+                                action.kind in {"FREE", "MOVE_OUT"}
+                                and action.key in ledger.allocations
+                            ):
+                                size, allocation_bucket = ledger.allocations[
+                                    action.key
+                                ]
+                                trace_action = replace(
+                                    action,
+                                    size_bytes=size,
+                                    bucket=allocation_bucket,
+                                )
                             ledger.apply(action)
                             local = ledger.buckets
                             bucket.act_live = base_act_live + local.get("act_live", 0)
@@ -403,7 +476,13 @@ class MemTimeline:
                                 local.get("workspace", 0)
                                 + local.get("communication", 0)
                             )
-                            record(action.owner or f"fwd_action@{layer_id}")
+                            record(
+                                action.owner or f"fwd_action@{layer_id}",
+                                layer_id=layer_id,
+                                op_name=action.op_name,
+                                action=trace_action,
+                                live_allocations=ledger.allocations,
+                            )
                         if ledger.live_keys != plan.resident_keys:
                             raise ValueError(
                                 f"layer {layer_id} forward ledger resident 不守恒: "
@@ -412,7 +491,7 @@ class MemTimeline:
                         bucket.workspace = 0
                         bucket.act_live = base_act_live + resident
                         pinned[(event.mb, layer_id)] = (resident, offloaded)
-                        record(f"fwd_end@{layer_id}")
+                        record(f"fwd_end@{layer_id}", layer_id=layer_id)
                     if not keep_gathered:
                         bucket.gather_buf = 0
                     if last_chunk and suffix_ops:
@@ -430,6 +509,19 @@ class MemTimeline:
                             ),
                             suffix_retained,
                         ):
+                            trace_action = action
+                            if (
+                                action.kind in {"FREE", "MOVE_OUT"}
+                                and action.key in suffix_ledger.allocations
+                            ):
+                                size, allocation_bucket = (
+                                    suffix_ledger.allocations[action.key]
+                                )
+                                trace_action = replace(
+                                    action,
+                                    size_bytes=size,
+                                    bucket=allocation_bucket,
+                                )
                             suffix_ledger.apply(action)
                             local = suffix_ledger.buckets
                             bucket.act_live = (
@@ -446,7 +538,11 @@ class MemTimeline:
                             record(
                                 "loss_logits"
                                 if action.op_name == "lm_head"
-                                else action.owner
+                                else action.owner,
+                                layer_id=-(stage + 1),
+                                op_name=action.op_name,
+                                action=trace_action,
+                                live_allocations=suffix_ledger.allocations,
                             )
                         if suffix_ledger.live_keys != suffix_retained:
                             raise ValueError("edge forward ledger resident 不守恒")
@@ -483,10 +579,16 @@ class MemTimeline:
                             record(
                                 "loss_bwd_dlogits"
                                 if op.name.startswith("loss_")
-                                else f"bwd_edge_op@{op.name}"
+                                else f"bwd_edge_op@{op.name}",
+                                layer_id=-(stage + 1),
+                                op_name=op.name,
                             )
                         bucket.workspace = 0
-                        record(f"bwd_edge_grad@{op.name}")
+                        record(
+                            f"bwd_edge_grad@{op.name}",
+                            layer_id=-(stage + 1),
+                            op_name=op.name,
+                        )
                         bucket.grad_buf = 0
                         if not keep_gathered:
                             bucket.gather_buf = 0
@@ -500,7 +602,7 @@ class MemTimeline:
                             )
                         else:
                             bucket.gather_buf = gather_window(index, backward=True, ids=active_layer_ids)
-                        record(f"bwd_gather@{layer_id}")
+                        record(f"bwd_gather@{layer_id}", layer_id=layer_id)
 
                         resident, _ = pinned[(event.mb, layer_id)]
                         plan = memory_plans[layer_id]
@@ -513,17 +615,26 @@ class MemTimeline:
                             pinned[(event.mb, item)][1] for item in window
                         )
                         if bucket.swap_buf:
-                            record(f"bwd_swap_prefetch@{layer_id}")
+                            record(
+                                f"bwd_swap_prefetch@{layer_id}",
+                                layer_id=layer_id,
+                            )
                         bucket.swap_buf = 0
                         if plan.recomputed_ops:
                             bucket.recomp_scratch = (
                                 plan.recompute_scratch_bytes
                             )
-                            record(f"bwd_recompute@{layer_id}")
+                            record(
+                                f"bwd_recompute@{layer_id}",
+                                layer_id=layer_id,
+                            )
                             bucket.recomp_scratch = 0
                         if plan.recomputed_comm_ops:
                             bucket.recomp_scratch = plan.recompute_comm_bytes
-                            record(f"bwd_recompute_comm@{layer_id}")
+                            record(
+                                f"bwd_recompute_comm@{layer_id}",
+                                layer_id=layer_id,
+                            )
                             bucket.recomp_scratch = 0
 
                         # Backward kernels and their communication staging run
@@ -533,20 +644,29 @@ class MemTimeline:
                                 (comm.volume_bytes for comm in op.collectives),
                                 default=0,
                             )
-                            if bucket.workspace:
-                                record(f"bwd_op@{layer_id}:{op.name}")
+                            if bucket.workspace or trace is not None:
+                                record(
+                                    f"bwd_op@{layer_id}:{op.name}",
+                                    layer_id=layer_id,
+                                    op_name=op.name,
+                                )
                         bucket.workspace = 0
 
                         bucket.grad_buf = layer_grad_buffer[layer_id]
-                        record(f"bwd_grad@{layer_id}")
+                        record(f"bwd_grad@{layer_id}", layer_id=layer_id)
                         bucket.grad_buf = 0
                         bucket.act_live -= resident
                         pinned.pop((event.mb, layer_id))
+                        record(
+                            f"bwd_activation_release@{layer_id}",
+                            layer_id=layer_id,
+                        )
                         if not keep_gathered:
                             bucket.gather_buf = 0
                     if last_chunk:
                         resident, _ = pinned.pop((event.mb, -1), (0, 0))
                         bucket.act_live -= resident
+                        record("bwd_edge_activation_release", layer_id=-1)
                     for op in reversed(prefix_ops if first_chunk else ()):
                         bucket.gather_buf = _op_fsdp_buffer_bytes(op, pm)
                         record(f"bwd_edge_gather@{op.name}")
